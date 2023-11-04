@@ -14,24 +14,17 @@ const components = {
   mastodon: Mastodon,
   mail: Mail
 }
+export type IconKey = keyof typeof components
 
 type Props = {
-  kind: keyof typeof components | string
+  kind: IconKey
   href: string | undefined
   size?: number
   className?: string
 }
 
-const {kind, href, size = 8, className} = Astro.props
-
-/// use var to parse string to lowercase
-/// ensure if kind is string, it's lowercase
-let formatKind = kind
-if (typeof kind === 'string') {
-  formatKind = kind.toLocaleLowerCase()
-}
-
-const SocialSvg = components[formatKind as keyof typeof components]
+const { kind, href, size = 8, className } = Astro.props
+const SvgIcon = components[kind]
 ---
 
 <a
@@ -41,7 +34,7 @@ const SocialSvg = components[formatKind as keyof typeof components]
   href={href}
 >
   <span class='sr-only'>{kind}</span>
-  <SocialSvg
+  <SvgIcon
     class={className ??
       `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${size} w-${size}`}
   />

@@ -1,14 +1,14 @@
 ---
-import {getCollection} from 'astro:content'
+import { getCollection } from 'astro:content'
 
-import {SITE_METADATA, ITEMS_PER_PAGE} from '@/consts'
+import { SITE_METADATA, ITEMS_PER_PAGE } from '@/data/consts'
 import RootLayout from '@/layouts/RootLayout.astro'
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/FormattedDate.astro'
 import Tag from '@/components/Tag.astro'
-import {excludeDrafts, sortBlogPosts} from '@/functions'
-import {socialMedia} from '@/about-data'
-import Icons from '@/components/icons/Icons.astro'
+import { excludeDrafts, sortBlogPosts } from '@/functions'
+import { socialMedia } from '@/data/about-me-data'
+import Icons, { type IconKey } from '@/components/icons/Icons.astro'
 
 const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
 ---
@@ -32,9 +32,9 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
                         class='flex text-sm font-medium transition group text-zinc-800 hover:text-primary dark:text-zinc-200'
                       >
                         <Icons
-                          kind='github'
-                          href={SITE_METADATA.github}
-                          size={5}
+                          kind={element.icon as IconKey}
+                          href={SITE_METADATA.youtube}
+                          size={6}
                         />
                       </a>
                     </li>
@@ -90,3 +90,4 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
     </div>
   </div>
 </RootLayout>
+ @/components/icons/IconsSource @/data/about-data @/data/consts

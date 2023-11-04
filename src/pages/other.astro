@@ -1,12 +1,12 @@
 ---
-import {getCollection} from 'astro:content'
+import { getCollection } from 'astro:content'
 
-import {SITE_METADATA, ITEMS_PER_PAGE} from '@/consts'
+import { SITE_METADATA, ITEMS_PER_PAGE } from '@/data/consts'
 import RootLayout from '@/layouts/RootLayout.astro'
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/FormattedDate.astro'
 import Tag from '@/components/Tag.astro'
-import {excludeDrafts, sortBlogPosts} from '@/functions'
+import { excludeDrafts, sortBlogPosts } from '@/functions'
 
 const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
 ---
@@ -27,7 +27,7 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
       {!posts.length && 'No posts found.'}
       {
         posts.slice(0, ITEMS_PER_PAGE).map(post => {
-          const {date, title, summary, tags} = post.data
+          const { date, title, summary, tags } = post.data
           return (
             <li class='py-12'>
               <article>
@@ -50,7 +50,7 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
                           </Link>
                         </h2>
                         <div class='flex flex-wrap'>
-                          {tags.map(({slug}) => (
+                          {tags.map(({ slug }) => (
                             <Tag slug={slug} />
                           ))}
                         </div>
@@ -97,3 +97,4 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
   <!--        </div>-->
   <!--)}-->
 </RootLayout>
+ @/data/consts

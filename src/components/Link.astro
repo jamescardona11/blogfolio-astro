@@ -1,20 +1,22 @@
 ---
-import type {HTMLAttributes} from "astro/types";
+import type {HTMLAttributes} from 'astro/types'
 
 type Props = HTMLAttributes<'a'>
 
-const {href, ...rest} = Astro.props;
+const {href, ...rest} = Astro.props
 
-const isInternalLink = href && href.startsWith('/')
-const isAnchorLink = href && href.startsWith('#')
+const isInternalLink = href && href.toString().startsWith('/')
+const isAnchorLink = href && href.toString().startsWith('#')
 ---
 
 {
-    (isInternalLink || isAnchorLink) ?
+  isInternalLink || isAnchorLink ? (
     <a href={href} {...rest}>
-        <slot/>
-    </a> :
-    <a target="_blank" rel="noopener noreferrer" href={href} {...rest}>
-        <slot/>
+      <slot />
     </a>
+  ) : (
+    <a target='_blank' rel='noopener noreferrer' href={href} {...rest}>
+      <slot />
+    </a>
+  )
 }

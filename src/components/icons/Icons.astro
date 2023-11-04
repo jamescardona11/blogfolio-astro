@@ -10,20 +10,28 @@ const components = {
   github: Github,
   youtube: Youtube,
   linkedin: Linkedin,
-  twitter: Twitter,
+  x: Twitter,
   mastodon: Mastodon,
   mail: Mail
 }
 
 type Props = {
-  kind: keyof typeof components
+  kind: keyof typeof components | string
   href: string | undefined
   size?: number
   className?: string
 }
 
 const {kind, href, size = 8, className} = Astro.props
-const SocialSvg = components[kind]
+
+/// use var to parse string to lowercase
+/// ensure if kind is string, it's lowercase
+let formatKind = kind
+if (typeof kind === 'string') {
+  formatKind = kind.toLocaleLowerCase()
+}
+
+const SocialSvg = components[formatKind as keyof typeof components]
 ---
 
 <a

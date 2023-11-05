@@ -1,11 +1,12 @@
 ---
-import Logo from '../../Logo.astro'
-import MobileNav from '../../MobileNav.astro'
-import ThemeSwitcher from '../../ThemeSwitcher.astro'
 import { cn } from '@/utils/cn'
+import Logo from '@/components/Logo.astro'
 
+import MobileNav from './MobileNav.astro'
+import ThemeSwitcher from './ThemeSwitcher.astro'
 import { navItemsList } from '../nav-items'
 import { SubMenuItem } from './SubMenuItem.tsx'
+
 import { siteMetadata } from '@/data/site-metadata'
 
 const { pathname } = Astro.url

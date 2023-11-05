@@ -20,7 +20,7 @@ import {
   siteNavLinks
 } from '@/components/nav/nav-items'
 
-import { KBarSearch } from '@/components/nav/command-menu/knbar-search'
+import { KBarSearch } from '@/components/command-menu/knbar-search'
 
 interface Props {
   children: React.ReactNode

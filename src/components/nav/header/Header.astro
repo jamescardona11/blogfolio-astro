@@ -1,21 +1,20 @@
 ---
-import { cn } from '@/utils/cn'
 import Logo from '@/components/Logo.astro'
+import Link from '@/components/Link.astro'
 
-import MobileNav from './MobileNav.astro'
-import ThemeSwitcher from './ThemeSwitcher.astro'
+import MobileNav from '../mobile/MobileNav.astro'
+import ThemeSwitcher from './components/ThemeSwitcher.astro'
 import { navItemsList } from '../nav-items'
-import { SubMenuItem } from './SubMenuItem.tsx'
+import { SubMenuItem } from './components/SubMenuItem'
+import MenuItem from './components/MenuItem.astro'
 
 import { siteMetadata } from '@/data/site-metadata'
-
-const { pathname } = Astro.url
 ---
 
 <header class='container bg-background'>
   <div class='flex items-center justify-between h-20 py-6'>
     <div>
-      <a
+      <Link
         href='/'
         aria-label={siteMetadata.name}
         class='flex items-center space-x-2'
@@ -24,7 +23,7 @@ const { pathname } = Astro.url
         <span class='hidden font-bold leading-5 text-md sm:inline-block'>
           {siteMetadata.name}
         </span>
-      </a>
+      </Link>
     </div>
     <div class='hidden sm:block'>
       <nav class='flex items-center gap-4'>
@@ -32,29 +31,11 @@ const { pathname } = Astro.url
           navItemsList
             .filter(e => e.hideNavigation == null || !e.hideNavigation)
             .map(navItem => {
-              const isActive =
-                pathname === navItem.href ||
-                navItem.href === pathname.replace(/\/$/, '')
-
               if (navItem.subMenu != null) {
                 return <SubMenuItem client:load navItem={navItem} />
               }
 
-              return (
-                <a
-                  href={navItem.href}
-                  class={cn(
-                    'flex items-center font-medium text-lg transition-colors text-foreground hover:text-foreground sm:text-sm',
-                    isActive ? 'text-foreground' : 'text-foreground/60'
-                  )}
-                >
-                  <span
-                    class={isActive ? 'underline decoration-foreground' : ''}
-                  >
-                    {navItem.title}
-                  </span>
-                </a>
-              )
+              return <MenuItem navItem={navItem} />
             })
         }
 

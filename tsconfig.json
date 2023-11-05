@@ -2,12 +2,13 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "baseUrl": ".",
-    "jsx": "preserve",
+    "baseUrl": "/Users/zoro/j11/astro-page",
+    "jsx": "react-jsx",
     "paths": {
       "@/*": [
         "src/*"
       ]
-    }
+    },
+    "jsxImportSource": "react"
   }
 }

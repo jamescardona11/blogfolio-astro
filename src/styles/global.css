@@ -21,6 +21,13 @@
     font-family: 'Geist';
     font-style: normal;
     font-display: block;
+    src: url('/fonts/Geist-Bold.woff2') format('woff2');
+  }
+
+  @font-face {
+    font-family: 'Geist';
+    font-style: normal;
+    font-display: block;
     src: url('/fonts/Geist-UltraLight.woff2') format('woff2');
   }
 
@@ -42,6 +49,7 @@
     font-family: 'Geist';
     font-style: normal;
     font-display: block;
+    font-weight: 500;
     src: url('/fonts/Geist-Medium.woff2') format('woff2');
   }
 

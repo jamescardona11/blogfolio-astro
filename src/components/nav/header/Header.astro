@@ -7,56 +7,59 @@ import { cn } from '@/utils/cn'
 import { navItemsList } from '../nav-items'
 import { SubMenuItem } from './SubMenuItem.tsx'
 import { siteMetadata } from '@/data/site-metadata'
+
+const { pathname } = Astro.url
 ---
 
-<header class='flex items-center justify-between py-10'>
-  <div>
-    <a href='/' aria-label={siteMetadata.name}>
-      <div class='flex items-center justify-between'>
-        <div class='mr-3'>
-          <Logo />
-        </div>
+<header class='container bg-background'>
+  <div class='flex items-center justify-between h-20 py-6'>
+    <div>
+      <a
+        href='/'
+        aria-label={siteMetadata.name}
+        class='flex items-center space-x-2'
+      >
+        <Logo />
+        <span class='hidden font-bold leading-5 text-md sm:inline-block'>
+          {siteMetadata.name}
+        </span>
+      </a>
+    </div>
+    <div class='hidden sm:block'>
+      <nav class='flex items-center gap-4'>
         {
-          typeof siteMetadata.name === 'string' ? (
-            <div class='hidden h-6 text-2xl font-semibold sm:block'>
-              {siteMetadata.name}
-            </div>
-          ) : (
-            siteMetadata.name
-          )
+          navItemsList
+            .filter(e => e.hideNavigation == null || !e.hideNavigation)
+            .map(navItem => {
+              const isActive =
+                pathname === navItem.href ||
+                navItem.href === pathname.replace(/\/$/, '')
+
+              if (navItem.subMenu != null) {
+                return <SubMenuItem client:load navItem={navItem} />
+              }
+
+              return (
+                <a
+                  href={navItem.href}
+                  class={cn(
+                    'flex items-center font-medium text-lg transition-colors text-foreground hover:text-foreground sm:text-sm',
+                    isActive ? 'text-foreground' : 'text-foreground/60'
+                  )}
+                >
+                  <span
+                    class={isActive ? 'underline decoration-foreground' : ''}
+                  >
+                    {navItem.title}
+                  </span>
+                </a>
+              )
+            })
         }
-      </div>
-    </a>
-  </div>
-  <div class='flex items-center space-x-4 leading-5 sm:space-x-6'>
-    {
-      navItemsList
-        .filter(e => e.hideNavigation == null || !e.hideNavigation)
-        .map(navItem => {
-          if (navItem.subMenu != null) {
-            return <SubMenuItem client:load navItem={navItem} />
-          }
 
-          return (
-            <a
-              href={navItem.href}
-              class={cn(
-                'flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm',
-                false ? 'text-foreground' : 'text-foreground/60'
-              )}
-            >
-              <span class={false ? 'underline decoration-foreground' : ''}>
-                {navItem.title}
-              </span>
-            </a>
-          )
-        })
-    }
-
-    <!--TODO: add theme button-->
-    <!--<SearchButton />-->
-    <ThemeSwitcher />
-
+        <ThemeSwitcher />
+      </nav>
+    </div>
     <MobileNav />
   </div>
 </header>

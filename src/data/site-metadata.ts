@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Personal Page',
   description:
     'I share my insights on crafting exceptional products, honing my developer prowess, and growing a successful tech career.',
-  siteUrl: 'jamescardona11.com',
+  siteUrl: 'https://jamescardona11.com',
   language: 'en-us',
   siteRepo: 'https://github.com/jamescardona11/personal-page',
   siteLogo: '/static/images/logo.png',

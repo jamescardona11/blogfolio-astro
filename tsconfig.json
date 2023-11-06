@@ -4,11 +4,11 @@
     "strictNullChecks": true,
     "baseUrl": "/Users/zoro/j11/astro-page",
     "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "paths": {
       "@/*": [
         "src/*"
       ]
-    },
-    "jsxImportSource": "react"
+    }
   }
 }

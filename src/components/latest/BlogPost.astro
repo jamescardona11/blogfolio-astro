@@ -1,19 +1,16 @@
 ---
 export const prerender = false // server
+import { getLatestBlogPost } from '@/api/blog/blog'
 
-import { getCourses } from '@/api/resume/education'
-
-const coursesItems = await getCourses()
-
-console.log(coursesItems)
+const latestBlogPost = await getLatestBlogPost()
 ---
 
 <div>
-  <h1>Education</h1>
+  <h1>Latest</h1>
 
   <ul class='grid grid-cols-2 gap-2 space-y-1'>
     {
-      coursesItems?.map(course => (
+      latestBlogPost?.map(course => (
         <li class='flex items-center justify-between'>
           <div class='inline-flex mr-1 truncate grow'>
             <span class='mr-2 text-sky-500'>{'>'}</span>
@@ -23,7 +20,7 @@ console.log(coursesItems)
               target='_blank'
               rel='noreferrer'
             >
-              {course.name}
+              {course.title}
             </a>
           </div>
         </li>

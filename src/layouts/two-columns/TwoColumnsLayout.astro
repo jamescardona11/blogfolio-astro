@@ -1,0 +1,23 @@
+---
+import SectionContainer from '@/components/SectionContainer.astro'
+import Footer from '@/components/nav/footer/Footer.astro'
+import RootLayout from '@/layouts/root/RootLayout.astro'
+
+interface Props {
+  metaTitle?: string
+  metaDescription?: string
+}
+
+const { metaTitle: title, metaDescription: description } = Astro.props
+---
+
+<RootLayout metaTitle={title} metaDescription={description}>
+  <SectionContainer>
+    <div
+      class='grid grid-cols-1 gap-y-8 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_1fr] max-sm:px-2'
+    >
+      <slot />
+    </div>
+    <Footer />
+  </SectionContainer>
+</RootLayout>

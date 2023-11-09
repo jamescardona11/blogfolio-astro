@@ -15,7 +15,7 @@ const { title, description } = Astro.props
 
 <html lang='en' class='scroll-smooth'>
   <ViewTransitions />
-  <BaseHead title={title} description={description} />
+  <BaseHead metaTitle={title} metaDescription={description} />
   <body class='font-sans antialiased bg-background text-foreground'>
     <Header />
     <CommandPalette client:load>

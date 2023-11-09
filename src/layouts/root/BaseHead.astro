@@ -5,16 +5,16 @@ import '@/styles/global.css'
 import { siteMetadata } from '@/data/site-metadata'
 
 interface Props {
-  title: string
-  description?: string
+  metaTitle: string
+  metaDescription?: string
   image?: string
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
 const {
-  title,
-  description = siteMetadata.description,
+  metaTitle: title,
+  metaDescription: description = siteMetadata.description,
   image = '/blog-placeholder-1.jpg'
 } = Astro.props
 ---

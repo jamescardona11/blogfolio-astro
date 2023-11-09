@@ -20,10 +20,10 @@ type Props = {
   kind: IconKey
   href: string | undefined
   size?: number
-  className?: string
+  styles?: string
 }
 
-const { kind, href, size = 8, className } = Astro.props
+const { kind, href, size = 8, styles } = Astro.props
 const SvgIcon = components[kind]
 ---
 
@@ -35,7 +35,7 @@ const SvgIcon = components[kind]
 >
   <span class='sr-only'>{kind}</span>
   <SvgIcon
-    class={className ??
+    class={styles ??
       `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${size} w-${size}`}
   />
 </a>

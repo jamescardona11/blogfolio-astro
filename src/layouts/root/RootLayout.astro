@@ -6,11 +6,11 @@ import Header from '@/components/nav/header/Header.astro'
 import CommandPalette from '@/components/command-menu/command-palette'
 
 interface Props {
-  title: string
-  description?: string
+  metaTitle?: string
+  metaDescription?: string
 }
 
-const { title, description } = Astro.props
+const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
 <html lang='en' class='scroll-smooth'>

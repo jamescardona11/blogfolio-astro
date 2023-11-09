@@ -4,15 +4,14 @@ import Footer from '@/components/nav/footer/Footer.astro'
 import RootLayout from '@/layouts/root/RootLayout.astro'
 
 interface Props {
-  title: string
-  description?: string
-  subtitle?: string
+  metaTitle?: string
+  metaDescription?: string
 }
 
-const { title, description } = Astro.props
+const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
-<RootLayout title={title} description={description}>
+<RootLayout metaTitle={title} metaDescription={description}>
   <SectionContainer>
     <slot />
     <Footer />

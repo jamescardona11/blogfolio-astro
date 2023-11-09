@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content'
 import { SITE_METADATA, ITEMS_PER_PAGE } from '@/data/consts'
 import RootLayout from '@/layouts/root/RootLayout.astro'
 import Link from '@/components/Link.astro'
-import FormattedDate from '@/components/FormattedDate.astro'
-import Tag from '@/components/Tag.astro'
+import FormattedDate from '@/components/old/FormattedDate.astro'
+import Tag from '@/components/old/Tag.astro'
 import { excludeDrafts, sortBlogPosts } from '@/functions'
 
 const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)

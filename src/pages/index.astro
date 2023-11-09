@@ -4,9 +4,10 @@ import RootLayout from '@/layouts/root/RootLayout.astro'
 import Icons, { type IconKey } from '@/components/icons/Icons.astro'
 import { socialNetwork } from '@/data/about-me-data'
 import BlogPost from '@/components/latest/BlogPost.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
 ---
 
-<RootLayout title='James Cardona - Home Page'>
+<PageLayout title='James Cardona - Home Page'>
   <section class='py-10 space-y-6'>
     <div class='flex flex-col items-center gap-4 text-center'>
       <div class='flex gap-3 mt-2'>
@@ -80,4 +81,4 @@ import BlogPost from '@/components/latest/BlogPost.astro'
       <!-- <BlogPost /> -->
     </div>
   </section>
-</RootLayout>
+</PageLayout>

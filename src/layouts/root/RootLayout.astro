@@ -2,9 +2,7 @@
 import { ViewTransitions } from 'astro:transitions'
 
 import BaseHead from './BaseHead.astro'
-import SectionContainer from '@/components/SectionContainer.astro'
 import Header from '@/components/nav/header/Header.astro'
-import Footer from '@/components/nav/footer/Footer.astro'
 import CommandPalette from '@/components/command-menu/command-palette'
 
 interface Props {
@@ -20,13 +18,10 @@ const { title, description } = Astro.props
   <BaseHead title={title} description={description} />
   <body class='font-sans antialiased bg-background text-foreground'>
     <Header />
-    <SectionContainer>
-      <CommandPalette client:load>
-        <main class='mb-auto'>
-          <slot />
-        </main>
-        <Footer />
-      </CommandPalette>
-    </SectionContainer>
+    <CommandPalette client:load>
+      <main class='mb-auto'>
+        <slot />
+      </main>
+    </CommandPalette>
   </body>
 </html>

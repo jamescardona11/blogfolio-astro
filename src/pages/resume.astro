@@ -1,4 +1,5 @@
 ---
+import DownloadCVCard from '@/components/resume/CVCard.astro'
 import LanguagesCard from '@/components/resume/LanguagesCard.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import RightSide from '@/layouts/two-columns/RightSide.astro'
@@ -9,7 +10,8 @@ import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
   <MiddleArea>
     <h1>Resume 1</h1>
   </MiddleArea>
-  <RightSide>
+  <RightSide styles='space-y-6'>
     <LanguagesCard />
+    <DownloadCVCard />
   </RightSide>
 </TwoColumnsLayout>

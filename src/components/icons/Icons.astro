@@ -5,6 +5,7 @@ import Youtube from './source/Youtube.astro'
 import Linkedin from './source/Linkedin.astro'
 import Twitter from './source/Twitter.astro'
 import Mastodon from './source/Mastodon.astro'
+import LinkIcon from './source/LinkIcon.astro'
 
 const components = {
   github: Github,
@@ -12,30 +13,41 @@ const components = {
   linkedin: Linkedin,
   x: Twitter,
   mastodon: Mastodon,
-  mail: Mail
+  mail: Mail,
+  link: LinkIcon
 }
 export type IconKey = keyof typeof components
 
 type Props = {
   kind: IconKey
-  href: string | undefined
+  href?: string
   size?: number
-  styles?: string
+  class?: string
 }
 
-const { kind, href, size = 8, styles } = Astro.props
+const { kind, href, size, class: s } = Astro.props
 const SvgIcon = components[kind]
+
+const styles =
+  s ??
+  `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${size} w-${size}`
 ---
 
-<a
-  class='text-sm text-gray-500 transition hover:text-gray-600'
-  target='_blank'
-  rel='noopener noreferrer'
-  href={href}
->
-  <span class='sr-only'>{kind}</span>
-  <SvgIcon
-    class={styles ??
-      `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${size} w-${size}`}
-  />
-</a>
+{
+  href ? (
+    <a
+      class='text-sm text-gray-500 transition hover:text-gray-600'
+      target='_blank'
+      rel='noopener noreferrer'
+      href={href}
+    >
+      <span class='sr-only'>{kind}</span>
+      <SvgIcon class={styles} />
+    </a>
+  ) : (
+    <div>
+      <span class='sr-only'>{kind}</span>
+      <SvgIcon class={styles} />
+    </div>
+  )
+}

@@ -2,8 +2,8 @@
 import { type Page, getCollection, type CollectionEntry } from 'astro:content'
 
 // import ListLayout from "@/layouts/ListLayout.astro";
-import { ITEMS_PER_PAGE } from '@/data/consts'
-import { excludeDrafts, sortBlogPosts } from '@/functions'
+import { ITEMS_PER_PAGE } from '@/consts'
+import { excludeDrafts, sortBlogPosts } from '@/lib/data/local/functions'
 import ListWithTagsLayout from '../../../layouts/ListWithTagsLayout.astro'
 
 interface Props {
@@ -39,4 +39,4 @@ const { Content } = await entry.render()
 >
   <Content />
 </ListWithTagsLayout>
- @/data/consts
+ @/data/consts @/lib/data/static/consts @/consts @/lib/data/local/functions

@@ -1,7 +1,7 @@
-import { type ResumeItem } from '@/lib/models/resume-item'
+import { type WorkItem } from '@/lib/models/work-item'
 import { type RecommendationItem } from '@/lib/models/recommendation-item'
 
-const localEducation: ResumeItem = {
+const localEducation: WorkItem = {
   startedDate: '2009',
   endDate: '2015',
   position: 'Software Engineering',

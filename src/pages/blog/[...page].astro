@@ -1,8 +1,8 @@
 ---
 import { type Page, getCollection } from 'astro:content'
 // import ListLayout from "@/layouts/ListLayout.astro";
-import { ITEMS_PER_PAGE } from '@/data/consts'
-import { sortBlogPosts, excludeDrafts } from '@/functions'
+import { ITEMS_PER_PAGE } from '@/consts'
+import { sortBlogPosts, excludeDrafts } from '@/lib/data/local/functions'
 import ListWithTagsLayout from '../../layouts/ListWithTagsLayout.astro'
 
 interface Props {
@@ -19,3 +19,4 @@ const { page } = Astro.props
 
 <!--<ListLayout title="Blog" page={page}/>-->
 <ListWithTagsLayout title='Blog' page={page} />
+ @/lib/data/static/consts @/consts @/lib/data/local/functions

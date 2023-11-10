@@ -1,4 +1,4 @@
-import { siteMetadata } from './site-metadata'
+import { siteMetadata } from '../../../../site-metadata'
 
 export interface SocialNetworkLink {
   name: string

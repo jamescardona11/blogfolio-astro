@@ -1,4 +1,4 @@
-export interface ResumeItem {
+export interface WorkItem {
   startedDate: string
   endDate?: string
   position: string

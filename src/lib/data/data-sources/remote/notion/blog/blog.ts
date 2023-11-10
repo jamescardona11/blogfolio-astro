@@ -1,7 +1,7 @@
-import { NOTION_BLOG_DB } from '@/api/server-constants'
+import { NOTION_BLOG_DB } from '@/lib/data/remote/remote-constants'
 import type { PostItem } from '@/lib/models/post'
-import { notionClient } from '@/lib/notion/notion'
-import { type NBlogPostRow } from '@/lib/notion/notion-models'
+import { notionClient } from '@/lib/data/remote/notion/notion'
+import { type NBlogPostRow } from '@/lib/data/remote/notion/notion-models'
 
 const notionDatabaseId = NOTION_BLOG_DB
 

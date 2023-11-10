@@ -1,4 +1,4 @@
-import { NOTION_SECRET } from '@/api/server-constants'
+import { NOTION_SECRET } from '@/lib/data/remote/remote-constants'
 import { Client } from '@notionhq/client'
 
 const notionSecret = NOTION_SECRET

@@ -1,4 +1,4 @@
-import type { WorkItem } from '@/lib/models/work-item'
+import type { ExperienceItem } from '@/lib/models/experience-item'
 import { NOTION_EXPERIENCE_DB } from '../../remote-constants'
 import { notionClient } from '../notion-client'
 
@@ -18,7 +18,7 @@ export async function getExperienceFromNotion() {
     // @ts-ignore
     const rows = query.results.map(res => res.properties) as NExperienceRow[]
 
-    const workItems: WorkItem[] = rows.map(row => ({
+    const workItems: ExperienceItem[] = rows.map(row => ({
       position: row.position.title[0].text.content,
       site: row.company.rich_text[0].text.content,
       description: row.description.rich_text[0].text.content,

@@ -4,9 +4,8 @@ import {
   recommendationData
 } from './data-sources/static/resume-data'
 
-import type { EducationItem } from '../models/education-item'
 import type { RecommendationItem } from '../models/recommendation-item'
-import type { WorkItem } from '../models/work-item'
+import type { ExperienceItem } from '../models/experience-item'
 import type { ResumeModel } from '../models/resume-model'
 
 export async function getResumeData(): Promise<ResumeModel> {
@@ -21,7 +20,7 @@ export async function getResumeData(): Promise<ResumeModel> {
   }
 }
 
-function getWorkExperienceData(): Promise<WorkItem[]> {
+function getWorkExperienceData(): Promise<ExperienceItem[]> {
   return getExperienceFromNotion()
 }
 
@@ -29,6 +28,6 @@ function getRecommendationData(): RecommendationItem[] {
   return recommendationData
 }
 
-function getEducationData(): EducationItem[] {
+function getEducationData(): ExperienceItem[] {
   return educationData
 }

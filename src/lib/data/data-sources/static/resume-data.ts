@@ -1,7 +1,7 @@
+import type { ExperienceItem } from '@/lib/models/experience-item'
 import { type RecommendationItem } from '@/lib/models/recommendation-item'
-import { type EducationItem } from '@/lib/models/education-item'
 
-const educationData: EducationItem[] = [
+const educationData: ExperienceItem[] = [
   {
     startedDate: '2009',
     endDate: '2015',

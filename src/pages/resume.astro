@@ -7,13 +7,14 @@ import DownloadCVCard from '@/components/resume/CVCard.astro'
 import LanguagesCard from '@/components/resume/LanguagesCard.astro'
 
 import { getResumeData } from '@/lib/data/resume-provider'
+import ExperienceSection from '@/components/resume/ExperienceSection.astro'
 
 const { work, recommendation, education } = await getResumeData()
 ---
 
 <TwoColumnsLayout metaTitle='My Resume'>
   <MiddleArea>
-    <h1>Resume 1</h1>
+    <ExperienceSection title='Work Experience' experience={work} />
   </MiddleArea>
   <RightSide styles='space-y-6'>
     <LanguagesCard />

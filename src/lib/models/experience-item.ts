@@ -1,4 +1,4 @@
-export interface EducationItem {
+export interface ExperienceItem {
   startedDate: string
   endDate?: string
   position: string

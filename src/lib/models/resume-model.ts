@@ -1,9 +1,8 @@
-import type { EducationItem } from './education-item'
 import type { RecommendationItem } from './recommendation-item'
-import type { WorkItem } from './work-item'
+import type { ExperienceItem } from './experience-item'
 
 export interface ResumeModel {
-  work: WorkItem[]
+  work: ExperienceItem[]
   recommendation: RecommendationItem[]
-  education: EducationItem[]
+  education: ExperienceItem[]
 }

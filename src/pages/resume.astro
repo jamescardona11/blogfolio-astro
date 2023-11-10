@@ -1,9 +1,15 @@
 ---
-import RootLayout from '@/layouts/root/RootLayout.astro'
-import CoursesSection from '@/components/resume/CoursesSection.astro'
+import LanguagesCard from '@/components/resume/LanguagesCard.astro'
+import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
+import RightSide from '@/layouts/two-columns/RightSide.astro'
+import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
 ---
 
-<RootLayout metaTitle='Resume'>
-  <h1>Resume</h1>
-  <!-- <CoursesSection /> -->
-</RootLayout>
+<TwoColumnsLayout metaTitle='My Resume'>
+  <MiddleArea>
+    <h1>Resume 1</h1>
+  </MiddleArea>
+  <RightSide>
+    <LanguagesCard />
+  </RightSide>
+</TwoColumnsLayout>

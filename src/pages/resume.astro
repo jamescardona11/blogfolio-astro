@@ -5,6 +5,10 @@ import RightSide from '@/layouts/two-columns/RightSide.astro'
 
 import DownloadCVCard from '@/components/resume/CVCard.astro'
 import LanguagesCard from '@/components/resume/LanguagesCard.astro'
+
+import { getResumeData } from '@/lib/data/resume-provider'
+
+const { work, recommendation, education } = await getResumeData()
 ---
 
 <TwoColumnsLayout metaTitle='My Resume'>

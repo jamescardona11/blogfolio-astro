@@ -1,5 +1,5 @@
-import { NOTION_SECRET } from '@/lib/data/remote/remote-constants'
 import { Client } from '@notionhq/client'
+import { NOTION_SECRET } from '../remote-constants'
 
 const notionSecret = NOTION_SECRET
 const notionClient = new Client({ auth: notionSecret })

@@ -23,7 +23,7 @@ export async function getLatestBlogPost() {
       ]
     })
 
-    const rows = query.results.map(res => {
+    const rows = query.results.map((res: any) => {
       // @ts-ignore
       const p = res.properties as NBlogPostRow
       p.id = res.id

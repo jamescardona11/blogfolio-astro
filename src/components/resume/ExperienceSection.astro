@@ -3,18 +3,18 @@ import type { ExperienceItem } from '@/lib/models/experience-item'
 import PathItem from './PathItem.astro'
 interface Props {
   title: string
-  experience: ExperienceItem[]
+  items: ExperienceItem[]
 }
 
-const { title, experience } = Astro.props
+const { title, items } = Astro.props
 ---
 
 <div>
-  <h1 class='h1 font-sans text-zinc-800 dark:text-zinc-100'>{title}</h1>
+  <h2 class='h3 font-sans text-zinc-800 dark:text-zinc-100'>{title}</h2>
   {/* Items */}
   <ul class='mt-8 space-y-8'>
     {
-      experience?.map((item, index) => (
+      items?.map(item => (
         <li class='relative group'>
           <PathItem item={item}>
             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'>

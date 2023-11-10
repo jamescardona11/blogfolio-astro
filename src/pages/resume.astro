@@ -1,4 +1,6 @@
 ---
+import { getResumeData } from '@/lib/data/resume-provider'
+
 import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import RightSide from '@/layouts/two-columns/RightSide.astro'
@@ -6,15 +8,18 @@ import RightSide from '@/layouts/two-columns/RightSide.astro'
 import DownloadCVCard from '@/components/resume/CVCard.astro'
 import LanguagesCard from '@/components/resume/LanguagesCard.astro'
 
-import { getResumeData } from '@/lib/data/resume-provider'
 import ExperienceSection from '@/components/resume/ExperienceSection.astro'
+import RecommendationsSection from '@/components/resume/RecommendationSection.astro'
+import EducationSection from '@/components/resume/EducationSection.astro'
 
 const { work, recommendation, education } = await getResumeData()
 ---
 
 <TwoColumnsLayout metaTitle='My Resume'>
   <MiddleArea>
-    <ExperienceSection title='Work Experience' experience={work} />
+    <ExperienceSection title='Work Experience' items={work} />
+    <RecommendationsSection title={'Recommendations'} items={recommendation} />
+    <EducationSection title={'Education'} items={education} />
   </MiddleArea>
   <RightSide styles='space-y-6'>
     <LanguagesCard />

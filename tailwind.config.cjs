@@ -6,6 +6,13 @@ module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
     extend: {
       lineHeight: {
         11: '2.75rem',
@@ -16,6 +23,27 @@ module.exports = {
       fontFamily: {
         sans: ['Geist', 'sans-serif'],
         heading: ['CalSans', 'sans-serif']
+      },
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1.5' }],
+        sm: ['0.875rem', { lineHeight: '1.5715' }],
+        base: ['1rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        lg: ['1.125rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        xl: ['1.25rem', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
+        '2xl': ['1.5rem', { lineHeight: '1.415', letterSpacing: '-0.01em' }],
+        '3xl': ['1.875rem', { lineHeight: '1.333', letterSpacing: '-0.01em' }],
+        '4xl': ['2.25rem', { lineHeight: '1.277', letterSpacing: '-0.01em' }],
+        '5xl': ['3rem', { lineHeight: '1', letterSpacing: '-0.01em' }],
+        '6xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.01em' }],
+        '7xl': ['4.5rem', { lineHeight: '1', letterSpacing: '-0.01em' }]
+      },
+      letterSpacing: {
+        tighter: '-0.02em',
+        tight: '-0.01em',
+        normal: '0',
+        wide: '0.01em',
+        wider: '0.02em',
+        widest: '0.4em'
       },
       colors: {
         midnight: '#0E0F11',
@@ -53,6 +81,25 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
         }
+      },
+      borderRadius: {
+        lg: `var(--radius)`,
+        md: `calc(var(--radius) - 2px)`,
+        sm: 'calc(var(--radius) - 4px)'
+      },
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' }
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' }
+        }
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out'
       },
       typography: ({ theme }) => ({
         DEFAULT: {

@@ -2,6 +2,9 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Additional styles */
+@import 'utility-patterns.css';
+
 @layer base {
   @font-face {
     font-family: 'CalSans';

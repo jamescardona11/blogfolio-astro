@@ -1,11 +1,15 @@
 ---
-import { getEntry } from 'astro:content'
-import AuthorLayout from '@/layouts/AuthorLayout.astro'
+import RenderBlocks from '@/components/notion-blocks/RenderBlocks.astro'
+import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
+import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
+import { getSummaryData } from '@/lib/data/about-me-provider'
+import { siteMetadata } from '@/site-metadata'
 
-const author = await getEntry('authors', 'default')
-const { Content } = await author.render()
+const { summaryData } = await getSummaryData()
 ---
 
-<AuthorLayout content={author.data}>
-  <Content />
-</AuthorLayout>
+<TwoColumnsLayout metaTitle={siteMetadata.name}>
+  <MiddleArea>
+    <RenderBlocks data={summaryData} />
+  </MiddleArea>
+</TwoColumnsLayout>

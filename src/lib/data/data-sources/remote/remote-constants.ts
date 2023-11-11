@@ -4,8 +4,8 @@ export const NOTION_SECRET =
 export const NOTION_EXPERIENCE_DB =
   import.meta.env.NOTION_EXPERIENCE_DB || process.env.NOTION_EXPERIENCE_DB
 
-export const NOTION_COURSES_DB =
-  import.meta.env.NOTION_COURSES_DB || process.env.NOTION_COURSES_DB
+export const NOTION_LEARNING_PATH_DB =
+  import.meta.env.NOTION_LEARNING_PATH_DB || process.env.NOTION_LEARNING_PATH_DB
 
 export const NOTION_PROJECTS_DB =
   import.meta.env.NOTION_PROJECTS_DB || process.env.NOTION_PROJECTS_DB
@@ -15,6 +15,10 @@ export const NOTION_BLOG_DB =
 
 export const NOTION_USES_DB =
   import.meta.env.NOTION_USES_DB || process.env.NOTION_USES_DB
+
+export const NOTION_ABOUT_ME_SUMMARY_DB =
+  import.meta.env.NOTION_ABOUT_ME_SUMMARY_DB ||
+  process.env.NOTION_ABOUT_ME_SUMMARY_DB
 
 export const GITHUB_TOKEN =
   import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN

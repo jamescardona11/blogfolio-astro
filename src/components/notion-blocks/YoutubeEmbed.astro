@@ -1,0 +1,17 @@
+---
+interface Props {
+  url: string
+}
+
+const { url } = Astro.props
+const src = url.replace('watch?v=', 'embed/')
+---
+
+<div class='relative overflow-hidden'>
+  <iframe
+    class='w-full h-96 md:h-[680px]'
+    src={src}
+    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+    allow-full-screen
+    title='Embedded youtube'></iframe>
+</div>

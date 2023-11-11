@@ -1,0 +1,22 @@
+---
+import Link from '../Link.astro'
+import type { TextRichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
+import Icons from '../icons/Icons.astro'
+
+interface Props {
+  text?: TextRichTextItemResponse[]
+}
+
+const { text } = Astro.props
+const heading = text?.filter(
+  t => t?.plain_text != null && t?.plain_text != '\n'
+)?.[0]?.plain_text
+
+const hashLink = heading?.toLowerCase().replace(/ /g, '-')
+---
+
+<div class='h-6'></div>
+<div class='flex items-center'>
+  <Link href={`#${hashLink}`}>{heading}</Link>
+  <Icons kind='link' />
+</div>

@@ -1,0 +1,140 @@
+---
+import Quote from '@components/Quote.astro'
+
+import NotionText from './NotionText.astro'
+import AnchorLink from './Heading.astro'
+import CodeBlock from './CodeBlock.astro'
+import YoutubeEmbed from './YoutubeEmbed.astro'
+import Callout from './Callout.astro'
+import NotionImage from './NotionImage.astro'
+import NotionFile from './NotionFile.astro'
+
+interface Props {
+  data: any
+}
+
+const { data } = Astro.props
+---
+
+<div>
+  {
+    data?.map((block: any) => {
+      const { type, id } = block
+      const value = block[type]
+
+      return (
+        <Fragment>
+          {type === 'paragraph' && (
+            <p class='text-zinc-800 dark:text-zinc-300'>
+              <NotionText text={value.rich_text} />
+            </p>
+          )}
+
+          {type === 'heading_1' && (
+            <h1 class='h1 text-zinc-800 dark:text-zinc-200'>
+              <AnchorLink text={value.rich_text} />
+            </h1>
+          )}
+
+          {type === 'heading_2' && (
+            <h2 class='h2 text-zinc-800 dark:text-zinc-200'>
+              <AnchorLink text={value.rich_text} />
+            </h2>
+          )}
+
+          {type === 'heading_3' && (
+            <h3 class='h3 text-zinc-800 dark:text-zinc-200'>
+              <AnchorLink text={value.rich_text} />
+            </h3>
+          )}
+
+          {type === 'bulleted_list_item' && (
+            <ul class='ml-4 text-zinc-800 dark:text-zinc-400'>
+              <li>
+                <NotionText text={value.rich_text} />
+              </li>
+            </ul>
+          )}
+
+          {type === 'numbered_list_item' && (
+            <ul class='ml-4 text-zinc-800 dark:text-zinc-400'>
+              <li>
+                <NotionText text={value.rich_text} />
+              </li>
+            </ul>
+          )}
+
+          {type === 'to_do' && (
+            <div>
+              <label
+                html-for={id}
+                class='flex items-center justify-start space-x-3'
+              >
+                <input
+                  id={id}
+                  aria-describedby={value.rich_text}
+                  name={id}
+                  type='checkbox'
+                  checked={value?.checked}
+                  read-only
+                  disabled
+                  class='w-4 h-4 text-sky-500 border-gray-300 rounded focus:ring-sky-500'
+                />
+                <span class=' text-zinc-800 dark:text-zinc-400'>
+                  <NotionText text={value.rich_text} />
+                </span>
+              </label>
+            </div>
+          )}
+
+          {type === 'child_page' && <p>{value.title}</p>}
+
+          {type === 'image' && <NotionImage value={value} />}
+
+          {type === 'quote' && (
+            <Quote quote={value.rich_text[0].text.content} />
+          )}
+
+          {type === 'callout' && (
+            <Callout>
+              {value.icon != null && (
+                <span class='text-xl'>{value.icon.emoji}</span>
+              )}
+              <NotionText text={value.rich_text} />
+            </Callout>
+          )}
+
+          {type === 'bookmark' && (
+            <a
+              class='text-gray-700 dark:text-zinc-400'
+              href={value.url}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {value.url}
+            </a>
+          )}
+
+          {type === 'pdf' && <NotionFile value={value} />}
+
+          {type === 'file' && <NotionFile value={value} />}
+
+          {type === 'video' && (
+            <YoutubeEmbed url={value?.external?.url ?? ''} />
+          )}
+
+          {type === 'code' && (
+            <CodeBlock
+              language={value.language}
+              code={value.rich_text[0].text.content}
+            />
+          )}
+
+          {type === 'divider' && (
+            <hr class="my-4 w-full border-none text-center h-10 before:content-['∿∿∿∿∿'] before:text-[#92959a] before:text-2xl" />
+          )}
+        </Fragment>
+      )
+    })
+  }
+</div>

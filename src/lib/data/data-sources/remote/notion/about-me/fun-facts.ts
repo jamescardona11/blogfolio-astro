@@ -1,41 +1,23 @@
-import type { ExperienceItem } from '@/lib/models/experience-item'
-import { NOTION_EXPERIENCE_DB } from '../../remote-constants'
-import { notionClient } from '../notion-client'
+import { NOTION_SKILLS_DB } from '@lib/data/data-sources/remote/remote-constants'
+import { notionClient } from '@/lib/data/notion-core/notion-client'
+import { type NFunFactRow } from '@/lib/data/notion-core/notion-response-models'
 
-const notionDatabaseId = NOTION_EXPERIENCE_DB
+const notionDatabaseId = NOTION_SKILLS_DB
 
-export async function getExperienceFromNotion() {
-  console.log('GET /resume/experience')
+export async function getFunFactsFromNotion() {
+  console.log('GET /about-me/skills')
 
-  try {
-    if (notionDatabaseId == null) {
-      throw new Error('Missing notion secret or DB-ID.')
-    }
-    const query = await notionClient.databases.query({
-      database_id: notionDatabaseId
-    })
+  const query = await notionClient.getDatabase(notionDatabaseId)
 
-    // @ts-ignore
-    const rows = query.results.map(res => res.properties) as NExperienceRow[]
-
-    const workItems: ExperienceItem[] = rows.map(row => ({
-      position: row.position.title[0].text.content,
-      site: row.company.rich_text[0].text.content,
-      description: row.description.rich_text[0].text.content,
-      link: row.link?.url,
-      startedDate: row.startedDate.rich_text[0].text.content,
-      endDate:
-        row.endDate?.rich_text[0] != null
-          ? row.endDate.rich_text[0].text?.content
-          : null,
-      technicalSkills: row.technicalSkills?.multi_select.map(
-        (skill: any) => skill.name
-      )
-    }))
-
-    return workItems
-  } catch (error) {
-    console.error(error)
+  if (!query.ok) {
+    console.error(query.error)
     return []
   }
+
+  // @ts-ignore
+  // run the cast because we know the data match this notion model
+  const rows = query.data.results.map(res => res.properties) as NFunFactRow[]
+  const facts: string[] = rows.map(row => row.name.title[0].text.content)
+
+  return facts
 }

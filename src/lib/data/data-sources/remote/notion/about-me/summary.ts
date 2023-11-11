@@ -1,35 +1,34 @@
-import { NOTION_ABOUT_ME_SUMMARY_DB } from '../../remote-constants'
-import { notionClient } from '../notion-client'
+import type {
+  BlockObjectResponse,
+  PartialBlockObjectResponse
+} from '@notionhq/client/build/src/api-endpoints'
+
+import { isFullBlock } from '@notionhq/client'
+
+import { NOTION_ABOUT_ME_SUMMARY_DB } from '@lib/data/data-sources/remote/remote-constants'
+import { notionClient } from '@/lib/data/notion-core/notion-client'
+
+import { mapNotionBlocks } from '@/lib/data/notion-core/notion-map-blocks'
 
 const notionPageId = NOTION_ABOUT_ME_SUMMARY_DB
 
 export async function getSummaryFromNotion() {
   console.log('GET /about/summary')
 
-  try {
-    if (notionPageId == null) {
-      throw new Error('Missing notion secret or DB-ID.')
+  let content: Array<PartialBlockObjectResponse | BlockObjectResponse> = []
+  let nextCursor
+  let query
+
+  do {
+    query = await notionClient.getPageBlocks(notionPageId, nextCursor)
+
+    if (!query.ok) {
+      console.error(query.error)
+      break
     }
 
-    let content = []
-    let blocks = await notionClient.blocks.children.list({
-      block_id: notionPageId
-    })
+    content = [...content, ...query.data.results]
+  } while (query.data.hasMore)
 
-    content = [...blocks.results]
-
-    while (blocks.has_more) {
-      blocks = await notionClient.blocks.children.list({
-        block_id: notionPageId,
-        start_cursor: blocks.next_cursor!
-      })
-
-      content = [...content, ...blocks.results]
-    }
-
-    return content
-  } catch (error) {
-    console.error(error)
-    return []
-  }
+  return mapNotionBlocks(content.filter(isFullBlock))
 }

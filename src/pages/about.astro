@@ -1,9 +1,10 @@
 ---
+import { siteMetadata } from '@/site-metadata'
+import { getSummaryData } from '@/lib/data/about-me-provider'
+
 import RenderBlocks from '@/components/notion-blocks/RenderBlocks.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
-import { getSummaryData } from '@/lib/data/about-me-provider'
-import { siteMetadata } from '@/site-metadata'
 
 const { summaryData } = await getSummaryData()
 ---

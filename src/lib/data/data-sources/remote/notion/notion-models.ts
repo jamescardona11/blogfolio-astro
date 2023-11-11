@@ -9,6 +9,7 @@ export interface NExperienceRow {
   description: { id: string; rich_text: Array<{ text: { content: string } }> }
   link?: { id: string; url: string }
   technicalSkills?: { id: string; multi_select: Array<{ name: string }> }
+  image?: { id: string; files: Array<{ file: { url: string } }> }
 }
 
 export interface NCourseRow {
@@ -64,4 +65,20 @@ export interface NUsesRow {
   tags?: { id: string; multi_select: Array<{ name: string }> }
   link?: { id: string; url: string }
   description?: { id: string; rich_text: Array<{ text: { content: string } }> }
+}
+
+export interface NSkillRow {
+  name: {
+    id: string
+    title: Array<{ text: { content: string } }>
+  }
+  color?: { id: string; rich_text: Array<{ text: { content: string } }> }
+  icon?: { id: string; files: Array<{ file: { url: string } }> }
+}
+
+export interface NFunFactRow {
+  name: {
+    id: string
+    title: Array<{ text: { content: string } }>
+  }
 }

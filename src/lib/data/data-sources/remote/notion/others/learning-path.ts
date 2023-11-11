@@ -1,6 +1,6 @@
 import { NOTION_COURSES_DB } from '@/lib/data/remote/remote-constants'
-import { notionClient } from '@/lib/data/remote/notion/notion'
-import { type NCourseRow } from '@/lib/data/remote/notion/notion-models'
+import { notionClient } from '../notion-client'
+import { type NCourseRow } from '../notion-models'
 import { type CourseItem } from '@/lib/models/course-item'
 
 const notionDatabaseId = NOTION_COURSES_DB

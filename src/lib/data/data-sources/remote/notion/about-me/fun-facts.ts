@@ -1,7 +1,6 @@
+import type { ExperienceItem } from '@/lib/models/experience-item'
 import { NOTION_EXPERIENCE_DB } from '../../remote-constants'
 import { notionClient } from '../notion-client'
-import { type NExperienceRow } from '../notion-models'
-import { type ExperienceItem } from '@/lib/models/experience-item'
 
 const notionDatabaseId = NOTION_EXPERIENCE_DB
 
@@ -25,11 +24,13 @@ export async function getExperienceFromNotion() {
       description: row.description.rich_text[0].text.content,
       link: row.link?.url,
       startedDate: row.startedDate.rich_text[0].text.content,
-      endDate: row.endDate?.rich_text[0]?.text?.content,
+      endDate:
+        row.endDate?.rich_text[0] != null
+          ? row.endDate.rich_text[0].text?.content
+          : null,
       technicalSkills: row.technicalSkills?.multi_select.map(
         (skill: any) => skill.name
-      ),
-      image: row.image?.files[0]?.file?.url
+      )
     }))
 
     return workItems

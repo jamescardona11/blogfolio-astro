@@ -1,0 +1,37 @@
+---
+import type { TodoList } from '@/lib/data/notion-core/notion-blocks'
+import NotionText from './NotionText.astro'
+
+interface Props {
+  block: TodoList
+}
+
+const { block } = Astro.props
+---
+
+<ul class=''>
+  {
+    block.items.map((listItem, index) => {
+      return (
+        <label class='flex items-center justify-start space-x-3'>
+          <input
+            id={index.toString()}
+            name={index.toString()}
+            type='checkbox'
+            checked={listItem.checked}
+            read-only
+            disabled
+            class='w-3 h-3 text-sky-500 border-gray-300 rounded focus:ring-sky-500'
+          />
+          <p
+            style={{
+              textDecoration: listItem.checked ? 'line-through' : 'initial'
+            }}
+          >
+            <NotionText block={listItem.richText} />
+          </p>
+        </label>
+      )
+    })
+  }
+</ul>

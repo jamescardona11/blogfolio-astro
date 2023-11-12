@@ -1,0 +1,23 @@
+---
+import type { UnorderedList } from '@/lib/data/notion-core/notion-blocks'
+import NotionText from './NotionText.astro'
+
+interface Props {
+  block: UnorderedList
+}
+
+const { block } = Astro.props
+---
+
+<ul class=''>
+  {
+    block.items.map(listItem => {
+      return (
+        <li class='flex items-center space-x-2'>
+          <div class='w-[6px] h-[6px] rounded-full bg-foreground' />
+          <NotionText block={listItem.richText} />
+        </li>
+      )
+    })
+  }
+</ul>

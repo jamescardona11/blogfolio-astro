@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets'
+
+import type { Media } from '@/lib/data/notion-core/notion-blocks'
+
+interface Props {
+  block: Media
+}
+const { block: image } = Astro.props
+---
+
+<figure>
+  <Image
+    id={image.name}
+    class='zoom-default rounded-xl block h-min w-full object-contain duration-700 ease-in-out'
+    width={1200}
+    height={684}
+    alt={image.caption ?? 'Notion image'}
+    src={image.url}
+    data-zoomable={true}
+  />
+  {
+    image.caption != null && (
+      <figcaption class='text-center'>{image.caption}</figcaption>
+    )
+  }
+</figure>

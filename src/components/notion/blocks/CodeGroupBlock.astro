@@ -1,0 +1,119 @@
+---
+import type { CodeBlockGroup } from '@/lib/data/notion-core/notion-blocks'
+import CodeBlock from './CodeBlock.astro'
+
+interface Props {
+  block: CodeBlockGroup
+}
+
+const { block: group } = Astro.props
+
+const tabs: string[] = group.items.map(
+  (item, index) => item.caption ?? `CodeBlock ${index + 1}`
+)
+---
+
+<div class='mb-2 text-sm font-medium'>Select code element</div>
+<div class='tabs'>
+  <div class='flex gap-1 p-1 mb-1'>
+    {
+      tabs.map((item, index) => {
+        const id = `tab-${index + 1}`
+        return (
+          <button
+            id={id}
+            aria-selected={index === 0}
+            aria-controls={`tab-panel-${index + 1}`}
+            role='tab'
+            type='button'
+            tabindex={index === 0 ? 0 : -1}
+          >
+            {item}
+          </button>
+        )
+      })
+    }
+  </div>
+  {
+    group.items.map((code, index) => {
+      const id = `tab-panel-${index + 1}`
+      return (
+        <div
+          id={id}
+          aria-labelledby={`tab-${index + 1}`}
+          role='tabpanel'
+          tabindex={index === 0 ? 0 : -1}
+          hidden={index !== 0}
+        >
+          <CodeBlock block={code} />
+        </div>
+      )
+    })
+  }
+</div>
+
+<style>
+  button[role='tab'] {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.375rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: rgba(184, 194, 204, 0.1);
+    color: rgba(184, 194, 204, 0.7);
+  }
+
+  button[role='tab'][aria-selected='true'] {
+    background-color: #71717a;
+    color: #ffffff;
+  }
+
+  button[role='tab'][aria-selected='false']:hover {
+    background-color: rgba(184, 194, 204, 0.2);
+    color: rgba(184, 194, 204, 1);
+  }
+</style>
+
+<script>
+  const tabElements = document.querySelectorAll('button[role="tab"]')
+  const panelElements = document.querySelectorAll('[role="tabpanel"]')
+  let activeIndex = 0
+
+  // Listen to clicks on tabs
+  tabElements.forEach(function (tab, index) {
+    tab.addEventListener('click', function (event) {
+      setActiveTab(index)
+    })
+  })
+
+  function setActiveTab(index: number) {
+    // Make currently active tab inactive
+    tabElements[activeIndex].setAttribute('aria-selected', 'false')
+    //@ts-ignore
+    tabElements[activeIndex].tabIndex = -1
+
+    // Set the new tab as active
+    tabElements[index].setAttribute('aria-selected', 'true')
+    //@ts-ignore
+    tabElements[index].tabIndex = 0
+
+    setActivePanel(index)
+    activeIndex = index
+  }
+
+  function setActivePanel(index: number) {
+    // Hide currently active panel
+    panelElements[activeIndex].setAttribute('hidden', '')
+    //@ts-ignore
+    panelElements[activeIndex].tabIndex = -1
+
+    // Show the new active panel
+    panelElements[index].removeAttribute('hidden')
+    //@ts-ignore
+    panelElements[index].tabIndex = 0
+  }
+</script>

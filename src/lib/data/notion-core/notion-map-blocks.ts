@@ -229,7 +229,7 @@ export const mapNotionBlocks = (
           return [...prev, factory.break()]
         }
         const content = transformNotionRichText(code.rich_text)
-        const caption = code.caption?.[0]?.plain_text ?? ''
+        const caption = code.caption?.[0]?.plain_text ?? undefined
 
         const prevIndex = prev.length - 1
         const previousBlock = prev[prevIndex]

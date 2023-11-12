@@ -14,6 +14,7 @@ import OrderedList from './blocks/OrderedList.astro'
 import TodoList from './blocks/TodoList.astro'
 import Bookmark from './blocks/Bookmark.astro'
 import NotionDivider from './blocks/NotionDivider.astro'
+import CodeGroupBlock from './blocks/CodeGroupBlock.astro'
 
 interface Props {
   blocks: Block[]
@@ -85,8 +86,12 @@ const { blocks } = Astro.props
       }
     }
 
-    if (block.type === 'code') {
-      return <CodeBlock block={block} />
+    if (block.type === 'codeGroup') {
+      if (block.items.length == 1) {
+        return <CodeBlock block={block.items[0]} />
+      }
+
+      return <CodeGroupBlock block={block} />
     }
   })
 }

@@ -11,7 +11,8 @@ import {
   type NText,
   type NotionColor,
   type StyleAnnotations,
-  type Heading
+  type Heading,
+  type Break
 } from './notion-blocks'
 
 export const mapNotionBlocks = (
@@ -39,10 +40,8 @@ export const mapNotionBlocks = (
         }
 
         const heading = transformNotionHeading(richText, 'h1')
-        console.log(heading)
-        if (heading == null) return prev
 
-        return [...prev, heading]
+        return [...prev, ...heading]
       }
 
       case 'heading_2': {
@@ -53,10 +52,8 @@ export const mapNotionBlocks = (
         }
 
         const heading = transformNotionHeading(richText, 'h2')
-        console.log(heading)
-        if (heading == null) return prev
 
-        return [...prev, heading]
+        return [...prev, ...heading]
       }
 
       case 'heading_3': {
@@ -66,10 +63,8 @@ export const mapNotionBlocks = (
           return [...prev, factory.break()]
         }
         const heading = transformNotionHeading(richText, 'h3')
-        console.log(heading)
-        if (heading == null) return prev
 
-        return [...prev, heading]
+        return [...prev, ...heading]
       }
 
       case 'bulleted_list_item': {
@@ -266,17 +261,22 @@ export const mapNotionBlocks = (
 const transformNotionHeading = (
   richText: RichTextItemResponse[],
   level: 'h1' | 'h2' | 'h3'
-): Heading | null => {
+): Block[] => {
   const content = richText.filter(t => t?.plain_text != '\n')
 
-  if (content.length === 0) return null
-  const heading = content[0].plain_text
-  const hashLink = heading?.toLowerCase().replace(/ /g, '-')
+  return richText.map(t => {
+    if (t.plain_text == '\n') {
+      return factory.break()
+    }
 
-  if (level === 'h1') return factory.heading1(heading, hashLink)
-  if (level === 'h2') return factory.heading2(heading, hashLink)
+    const heading = content[0].plain_text
+    const hashLink = heading?.toLowerCase().replace(/ /g, '-')
 
-  return factory.heading3(heading, hashLink)
+    if (level === 'h1') return factory.heading1(heading, hashLink)
+    if (level === 'h2') return factory.heading2(heading, hashLink)
+
+    return factory.heading3(heading, hashLink)
+  })
 }
 
 const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {

@@ -11,15 +11,16 @@ export type StyleAnnotations = {
   color: NotionColor
 }
 
-export type Text = {
+export type NText = {
   type: 'text'
   text: string
-  style?: string
+  styles?: string
+  url?: string
 }
 
 export type RichText = {
   type: 'richText'
-  content: Text[]
+  content: NText[]
 }
 
 export type Heading = {
@@ -96,7 +97,7 @@ export type Unsupported = {
 }
 
 export type Block =
-  | Text
+  | NText
   | Heading
   | UnorderedList
   | ListItem
@@ -113,14 +114,19 @@ export type Block =
   | RichText
   | Unsupported
 
-const textFactory = (content: string, style: string): Text => {
+const textFactory = (
+  content: string,
+  opt: { styles: string; url?: string }
+): NText => {
   return {
     type: 'text',
-    text: content
+    text: content,
+    styles: opt.styles,
+    url: opt.url
   }
 }
 
-const richTextFactory = (content: Text[]): RichText => {
+const richTextFactory = (content: NText[]): RichText => {
   return {
     type: 'richText',
     content
@@ -140,7 +146,7 @@ const headingFactory = (
   }
 }
 
-const listItemFactory = (text: Text[]): ListItem => {
+const listItemFactory = (text: NText[]): ListItem => {
   const richText = richTextFactory(text)
 
   return {
@@ -149,7 +155,7 @@ const listItemFactory = (text: Text[]): ListItem => {
   }
 }
 
-const todoListItemFactory = (text: Text[], checked: boolean): TodoListItem => {
+const todoListItemFactory = (text: NText[], checked: boolean): TodoListItem => {
   const richText = richTextFactory(text)
 
   return {
@@ -187,7 +193,7 @@ const quoteFactory = (text: string): Quote => {
   }
 }
 
-const calloutFactory = (text: Text[], icon: string): Callout => {
+const calloutFactory = (text: NText[], icon: string): Callout => {
   const richText = richTextFactory(text)
 
   return {
@@ -229,7 +235,7 @@ const breakFactory = (): Break => {
   }
 }
 
-const codeFactory = (text: Text[]): Code => {
+const codeFactory = (text: NText[]): Code => {
   const richText = richTextFactory(text)
   return {
     type: 'code',
@@ -250,8 +256,8 @@ export const factory = {
     headingFactory(text, hashLink, 'h2'),
   heading3: (text: string, hashLink: string) =>
     headingFactory(text, hashLink, 'h3'),
-  listItem: (text: Text[]) => listItemFactory(text),
-  todoItem: (text: Text[], checked: boolean) =>
+  listItem: (text: NText[]) => listItemFactory(text),
+  todoItem: (text: NText[], checked: boolean) =>
     todoListItemFactory(text, checked),
   unorderedList: unorderedListFactory,
   orderedList: orderedListFactory,

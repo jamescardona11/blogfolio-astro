@@ -8,7 +8,7 @@ import type {
 import {
   factory,
   type Block,
-  type Text,
+  type NText,
   type NotionColor,
   type StyleAnnotations,
   type Heading
@@ -39,7 +39,8 @@ export const mapNotionBlocks = (
         }
 
         const heading = transformNotionHeading(richText, 'h1')
-        if (!heading) return prev
+        console.log(heading)
+        if (heading == null) return prev
 
         return [...prev, heading]
       }
@@ -52,7 +53,8 @@ export const mapNotionBlocks = (
         }
 
         const heading = transformNotionHeading(richText, 'h2')
-        if (!heading) return prev
+        console.log(heading)
+        if (heading == null) return prev
 
         return [...prev, heading]
       }
@@ -64,7 +66,8 @@ export const mapNotionBlocks = (
           return [...prev, factory.break()]
         }
         const heading = transformNotionHeading(richText, 'h3')
-        if (!heading) return prev
+        console.log(heading)
+        if (heading == null) return prev
 
         return [...prev, heading]
       }
@@ -276,10 +279,13 @@ const transformNotionHeading = (
   return factory.heading3(heading, hashLink)
 }
 
-const transformNotionRichText = (richText: RichTextItemResponse[]): Text[] => {
+const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {
   return richText.map(t => {
     const styles = matchStyle(t.annotations as StyleAnnotations)
-    return factory.text(t.plain_text, styles)
+    const url =
+      t.type === 'text' && t.text.link != null ? t.text.link.url : undefined
+
+    return factory.text(t.plain_text, { styles, url })
   })
 }
 

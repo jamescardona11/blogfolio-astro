@@ -8,7 +8,7 @@ import type {
 import {
   factory,
   type Block,
-  type NText,
+  type TextBlock,
   type NotionColor,
   type StyleAnnotations,
   type Media
@@ -226,14 +226,14 @@ export const mapNotionBlocks = (
       }
 
       case 'code': {
-        const richText = block.code.rich_text
+        const code = block.code
 
-        if (!richText.length) {
+        if (!code.rich_text.length) {
           return [...prev, factory.break()]
         }
-        const content = transformNotionRichText(richText)
+        const content = transformNotionRichText(code.rich_text)
 
-        return [...prev, factory.code(content)]
+        return [...prev, factory.code(content, code.language)]
       }
 
       default: {
@@ -297,7 +297,9 @@ const transformNotionMedia = (
   return factory.media(url, name, caption, kind)
 }
 
-const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {
+const transformNotionRichText = (
+  richText: RichTextItemResponse[]
+): TextBlock[] => {
   return richText.map(t => {
     const styles = matchStyle(t.annotations as StyleAnnotations)
     const url =

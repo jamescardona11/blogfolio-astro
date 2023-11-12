@@ -1,0 +1,18 @@
+---
+import { Code } from 'astro/components'
+import { getCodeLang } from '@/utils/code-lang'
+import type { CodeBlock } from '@/lib/data/notion-core/notion-blocks'
+
+interface Props {
+  block: CodeBlock
+}
+
+const { block } = Astro.props
+const lang = getCodeLang(block.lang)
+
+const code = block.richText.content.map(c => c.text).join('')
+---
+
+<Fragment>
+  <Code code={code} lang={lang} />
+</Fragment>

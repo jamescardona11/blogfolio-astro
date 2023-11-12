@@ -11,7 +11,7 @@ export type StyleAnnotations = {
   color: NotionColor
 }
 
-export type NText = {
+export type TextBlock = {
   type: 'text'
   text: string
   styles?: string
@@ -20,7 +20,7 @@ export type NText = {
 
 export type RichText = {
   type: 'richText'
-  content: NText[]
+  content: TextBlock[]
 }
 
 export type Heading = {
@@ -84,9 +84,10 @@ export type Divider = {
   type: 'divider'
 }
 
-export type Code = {
+export type CodeBlock = {
   type: 'code'
   richText: RichText
+  lang: string
 }
 
 export type Break = {
@@ -98,7 +99,7 @@ export type Unsupported = {
 }
 
 export type Block =
-  | NText
+  | TextBlock
   | Heading
   | UnorderedList
   | ListItem
@@ -110,7 +111,7 @@ export type Block =
   | Bookmark
   | Media
   | Divider
-  | Code
+  | CodeBlock
   | Break
   | RichText
   | Unsupported
@@ -118,7 +119,7 @@ export type Block =
 const textFactory = (
   content: string,
   opt: { styles: string; url?: string }
-): NText => {
+): TextBlock => {
   return {
     type: 'text',
     text: content,
@@ -127,7 +128,7 @@ const textFactory = (
   }
 }
 
-const richTextFactory = (content: NText[]): RichText => {
+const richTextFactory = (content: TextBlock[]): RichText => {
   return {
     type: 'richText',
     content
@@ -147,7 +148,7 @@ const headingFactory = (
   }
 }
 
-const listItemFactory = (text: NText[]): ListItem => {
+const listItemFactory = (text: TextBlock[]): ListItem => {
   const richText = richTextFactory(text)
 
   return {
@@ -156,7 +157,10 @@ const listItemFactory = (text: NText[]): ListItem => {
   }
 }
 
-const todoListItemFactory = (text: NText[], checked: boolean): TodoListItem => {
+const todoListItemFactory = (
+  text: TextBlock[],
+  checked: boolean
+): TodoListItem => {
   const richText = richTextFactory(text)
 
   return {
@@ -194,7 +198,7 @@ const quoteFactory = (text: string): Quote => {
   }
 }
 
-const calloutFactory = (text: NText[], icon: string): Callout => {
+const calloutFactory = (text: TextBlock[], icon: string): Callout => {
   const richText = richTextFactory(text)
 
   return {
@@ -238,11 +242,12 @@ const breakFactory = (): Break => {
   }
 }
 
-const codeFactory = (text: NText[]): Code => {
+const codeFactory = (text: TextBlock[], lang: string): CodeBlock => {
   const richText = richTextFactory(text)
   return {
     type: 'code',
-    richText
+    richText,
+    lang
   }
 }
 
@@ -259,8 +264,8 @@ export const factory = {
     headingFactory(text, hashLink, 'h2'),
   heading3: (text: string, hashLink: string) =>
     headingFactory(text, hashLink, 'h3'),
-  listItem: (text: NText[]) => listItemFactory(text),
-  todoItem: (text: NText[], checked: boolean) =>
+  listItem: (text: TextBlock[]) => listItemFactory(text),
+  todoItem: (text: TextBlock[], checked: boolean) =>
     todoListItemFactory(text, checked),
   unorderedList: unorderedListFactory,
   orderedList: orderedListFactory,

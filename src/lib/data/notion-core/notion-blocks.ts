@@ -76,6 +76,7 @@ export type Media = {
   type: 'media'
   kind: 'image' | 'video' | 'file' | 'pdf'
   url: string
+  name: string
   caption: string
 }
 
@@ -212,12 +213,14 @@ const bookmarkFactory = (url: string): Bookmark => {
 
 const mediaFactory = (
   url: string,
+  name: string,
   caption: string,
   kind: 'image' | 'video' | 'file' | 'pdf'
 ): Media => {
   return {
     type: 'media',
     url,
+    name,
     caption,
     kind
   }

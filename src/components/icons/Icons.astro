@@ -6,6 +6,7 @@ import Linkedin from './source/Linkedin.astro'
 import Twitter from './source/Twitter.astro'
 import Mastodon from './source/Mastodon.astro'
 import LinkIcon from './source/LinkIcon.astro'
+import FileIcon from './source/FileIcon.astro'
 
 const components = {
   github: Github,
@@ -14,7 +15,8 @@ const components = {
   x: Twitter,
   mastodon: Mastodon,
   mail: Mail,
-  link: LinkIcon
+  link: LinkIcon,
+  file: FileIcon
 }
 export type IconKey = keyof typeof components
 

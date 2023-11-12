@@ -10,7 +10,8 @@ import {
   type Block,
   type NText,
   type NotionColor,
-  type StyleAnnotations
+  type StyleAnnotations,
+  type Media
 } from './notion-blocks'
 
 export const mapNotionBlocks = (
@@ -191,37 +192,25 @@ export const mapNotionBlocks = (
       case 'video': {
         const b = block.video
         const url = b.type === 'external' ? b.external.url : b.file.url
-        const splitSourceArray = url.split('/')
-        const lastElementInArray = splitSourceArray[splitSourceArray.length - 1]
-        const videoUrl = lastElementInArray.includes('?')
-          ? lastElementInArray.split('?')[0]
-          : lastElementInArray
-
         const caption = b.caption?.[0]?.plain_text ?? ''
 
-        return [...prev, factory.media(videoUrl, caption, 'video')]
+        return [...prev, transformNotionMedia(url, caption, 'video')]
       }
 
       case 'file': {
         const b = block.file
         const url = b.type === 'external' ? b.external.url : b.file.url
-        const splitSourceArray = url.split('/')
-        const fileUrl = splitSourceArray[splitSourceArray.length - 1]
-
         const caption = b.caption?.[0]?.plain_text ?? ''
 
-        return [...prev, factory.media(fileUrl, caption, 'file')]
+        return [...prev, transformNotionMedia(url, caption, 'file')]
       }
 
       case 'pdf': {
         const b = block.pdf
         const url = b.type === 'external' ? b.external.url : b.file.url
-        const splitSourceArray = url.split('/')
-        const fileUrl = splitSourceArray[splitSourceArray.length - 1]
-
         const caption = b.caption?.[0]?.plain_text ?? ''
 
-        return [...prev, factory.media(fileUrl, caption, 'pdf')]
+        return [...prev, transformNotionMedia(url, caption, 'pdf')]
       }
 
       case 'image': {
@@ -229,7 +218,7 @@ export const mapNotionBlocks = (
         const url = b.type === 'external' ? b.external.url : b.file.url
         const caption = b.caption?.[0]?.plain_text ?? ''
 
-        return [...prev, factory.media(url, caption, 'image')]
+        return [...prev, transformNotionMedia(url, caption, 'image')]
       }
 
       case 'divider': {
@@ -294,6 +283,20 @@ const transformNotionHeading = (
   return blocks
 }
 
+const transformNotionMedia = (
+  url: string,
+  caption: string,
+  kind: 'image' | 'video' | 'file' | 'pdf'
+): Media => {
+  const splitSourceArray = url.split('/')
+  const lastElementInArray = splitSourceArray[splitSourceArray.length - 1]
+  const name = lastElementInArray.includes('?')
+    ? lastElementInArray.split('?')[0]
+    : kind
+
+  return factory.media(url, name, caption, kind)
+}
+
 const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {
   return richText.map(t => {
     const styles = matchStyle(t.annotations as StyleAnnotations)
@@ -316,15 +319,15 @@ const colorMap: Record<NotionColor, string[]> = {
   purple: ['text-purple-600'],
   pink: ['text-pink-600'],
   red: ['text-red-600'],
-  gray_background: ['color-black', 'bg-gray'],
-  brown_background: ['color-black', 'bg-brown'],
-  orange_background: ['color-black', 'bg-orange'],
-  yellow_background: ['color-black', 'bg-yellow'],
-  green_background: ['color-black', 'bg-green'],
-  blue_background: ['color-black', 'bg-blue'],
-  purple_background: ['color-black', 'bg-purple'],
-  pink_background: ['color-black', 'bg-pink'],
-  red_background: ['color-black', 'bg-red']
+  gray_background: ['text-bg-foreground', 'bg-gray'],
+  brown_background: ['text-bg-foreground', 'bg-brown'],
+  orange_background: ['text-bg-foreground', 'bg-orange'],
+  yellow_background: ['text-bg-foreground', 'bg-yellow'],
+  green_background: ['text-bg-foreground', 'bg-green'],
+  blue_background: ['text-bg-foreground', 'bg-blue'],
+  purple_background: ['text-bg-foreground', 'bg-purple'],
+  pink_background: ['text-bg-foreground', 'bg-pink'],
+  red_background: ['text-bg-foreground', 'bg-red']
 }
 
 const matchStyle = (styles?: StyleAnnotations) => {

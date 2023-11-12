@@ -10,9 +10,7 @@ import {
   type Block,
   type NText,
   type NotionColor,
-  type StyleAnnotations,
-  type Heading,
-  type Break
+  type StyleAnnotations
 } from './notion-blocks'
 
 export const mapNotionBlocks = (
@@ -262,21 +260,38 @@ const transformNotionHeading = (
   richText: RichTextItemResponse[],
   level: 'h1' | 'h2' | 'h3'
 ): Block[] => {
-  const content = richText.filter(t => t?.plain_text != '\n')
+  let blocks: Block[] = []
 
-  return richText.map(t => {
+  richText.forEach(t => {
     if (t.plain_text == '\n') {
-      return factory.break()
+      blocks.push(factory.break())
+    } else {
+      let heading = t.plain_text
+      if (heading.startsWith('\n')) {
+        blocks.push(factory.break())
+        heading = heading.replace('\n', '')
+      }
+
+      let pendingBreak
+      if (heading.endsWith('\n')) {
+        pendingBreak = true
+        heading = heading.replace('\n', '')
+      }
+
+      const hashLink = heading?.toLowerCase().replace(/ /g, '-')
+
+      if (level === 'h1') blocks.push(factory.heading1(heading, hashLink))
+      if (level === 'h2') blocks.push(factory.heading2(heading, hashLink))
+
+      blocks.push(factory.heading3(heading, hashLink))
+
+      if (pendingBreak) {
+        blocks.push(factory.break())
+      }
     }
-
-    const heading = content[0].plain_text
-    const hashLink = heading?.toLowerCase().replace(/ /g, '-')
-
-    if (level === 'h1') return factory.heading1(heading, hashLink)
-    if (level === 'h2') return factory.heading2(heading, hashLink)
-
-    return factory.heading3(heading, hashLink)
   })
+
+  return blocks
 }
 
 const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {

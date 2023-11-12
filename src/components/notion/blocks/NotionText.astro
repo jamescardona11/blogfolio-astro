@@ -1,16 +1,19 @@
 ---
 import type { RichText } from '@/lib/data/notion-core/notion-blocks'
+import Break from './Break.astro'
 
 interface Props {
   block: RichText
 }
 
-const { block: text } = Astro.props
+const { block: richText } = Astro.props
 ---
 
 {
-  text.content.map(b => {
-    return (
+  richText.content.map(b => {
+    return b.text == '\n' ? (
+      <Break />
+    ) : (
       <span class={b.styles}>
         {b.url != null ? (
           <a class='text-gray-700 dark:text-zinc-400 underline' href={b.text}>

@@ -77,6 +77,7 @@ export const mapNotionBlocks = (
 
         const prevIndex = prev.length - 1
         const previousBlock = prev[prevIndex]
+        const listItem = factory.listItem(content)
 
         // 1. Check if the previous item is a list
         if (previousBlock?.type === 'unorderedList') {
@@ -85,13 +86,13 @@ export const mapNotionBlocks = (
             ...prev.slice(0, prevIndex),
             {
               ...previousBlock,
-              items: [...previousBlock.items, factory.listItem(content)]
+              items: [...previousBlock.items, listItem]
             }
           ]
         }
 
         // 3. If it isn't, create a new list and add the current item to it
-        return [...prev, factory.unorderedList([factory.listItem(content)])]
+        return [...prev, factory.unorderedList([listItem])]
       }
 
       case 'numbered_list_item': {
@@ -104,6 +105,7 @@ export const mapNotionBlocks = (
 
         const prevIndex = prev.length - 1
         const previousBlock = prev[prevIndex]
+        const listItem = factory.listItem(content)
 
         // 1. Check if the previous item is a list
         if (previousBlock?.type === 'orderedList') {
@@ -112,13 +114,13 @@ export const mapNotionBlocks = (
             ...prev.slice(0, prevIndex),
             {
               ...previousBlock,
-              items: [...previousBlock.items, factory.listItem(content)]
+              items: [...previousBlock.items, listItem]
             }
           ]
         }
 
         // 3. If it isn't, create a new list and add the current item to it
-        return [...prev, factory.orderedList([factory.listItem(content)])]
+        return [...prev, factory.orderedList([listItem])]
       }
 
       case 'to_do': {
@@ -132,6 +134,7 @@ export const mapNotionBlocks = (
 
         const prevIndex = prev.length - 1
         const previousBlock = prev[prevIndex]
+        const todoItem = factory.todoItem(content, block.to_do.checked)
 
         // 1. Check if the previous item is a list
         if (previousBlock?.type === 'todoList') {
@@ -140,19 +143,13 @@ export const mapNotionBlocks = (
             ...prev.slice(0, prevIndex),
             {
               ...previousBlock,
-              items: [
-                ...previousBlock.items,
-                factory.todoItem(content, block.to_do.checked)
-              ]
+              items: [...previousBlock.items, todoItem]
             }
           ]
         }
 
         // 3. If it isn't, create a new list and add the current item to it
-        return [
-          ...prev,
-          factory.todoList([factory.todoItem(content, block.to_do.checked)])
-        ]
+        return [...prev, factory.todoList([todoItem])]
       }
 
       case 'quote': {
@@ -232,8 +229,26 @@ export const mapNotionBlocks = (
           return [...prev, factory.break()]
         }
         const content = transformNotionRichText(code.rich_text)
+        const caption = code.caption?.[0]?.plain_text ?? ''
 
-        return [...prev, factory.code(content, code.language)]
+        const prevIndex = prev.length - 1
+        const previousBlock = prev[prevIndex]
+        const codeBlock = factory.code(content, code.language, caption)
+
+        // 1. Check if the previous item is a code group
+        if (previousBlock?.type === 'codeGroup') {
+          // 2. If it is, add the current item to the group
+          return [
+            ...prev.slice(0, prevIndex),
+            {
+              ...previousBlock,
+              items: [...previousBlock.items, codeBlock]
+            }
+          ]
+        }
+
+        // 3. If it isn't, create a new group and add the current item to it
+        return [...prev, factory.codeGroup([codeBlock])]
       }
 
       default: {

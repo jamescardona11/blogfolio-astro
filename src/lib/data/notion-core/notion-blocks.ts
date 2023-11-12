@@ -88,6 +88,12 @@ export type CodeBlock = {
   type: 'code'
   richText: RichText
   lang: string
+  caption?: string
+}
+
+export type CodeBlockGroup = {
+  type: 'codeGroup'
+  items: CodeBlock[]
 }
 
 export type Break = {
@@ -112,6 +118,7 @@ export type Block =
   | Media
   | Divider
   | CodeBlock
+  | CodeBlockGroup
   | Break
   | RichText
   | Unsupported
@@ -242,12 +249,24 @@ const breakFactory = (): Break => {
   }
 }
 
-const codeFactory = (text: TextBlock[], lang: string): CodeBlock => {
+const codeFactory = (
+  text: TextBlock[],
+  lang: string,
+  caption?: string
+): CodeBlock => {
   const richText = richTextFactory(text)
   return {
     type: 'code',
     richText,
-    lang
+    lang,
+    caption
+  }
+}
+
+const codeGroupFactory = (items: CodeBlock[]): CodeBlockGroup => {
+  return {
+    type: 'codeGroup',
+    items
   }
 }
 
@@ -276,6 +295,7 @@ export const factory = {
   media: mediaFactory,
   divider: dividerFactory,
   code: codeFactory,
+  codeGroup: codeGroupFactory,
   break: breakFactory,
   richText: richTextFactory,
   unsupported: unsupportedFactory

@@ -19,10 +19,15 @@ export class NotionClient {
     this.client = new Client({ auth: notionSecret })
   }
 
-  async getDatabase(databaseId: string) {
+  async getDatabase(
+    databaseId: string,
+    { filter, sorts }: { filter?: any; sorts?: any } = {}
+  ) {
     try {
       const response = await this.client.databases.query({
-        database_id: databaseId
+        database_id: databaseId,
+        filter,
+        sorts
       })
 
       return createSuccessResponse({

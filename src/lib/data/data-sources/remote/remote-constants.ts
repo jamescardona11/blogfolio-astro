@@ -13,8 +13,8 @@ export const NOTION_PROJECTS_DB =
 export const NOTION_BLOG_DB =
   import.meta.env.NOTION_BLOG_DB || process.env.NOTION_BLOG_DB
 
-export const NOTION_USES_DB =
-  import.meta.env.NOTION_USES_DB || process.env.NOTION_USES_DB
+export const NOTION_TOOLBOX_DB =
+  import.meta.env.NOTION_TOOLBOX_DB || process.env.NOTION_TOOLBOX_DB
 
 export const NOTION_ABOUT_ME_SUMMARY_DB =
   import.meta.env.NOTION_ABOUT_ME_SUMMARY_DB ||

@@ -1,8 +1,10 @@
+import { isFullBlock } from '@notionhq/client'
 import type {
   BlockObjectResponse,
-  RichTextItemResponse,
-  TextRichTextItemResponse
+  PartialBlockObjectResponse,
+  RichTextItemResponse
 } from '@notionhq/client/build/src/api-endpoints'
+
 import {
   factory,
   type Block,
@@ -13,9 +15,9 @@ import {
 } from './notion-blocks'
 
 export const mapNotionBlocks = (
-  notionBlocks: BlockObjectResponse[]
+  notionBlocks: Array<PartialBlockObjectResponse | BlockObjectResponse>
 ): Block[] => {
-  const blocks = notionBlocks.reduce((prev, block) => {
+  const blocks = notionBlocks.filter(isFullBlock).reduce((prev, block) => {
     switch (block.type) {
       case 'paragraph': {
         const richText = block.paragraph.rich_text

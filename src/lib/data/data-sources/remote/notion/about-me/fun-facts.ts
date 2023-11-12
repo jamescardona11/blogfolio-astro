@@ -1,6 +1,7 @@
 import { NOTION_SKILLS_DB } from '@lib/data/data-sources/remote/remote-constants'
-import { notionClient } from '@/lib/data/notion-core/notion-client'
-import { type NFunFactRow } from '@/lib/data/notion-core/notion-response-models'
+import { notionClient } from '@lib/data/notion-core/notion-client'
+import { type NFunFactRow } from '@lib/data/notion-core/notion-response-models'
+import { createSuccessResponse } from '@/lib/data/core/api_response'
 
 const notionDatabaseId = NOTION_SKILLS_DB
 
@@ -11,7 +12,7 @@ export async function getFunFactsFromNotion() {
 
   if (!query.ok) {
     console.error(query.error)
-    return []
+    return query
   }
 
   // @ts-ignore
@@ -19,5 +20,5 @@ export async function getFunFactsFromNotion() {
   const rows = query.data.results.map(res => res.properties) as NFunFactRow[]
   const facts: string[] = rows.map(row => row.name.title[0].text.content)
 
-  return facts
+  return createSuccessResponse(facts)
 }

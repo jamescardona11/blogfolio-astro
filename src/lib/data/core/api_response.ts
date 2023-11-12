@@ -1,4 +1,4 @@
-type SuccessResponse<TData extends any> = {
+export type SuccessResponse<TData extends any> = {
   ok: true
   data: TData
 }
@@ -11,7 +11,7 @@ export const createSuccessResponse = <TData extends any>(
 
 type ErrorCause = 'NOT_FOUND' | 'UNAUTHORIZED' | 'UNKNOWN'
 
-type FailureResponse = {
+export type FailureResponse = {
   ok: false
   error: {
     message: string

@@ -3,12 +3,14 @@ import type {
   PartialBlockObjectResponse
 } from '@notionhq/client/build/src/api-endpoints'
 
-import { isFullBlock } from '@notionhq/client'
-
 import { NOTION_ABOUT_ME_SUMMARY_DB } from '@lib/data/data-sources/remote/remote-constants'
-import { notionClient } from '@/lib/data/notion-core/notion-client'
+import { notionClient } from '@lib/data/notion-core/notion-client'
 
-import { mapNotionBlocks } from '@/lib/data/notion-core/notion-map-blocks'
+import {
+  createFailureResponse,
+  createSuccessResponse
+} from '@/lib/data/core/api_response'
+import { mapNotionBlocks } from '@lib/data/notion-core/notion-map-blocks'
 
 const notionPageId = NOTION_ABOUT_ME_SUMMARY_DB
 
@@ -30,5 +32,9 @@ export async function getSummaryFromNotion() {
     content = [...content, ...query.data.results]
   } while (query.data.hasMore)
 
-  return mapNotionBlocks(content.filter(isFullBlock))
+  if (content.length === 0) {
+    return createFailureResponse('No content found', 'NOT_FOUND')
+  }
+
+  return createSuccessResponse(mapNotionBlocks(content))
 }

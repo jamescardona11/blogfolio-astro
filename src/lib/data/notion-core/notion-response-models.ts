@@ -12,7 +12,7 @@ export interface NExperienceRow {
   image?: { id: string; files: Array<{ file: { url: string } }> }
 }
 
-export interface NCourseRow {
+export interface NLearningPathRow {
   name: {
     id: string
     title: Array<{ text: { content: string } }>
@@ -55,7 +55,7 @@ export interface NBlogPostRow {
   publishedAt: { id: string; date: { start: string } }
 }
 
-export interface NUsesRow {
+export interface NToolboxRow {
   id?: string
   name: {
     id: string

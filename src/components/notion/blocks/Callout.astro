@@ -1,1 +1,14 @@
-<div class='flex p-3 space-x-4 bg-gray-100 rounded-lg'><slot /></div>
+---
+import type { Callout } from '@/lib/data/notion-core/notion-blocks'
+import NotionText from './NotionText.astro'
+interface Props {
+  block: Callout
+}
+
+const { block } = Astro.props
+---
+
+<div class='flex p-3 space-x-4 items-center bg-gray-100 rounded-lg'>
+  {block.icon != null && <span>{block.icon}</span>}
+  <NotionText block={block.richText} />
+</div>

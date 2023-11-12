@@ -1,0 +1,19 @@
+---
+import type { Bookmark } from '@/lib/data/notion-core/notion-blocks'
+interface Props {
+  block: Bookmark
+}
+
+const { block } = Astro.props
+---
+
+<div class='flex p-3 space-x-4 bg-gray-100 rounded-lg'>
+  <a
+    class='text-gray-700 dark:text-zinc-400'
+    href={block.url}
+    target='_blank'
+    rel='noreferrer'
+  >
+    {block.url}
+  </a>
+</div>

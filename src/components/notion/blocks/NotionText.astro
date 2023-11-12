@@ -11,12 +11,13 @@ const { block: richText } = Astro.props
 
 {
   richText.content.map(b => {
+    console.log(b.text)
     return b.text == '\n' ? (
       <Break />
     ) : (
       <span class={b.styles}>
         {b.url != null ? (
-          <a class='text-gray-700 dark:text-zinc-400 underline' href={b.text}>
+          <a class='text-gray-700 dark:text-zinc-400 underline' href={b.url}>
             {b.text}
           </a>
         ) : (

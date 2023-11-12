@@ -304,17 +304,18 @@ const transformNotionRichText = (richText: RichTextItemResponse[]): NText[] => {
   })
 }
 
+// TOOD: Partially unimplemented
 const colorMap: Record<NotionColor, string[]> = {
-  default: ['text-black'],
-  gray: ['text-gray'],
-  brown: ['text-brown'],
-  orange: ['text-orange'],
-  yellow: ['text-yellow'],
-  green: ['text-green'],
-  blue: ['text-blue'],
-  purple: ['text-purple'],
-  pink: ['text-pink'],
-  red: ['text-red'],
+  default: ['text-bg-foreground'],
+  gray: ['text-gray-600'],
+  brown: ['text-brown-600'],
+  orange: ['text-orange-600'],
+  yellow: ['text-yellow-600'],
+  green: ['text-green-600'],
+  blue: ['text-blue-600'],
+  purple: ['text-purple-600'],
+  pink: ['text-pink-600'],
+  red: ['text-red-600'],
   gray_background: ['color-black', 'bg-gray'],
   brown_background: ['color-black', 'bg-brown'],
   orange_background: ['color-black', 'bg-orange'],
@@ -336,7 +337,7 @@ const matchStyle = (styles?: StyleAnnotations) => {
     ...(styles.underline ? ['underline'] : []),
     ...(styles.code
       ? [
-          'bg-gray-200 font-semibold text-gray-500 text-sm px-2 rounded mx-1 inline-block align-middle tracking-tight'
+          'bg-gray-200 font-semibold text-gray-600 text-sm px-2 rounded mx-1 inline-block align-middle tracking-tight'
         ]
       : []),
     ...colorMap[styles.color]

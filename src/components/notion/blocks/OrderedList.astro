@@ -14,7 +14,7 @@ const { block } = Astro.props
     block.items.map((listItem, index) => {
       return (
         <li class='flex items-center space-x-2'>
-          <span class='font-medium text-foreground'>{index}.</span>
+          <span class='font-medium text-foreground'>{index + 1}.</span>
           <p>
             <NotionText block={listItem.richText} />
           </p>

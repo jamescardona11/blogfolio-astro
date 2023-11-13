@@ -4,6 +4,7 @@
 
 /* Additional styles */
 @import 'utility-patterns.css';
+@import 'copy-button.css';
 
 @layer base {
   @font-face {

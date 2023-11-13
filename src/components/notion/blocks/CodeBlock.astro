@@ -13,6 +13,10 @@ const lang = getCodeLang(block.lang)
 const code = block.richText.content.map(c => c.text).join('')
 ---
 
-<Fragment>
-  <Code code={code} lang={lang} />
-</Fragment>
+<div id='code-block'>
+  <Fragment>
+    <Code code={code} lang={lang} />
+  </Fragment>
+</div>
+
+<script src='src/scripts/copy-button.js'></script>

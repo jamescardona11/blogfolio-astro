@@ -1,16 +1,35 @@
 ---
+import { Image } from 'astro:assets'
+
 import { siteMetadata } from '@/site-metadata'
 import { getSummaryData } from '@/lib/data/about-me-provider'
 
-import RenderBlocks from '@/components/notion-blocks/RenderBlocks.astro'
+import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
+import RightSide from '@/layouts/two-columns/RightSide.astro'
+import Quote from '@/components/Quote.astro'
 
 const { summaryData } = await getSummaryData()
 ---
 
 <TwoColumnsLayout metaTitle={siteMetadata.name}>
+  <RightSide>
+    <div class='rounded-2xl bg-zinc-800 object-cover dark:bg-zinc-800'>
+      <Image
+        src='/static/avatar.jpeg'
+        alt='James Cardona'
+        width={1200}
+        height={684}
+        sizes='(min-width: 1024px) 32rem, 20rem'
+        class='aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800'
+      />
+    </div>
+    <Quote styles='mt-2' quote='Fortuna audaces iuvat' author='Virgilio' />
+  </RightSide>
   <MiddleArea>
-    <RenderBlocks data={summaryData} />
+    <RenderBlocks blocks={summaryData} />
   </MiddleArea>
+
+  <RightSide />
 </TwoColumnsLayout>

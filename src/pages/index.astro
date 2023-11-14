@@ -16,15 +16,11 @@ import { socialNetwork } from '@/lib/data/data-sources/static/about-me-data'
             const element = socialNetwork[key]
 
             return (
-              <>
-                <li class='flex pt-2'>
-                  <Icons
-                    kind={element.icon as IconKey}
-                    href={element.link}
-                    size={5}
-                  />
-                </li>
-              </>
+              <Icons
+                kind={element.icon as IconKey}
+                href={element.link}
+                size={5}
+              />
             )
           })
         }

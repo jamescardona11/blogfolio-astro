@@ -30,7 +30,8 @@ type Props = {
 const { kind, href, size, class: s } = Astro.props
 const SvgIcon = components[kind]
 
-const fSize = size ?? 6
+const fSize = size ?? 5
+
 const styles =
   s ??
   `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${fSize} w-${fSize}`

@@ -1,0 +1,31 @@
+---
+import { socialNetwork } from '@/lib/data/data-sources/static/about-me-data'
+
+import BaseCard from '../BaseCard.astro'
+import Link from '../Link.astro'
+import Icons, { type IconKey } from '../icons/Icons.astro'
+---
+
+<BaseCard title='Connect with me'>
+  <ul class='space-y-2'>
+    {
+      Object.keys(socialNetwork).map(key => {
+        const element = socialNetwork[key]
+        return (
+          <li class='flex items-center'>
+            <Link href={element.link}>
+              <Icons
+                kind={element.icon as IconKey}
+                href={element.link}
+                class='fill-zinc-500 dark:group-hover:fill-zinc-400 group-hover:fill-zinc-700 w-5 h-5'
+              />
+              <span class='ml-4 font-medium text-base text-foreground '>
+                {element.name}
+              </span>
+            </Link>
+          </li>
+        )
+      })
+    }
+  </ul>
+</BaseCard>

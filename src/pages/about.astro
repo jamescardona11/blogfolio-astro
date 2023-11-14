@@ -13,11 +13,11 @@ import ConnectWithMeCard from '@/components/about/ConnectWithMeCard.astro'
 import CurrentCompany from '@/components/about/CurrentCompany.astro'
 import FunnyCard from '@/components/about/FunnyCard.astro'
 
-const { summaryData } = await getSummaryData()
+const { summaryData, funFacts, currentWork } = await getSummaryData()
 ---
 
 <TwoColumnsLayout metaTitle={siteMetadata.name}>
-  <RightSide>
+  <RightSide styles='w-[240px]'>
     <div class='rounded-2xl bg-zinc-800 object-cover dark:bg-zinc-800'>
       <Image
         src='/static/avatar.jpeg'
@@ -34,9 +34,9 @@ const { summaryData } = await getSummaryData()
     <RenderBlocks blocks={summaryData} />
   </MiddleArea>
 
-  <RightSide>
+  <RightSide styles='md:justify-self-end space-y-6'>
     <ConnectWithMeCard />
-    <CurrentCompany />
-    <FunnyCard />
+    <CurrentCompany currentWork={currentWork} />
+    <FunnyCard funFacts={funFacts} />
   </RightSide>
 </TwoColumnsLayout>

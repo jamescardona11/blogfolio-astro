@@ -1,12 +1,12 @@
-import { NOTION_SKILLS_DB } from '@lib/data/data-sources/remote/remote-constants'
+import { NOTION_FUN_FACTS_DB } from '@lib/data/data-sources/remote/remote-constants'
 import { notionClient } from '@lib/data/notion-core/notion-client'
 import { type NFunFactRow } from '@lib/data/notion-core/notion-response-models'
 import { createSuccessResponse } from '@/lib/data/core/api_response'
 
-const notionDatabaseId = NOTION_SKILLS_DB
+const notionDatabaseId = NOTION_FUN_FACTS_DB
 
 export async function getFunFactsFromNotion() {
-  console.log('GET /about-me/skills')
+  console.log('GET /about-me/fun-facts')
 
   const query = await notionClient.getDatabase(notionDatabaseId)
 
@@ -16,7 +16,6 @@ export async function getFunFactsFromNotion() {
   }
 
   // @ts-ignore
-  // run the cast because we know the data match this notion model
   const rows = query.data.results.map(res => res.properties) as NFunFactRow[]
   const facts: string[] = rows.map(row => row.name.title[0].text.content)
 

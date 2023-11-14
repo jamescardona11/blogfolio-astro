@@ -78,7 +78,6 @@ export interface NSkillRow {
 
 export interface NFunFactRow {
   name: {
-    id: string
     title: Array<{ text: { content: string } }>
   }
 }

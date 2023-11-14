@@ -1,0 +1,24 @@
+---
+import BaseCard from '../BaseCard.astro'
+
+interface Props {
+  funFacts: string[]
+}
+
+const { funFacts } = Astro.props
+---
+
+<BaseCard title='Fun facts' variant='left'>
+  <ul class='space-y-1'>
+    {
+      funFacts.map(fact => (
+        <li class='flex justify-between items-center'>
+          <div class='grow inline-flex mr-1 truncate'>
+            <span class='text-sky-500 mr-2'> {'>'} </span>
+            <a class='font-sans font-[650] text-sm truncate'>{fact}</a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</BaseCard>

@@ -55,7 +55,7 @@ export interface NBlogPostRow {
   publishedAt: { id: string; date: { start: string } }
 }
 
-export interface NToolboxRow {
+export interface NUsesRow {
   id?: string
   name: {
     id: string

@@ -78,42 +78,4 @@ const tabs: string[] = group.items.map(
   }
 </style>
 
-<script>
-  const tabElements = document.querySelectorAll('button[role="tab"]')
-  const panelElements = document.querySelectorAll('[role="tabpanel"]')
-  let activeIndex = 0
-
-  // Listen to clicks on tabs
-  tabElements.forEach(function (tab, index) {
-    tab.addEventListener('click', function (event) {
-      setActiveTab(index)
-    })
-  })
-
-  function setActiveTab(index: number) {
-    // Make currently active tab inactive
-    tabElements[activeIndex].setAttribute('aria-selected', 'false')
-    //@ts-ignore
-    tabElements[activeIndex].tabIndex = -1
-
-    // Set the new tab as active
-    tabElements[index].setAttribute('aria-selected', 'true')
-    //@ts-ignore
-    tabElements[index].tabIndex = 0
-
-    setActivePanel(index)
-    activeIndex = index
-  }
-
-  function setActivePanel(index: number) {
-    // Hide currently active panel
-    panelElements[activeIndex].setAttribute('hidden', '')
-    //@ts-ignore
-    panelElements[activeIndex].tabIndex = -1
-
-    // Show the new active panel
-    panelElements[index].removeAttribute('hidden')
-    //@ts-ignore
-    panelElements[index].tabIndex = 0
-  }
-</script>
+<script src='src/scripts/tabs-controller.js'></script>

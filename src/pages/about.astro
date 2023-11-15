@@ -11,9 +11,9 @@ import RightSide from '@/layouts/two-columns/RightSide.astro'
 import Quote from '@/components/Quote.astro'
 import ConnectWithMeCard from '@/components/about/ConnectWithMeCard.astro'
 import CurrentCompany from '@/components/about/CurrentCompany.astro'
-import FunnyCard from '@/components/about/FunnyCard.astro'
+import SkillCard from '@/components/about/SkillCard.astro'
 
-const { summaryData, funFacts, currentWork } = await getSummaryData()
+const { summaryData, skills, currentWork } = await getSummaryData()
 ---
 
 <TwoColumnsLayout metaTitle={siteMetadata.name}>
@@ -24,7 +24,6 @@ const { summaryData, funFacts, currentWork } = await getSummaryData()
         alt='James Cardona'
         width={1200}
         height={684}
-        sizes='(min-width: 1024px) 32rem, 20rem'
         class='aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800'
       />
     </div>
@@ -37,6 +36,6 @@ const { summaryData, funFacts, currentWork } = await getSummaryData()
   <RightSide styles='md:justify-self-end space-y-6'>
     <ConnectWithMeCard />
     <CurrentCompany currentWork={currentWork} />
-    <FunnyCard funFacts={funFacts} />
+    <SkillCard skills={skills} />
   </RightSide>
 </TwoColumnsLayout>

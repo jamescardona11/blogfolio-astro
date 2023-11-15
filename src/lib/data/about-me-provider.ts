@@ -1,13 +1,13 @@
-import { getFunFactsFromNotion } from './data-sources/remote/notion/about-me/fun-facts'
+import { getSkillsFromNotion } from './data-sources/remote/notion/about-me/skills'
 import { getSummaryFromNotion } from './data-sources/remote/notion/about-me/summary'
 import { getExperienceFromNotion } from './data-sources/remote/notion/resume/experience'
 
 export async function getSummaryData() {
   const summaryData = await getSummaryBlocks()
-  const funFacts = await getFunFactsData()
+  const skills = await getSkillsData()
   const currentWork = await getCurrentWork()
 
-  return { summaryData, funFacts, currentWork }
+  return { summaryData, skills, currentWork }
 }
 
 async function getSummaryBlocks() {
@@ -19,13 +19,13 @@ async function getSummaryBlocks() {
   return summaryData.ok ? summaryData.data : []
 }
 
-async function getFunFactsData() {
-  const funFactsData = await getFunFactsFromNotion()
-  if (!funFactsData.ok) {
-    console.log(funFactsData.error)
+async function getSkillsData() {
+  const skillsData = await getSkillsFromNotion()
+  if (!skillsData.ok) {
+    console.log(skillsData.error)
   }
 
-  return funFactsData.ok ? funFactsData.data : []
+  return skillsData.ok ? skillsData.data : []
 }
 
 async function getCurrentWork() {

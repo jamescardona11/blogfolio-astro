@@ -23,9 +23,6 @@ export const NOTION_ABOUT_ME_SUMMARY_DB =
 export const NOTION_SKILLS_DB =
   import.meta.env.NOTION_SKILLS_DB || process.env.NOTION_SKILLS_DB
 
-export const NOTION_FUN_FACTS_DB =
-  import.meta.env.NOTION_FUN_FACTS_DB || process.env.NOTION_FUN_FACTS_DB
-
 export const GITHUB_TOKEN =
   import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN
 

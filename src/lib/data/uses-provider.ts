@@ -1,5 +1,5 @@
 import { getToolboxFromNotion } from './data-sources/remote/notion/others/uses'
-import type { UsesByCategory, UsesItem } from '../models/uses-item'
+import type { UsesByCategory } from '../models/uses-item'
 
 export async function getUses(): Promise<UsesByCategory> {
   const usesData = await getUsesData()
@@ -8,13 +8,13 @@ export async function getUses(): Promise<UsesByCategory> {
   const software = data?.filter(item => item.type === 'Software')
   const hardware = data?.filter(item => item.type === 'Hardware')
   const coding = data?.filter(item => item.type === 'Coding')
-  const thisSite = data?.filter(item => item.type === 'This Site & Blog')
+  const thisPage = data?.filter(item => item.type === 'This Site & Blog')
 
   return {
     software,
     hardware,
     coding,
-    thisSite
+    thisPage
   }
 }
 

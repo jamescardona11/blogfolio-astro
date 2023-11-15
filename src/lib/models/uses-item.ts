@@ -10,5 +10,5 @@ export interface UsesByCategory {
   software: UsesItem[]
   hardware: UsesItem[]
   coding: UsesItem[]
-  thisSite: UsesItem[]
+  thisPage: UsesItem[]
 }

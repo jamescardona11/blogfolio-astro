@@ -16,7 +16,7 @@ const { work, recommendation, education } = await getResumeData()
 ---
 
 <TwoColumnsLayout metaTitle='My Resume'>
-  <MiddleArea>
+  <MiddleArea styles='space-y-8'>
     <ExperienceSection title='Work Experience' items={work} />
     <RecommendationsSection title={'Recommendations'} items={recommendation} />
     <EducationSection title={'Education'} items={education} />

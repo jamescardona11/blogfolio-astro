@@ -20,8 +20,14 @@ export async function getResumeData(): Promise<ResumeModel> {
   }
 }
 
-function getWorkExperienceData(): Promise<ExperienceItem[]> {
-  return getExperienceFromNotion()
+async function getWorkExperienceData() {
+  const experience = await getExperienceFromNotion()
+
+  if (!experience.ok) {
+    console.log(experience.error)
+  }
+
+  return experience.ok ? experience.data : []
 }
 
 function getRecommendationData(): RecommendationItem[] {

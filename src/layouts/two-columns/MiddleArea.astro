@@ -1,3 +1,11 @@
-<div class='md:order-first md:row-span-2'>
+---
+interface Props {
+  styles?: string
+}
+
+const { styles } = Astro.props
+---
+
+<div class:list={['md:order-first md:row-span-2', styles]}>
   <slot />
 </div>

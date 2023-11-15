@@ -1,9 +1,9 @@
 ---
 import Link from '@/components/Link.astro'
 import PageTitle from '@/components/PageTitle.astro'
-import TabElements from '@/components/uses/TabElements.astro'
-import UsesTabs2 from '@/components/uses/UsesTabs2.astro'
-import UsesTabs from '@/components/uses/uses-tabs'
+
+import UsesTabs from '@/components/uses/UsesTabs.astro'
+
 import PageLayout from '@/layouts/PageLayout.astro'
 import { getUses } from '@/lib/data/uses-provider'
 
@@ -16,7 +16,7 @@ const usesByCategory = await getUses()
     subtitle='Hardware and Software I use every day.'
   />
 
-  <UsesTabs2 usesByCategory={usesByCategory} />
+  <UsesTabs usesByCategory={usesByCategory} />
 
   <p class='mt-20 text-base'>
     Influenced by{' '}

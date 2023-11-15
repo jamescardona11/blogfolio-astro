@@ -3,7 +3,7 @@ import { ViewTransitions } from 'astro:transitions'
 
 import BaseHead from './BaseHead.astro'
 import Header from '@/components/nav/header/Header.astro'
-import CommandPalette from '@/components/command-menu/command-palette'
+import Footer from '@/components/nav/footer/Footer.astro'
 
 interface Props {
   metaTitle?: string
@@ -16,12 +16,13 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 <html lang='en' class='scroll-smooth'>
   <ViewTransitions />
   <BaseHead metaTitle={title} metaDescription={description} />
-  <body class='font-sans antialiased bg-background text-foreground'>
+  <body
+    class='font-sans antialiased bg-background text-foreground flex flex-col min-h-screen justify-between'
+  >
     <Header />
-    <CommandPalette client:load>
-      <main class='mb-auto'>
-        <slot />
-      </main>
-    </CommandPalette>
+    <main class='mb-auto'>
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

@@ -6,6 +6,7 @@ import {
   createFailureResponse,
   createSuccessResponse
 } from '@/lib/data/core/api_response'
+import type { GithubStatsItem } from '@/lib/models/github-stats-item'
 
 export async function getGithubStats() {
   console.log('GET /api/dashboard/wakatime')
@@ -38,7 +39,7 @@ export async function getGithubStats() {
       followers,
       stars,
       contributions
-    })
+    } as GithubStatsItem)
   } catch (error) {
     console.error(error)
     return createFailureResponse('Something went wrong with Github', 'UNKNOWN')

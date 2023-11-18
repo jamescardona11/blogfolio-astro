@@ -22,3 +22,8 @@ pnpm-debug.log*
 .idea
 
 ref.md
+
+
+prisma/migrations
+prisma/dev.db
+prisma/dev.db-journal

@@ -1,52 +1,94 @@
 ---
-import Card from '@/components/old/Card.astro'
-import RootLayout from '@/layouts/root/RootLayout.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import PageTitle from '@/components/PageTitle.astro'
 
-const projectsData = [
+import { hexToRgb } from '@/utils/color'
+import { getDashboardData } from '@/lib/data/dashboard-provider'
+import { siteMetadata } from '@/site-metadata'
+import IconStatByType from '@/components/dashboard/IconStatByType.astro'
+
+const { githubStats, wakatime } = await getDashboardData()
+
+interface StatCard {
+  icon: string
+  title: string
+  link: string
+  value: number | string | undefined
+  color: string
+}
+
+const now = new Date()
+const currentYear = now.getFullYear()
+
+const data: StatCard[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/public/static/images/google.png',
-    href: 'https://www.google.com'
+    title: 'Coding hours',
+    link: 'https://wakatime.com/@jamescardona11',
+    value: wakatime?.time ?? 0,
+    icon: 'codingHours',
+    color: '#f7b731'
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine'
+    title: 'Followers on GitHub',
+    link: `https://github.com/${siteMetadata.github}`,
+    value: githubStats?.followers,
+    icon: 'followers',
+    color: '#4078c0'
+  },
+  {
+    title: 'Stars on GitHub',
+    link: `https://github.com/${siteMetadata.github}`,
+    value: githubStats?.stars,
+    icon: 'stars',
+    color: '#c94091'
+  },
+  {
+    title: `Github commits on ${currentYear}`,
+    link: `https://github.com/${siteMetadata.github}`,
+    value: githubStats?.contributions,
+    icon: 'contributions',
+    color: '#26de81'
   }
 ]
 ---
 
-<RootLayout metaTitle='Projects'>
-  <div class='divide-y divide-gray-200 dark:divide-gray-700'>
-    <div class='space-y-2 pb-8 pt-6 md:space-y-5'>
-      <h1
-        class='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'
-      >
-        Projects
-      </h1>
-      <p class='text-lg leading-7 text-gray-500 dark:text-gray-400'>
-        Showcase your projects with a hero image (16 x 9)
-      </p>
-    </div>
-    <div class='container py-12'>
-      <div class='-m-4 flex flex-wrap'>
-        {
-          projectsData.map(d => (
-            <Card
-              title={d.title}
-              description={d.description}
-              imgSrc={d.imgSrc}
-              href={d.href}
-            />
-          ))
-        }
-      </div>
-    </div>
+<PageLayout metaTitle='Uses - tools'>
+  <PageTitle title='Dashboard' />
+  <div class='grid gap-4 mt-4 mb-4 sm:grid-cols-2'>
+    {
+      data.map(item => {
+        const { icon, link, title, value, color } = item
+        const newColor = hexToRgb(color, 0)
+
+        return (
+          <a
+            target='_blank'
+            rel='noopener noreferrer'
+            href={link}
+            class:list={[
+              'flex flex-col gap-2 rounded-lg border p-4 transition-colors duration-150',
+              'hover:bg-[rgba(var(--custom-color)/0.05)]',
+              'hover:border-[rgba(var(--custom-color)/0.56)]'
+            ]}
+            style={{ '--custom-color': newColor }}
+          >
+            <div class='flex justify-end'>
+              <div
+                class:list={[
+                  'rounded-full p-2',
+                  'bg-[rgba(var(--custom-color)/0.15)]'
+                ]}
+                style={{ '--custom-color': newColor }}
+              >
+                <IconStatByType type={icon} color={color} />{' '}
+              </div>
+            </div>
+
+            <div class='text-3xl font-black'>{value ?? '-'}</div>
+            <div class='text-base font-sans'>{title}</div>
+          </a>
+        )
+      })
+    }
   </div>
-</RootLayout>
+</PageLayout>

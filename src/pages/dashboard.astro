@@ -1,4 +1,6 @@
 ---
+export const prerender = false // server
+
 import PageLayout from '@/layouts/PageLayout.astro'
 import PageTitle from '@/components/PageTitle.astro'
 
@@ -7,7 +9,7 @@ import { getDashboardData } from '@/lib/data/dashboard-provider'
 import { siteMetadata } from '@/site-metadata'
 import IconStatByType from '@/components/dashboard/IconStatByType.astro'
 
-const { githubStats, wakatime } = await getDashboardData()
+const { githubStats, wakatime, reactions } = await getDashboardData()
 
 interface StatCard {
   icon: string
@@ -19,6 +21,9 @@ interface StatCard {
 
 const now = new Date()
 const currentYear = now.getFullYear()
+
+const allReactions =
+  reactions.claps + reactions.likes + reactions.loves + reactions.party
 
 const data: StatCard[] = [
   {
@@ -48,6 +53,20 @@ const data: StatCard[] = [
     value: githubStats?.contributions,
     icon: 'contributions',
     color: '#26de81'
+  },
+  {
+    title: 'All-time views',
+    link: 'https://jamescardona11.com',
+    value: reactions.views,
+    icon: 'views',
+    color: '#A076D9'
+  },
+  {
+    title: 'All-time reactions',
+    link: 'https://jamescardona11.com',
+    value: allReactions,
+    icon: 'likes',
+    color: '#EB3B5A'
   }
 ]
 ---

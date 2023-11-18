@@ -1,16 +1,20 @@
-import type { DashboardModel } from '../models/dashboard-model'
-import type { GithubStatsItem } from '../models/github-stats-item'
-import type { WakatimeItem } from '../models/wakatime-item'
+import type { DashboardModel } from '@lib/models/dashboard-model'
+import type { GithubStatsItem } from '@lib/models/github-stats-item'
+import type { WakatimeItem } from '@lib/models/wakatime-item'
+
 import { getGithubStats } from './data-sources/remote/dashboard/github'
+import { getStatsData } from './data-sources/remote/dashboard/stats'
 import { getWakatimeStats } from './data-sources/remote/dashboard/wakatime'
 
 export async function getDashboardData(): Promise<DashboardModel> {
   const wakatimeStats = await getWakatimeData()
   const githubStats = await getGithubStatsData()
+  const reactions = await getStatsData()
 
   return {
     githubStats,
-    wakatime: wakatimeStats
+    wakatime: wakatimeStats,
+    reactions
   }
 }
 

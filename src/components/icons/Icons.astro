@@ -1,4 +1,6 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
+
 import Mail from './source/Mail.astro'
 import Github from './source/Github.astro'
 import Youtube from './source/Youtube.astro'
@@ -7,6 +9,11 @@ import Twitter from './source/Twitter.astro'
 import Mastodon from './source/Mastodon.astro'
 import LinkIcon from './source/LinkIcon.astro'
 import FileIcon from './source/FileIcon.astro'
+import StartIcon from './source/StartIcon.astro'
+import ClockIcon from './source/ClockIcon.astro'
+import ContributionsIcon from './source/ContributionsIcon.astro'
+import LikeIcon from './source/LikeIcon.astro'
+import ViewsIcon from './source/ViewsIcon.astro'
 
 const components = {
   github: Github,
@@ -16,24 +23,29 @@ const components = {
   mastodon: Mastodon,
   mail: Mail,
   link: LinkIcon,
-  file: FileIcon
+  file: FileIcon,
+  start: StartIcon,
+  clock: ClockIcon,
+  contributions: ContributionsIcon,
+  likes: LikeIcon,
+  views: ViewsIcon
 }
+
 export type IconKey = keyof typeof components
 
-type Props = {
+type Props = HTMLAttributes<'svg'> & {
   kind: IconKey
   href?: string
   size?: number
-  class?: string
 }
 
-const { kind, href, size, class: s } = Astro.props
+const { kind, href, size, class: c, style } = Astro.props
 const SvgIcon = components[kind]
 
 const fSize = size ?? 5
 
-const styles =
-  s ??
+const className =
+  c ??
   `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${fSize} w-${fSize}`
 ---
 
@@ -46,12 +58,12 @@ const styles =
       href={href}
     >
       <span class='sr-only'>{kind}</span>
-      <SvgIcon class={styles} />
+      <SvgIcon class={className} style={style} />
     </a>
   ) : (
     <div>
       <span class='sr-only'>{kind}</span>
-      <SvgIcon class={styles} />
+      <SvgIcon class={className} style={style} />
     </div>
   )
 }

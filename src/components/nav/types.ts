@@ -1,6 +1,6 @@
 import { type IconKey } from '@/components/icons/Icons.astro'
 
-export interface NavItemProps {
+export type NavItemProps = {
   href: string
   title: string
   hideNavigation?: boolean

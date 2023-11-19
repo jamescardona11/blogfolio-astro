@@ -14,10 +14,7 @@ import Icons, { type IconKey } from '../icons/Icons.astro'
         return (
           <li>
             <Link href={element.link} class='flex items-center'>
-              <Icons
-                kind={element.icon as IconKey}
-                class=' fill-zinc-500 dark:group-hover:fill-zinc-400 group-hover:fill-zinc-700 w-5 h-5'
-              />
+              <Icons kind={element.icon as IconKey} />
               <span class='ml-4 font-medium text-base text-foreground '>
                 {element.name}
               </span>

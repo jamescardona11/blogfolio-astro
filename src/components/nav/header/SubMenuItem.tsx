@@ -7,7 +7,7 @@ import {
   NavigationMenuTrigger
 } from '@/components/ui/navigation-menu'
 
-import type { NavItemProps } from '../../types'
+import type { NavItemProps } from '../types'
 
 export const SubMenuItem = ({ navItem }: { navItem: NavItemProps }) => {
   return (

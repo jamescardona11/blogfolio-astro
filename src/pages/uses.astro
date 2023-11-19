@@ -1,6 +1,7 @@
 ---
 import Link from '@/components/Link.astro'
 import PageTitle from '@/components/PageTitle.astro'
+import Reactions from '@/components/reactions/reactions'
 
 import UsesTabs from '@/components/uses/UsesTabs.astro'
 
@@ -15,6 +16,10 @@ const usesByCategory = await getUses()
     title='What do I use?'
     subtitle='Hardware and Software I use every day.'
   />
+
+  <div class='w-full h-12 mb-4'>
+    <Reactions client:idle slug='uses_page' />
+  </div>
 
   <UsesTabs usesByCategory={usesByCategory} />
 

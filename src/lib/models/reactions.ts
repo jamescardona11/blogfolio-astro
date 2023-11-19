@@ -3,7 +3,7 @@ export interface ReactionsModel {
   loves: number
   claps: number
   party: number
-  views: number
+  views?: number
 }
 
 export type ReactionType = 'likes' | 'loves' | 'claps' | 'party'

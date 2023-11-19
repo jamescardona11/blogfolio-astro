@@ -1,22 +1,74 @@
 ---
-import { type Page, getCollection } from 'astro:content'
-// import ListLayout from "@/layouts/ListLayout.astro";
-import { ITEMS_PER_PAGE } from '@/consts'
-import { sortBlogPosts, excludeDrafts } from '@/lib/data/local/functions'
-import ListWithTagsLayout from '../../layouts/ListWithTagsLayout.astro'
+import { Image } from 'astro:assets'
+import type { Page } from 'astro'
+import { getCollection, type CollectionEntry } from 'astro:content'
+
+import PageTitle from '@/components/PageTitle.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import Link from '@/components/Link.astro'
+
+import {
+  excludeDrafts,
+  sortBlogPosts
+} from '@/lib/data/data-sources/local/functions'
+
+import { formatDate } from '@/utils/utils'
+
+// @ts-ignore
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
+  return paginate(posts, { pageSize: 10 })
+}
 
 interface Props {
   page: Page
 }
 
-export async function getStaticPaths({ paginate }) {
-  const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
-  return paginate(posts, { pageSize: ITEMS_PER_PAGE })
-}
-
 const { page } = Astro.props
+const { data: posts } = page
+
+console.log(posts)
 ---
 
-<!--<ListLayout title="Blog" page={page}/>-->
-<ListWithTagsLayout title='Blog' page={page} />
- @/lib/data/static/consts @/consts @/lib/data/local/functions
+<PageLayout metaTitle='Blog'>
+  <PageTitle
+    title='Blog'
+    subtitle='A blog built using Contentlayer. Posts are written in MDX.'
+  />
+  <hr class='my-8 border-muted' />
+
+  {
+    posts?.length ? (
+      <div class='grid gap-10 sm:grid-cols-2'>
+        {
+          // destructuring data from the collection
+          // review `config.ts` inside the content folder to destructure the right data
+          posts.map(({ slug, data: { image, title, summary, date } }) => (
+            <article class='group relative flex flex-col space-y-2'>
+              {image && (
+                <Image
+                  src={image}
+                  alt={title}
+                  width={804}
+                  height={452}
+                  class='rounded-md border bg-muted transition-colors'
+                />
+              )}
+              <h2 class='text-2xl font-extrabold'>{title}</h2>
+              {summary && <p class='text-muted-foreground'>{summary}</p>}
+
+              {date && (
+                <p class='text-sm text-muted-foreground'>{formatDate(date)}</p>
+              )}
+              <Link href={slug} class='absolute inset-0'>
+                <span class='sr-only'>View Article</span>
+              </Link>
+            </article>
+          ))
+        }
+      </div>
+    ) : (
+      <p>No posts published.</p>
+    )
+  }
+</PageLayout>

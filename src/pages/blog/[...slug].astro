@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content'
 
-import { excludeDrafts } from '@/lib/data/local/functions'
 import PostLayout from '@/layouts/PostLayout.astro'
+import { excludeDrafts } from '@/lib/data/data-sources/local/functions'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', excludeDrafts)

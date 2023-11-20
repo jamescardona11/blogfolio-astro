@@ -1,18 +1,18 @@
 ---
-import { Image } from 'astro:assets'
 import type { Page } from 'astro'
-import { getCollection, type CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
 
 import PageTitle from '@/components/PageTitle.astro'
 import PageLayout from '@/layouts/PageLayout.astro'
-import Link from '@/components/Link.astro'
 
 import {
   excludeDrafts,
   sortBlogPosts
 } from '@/lib/data/data-sources/local/functions'
 
-import { formatDate } from '@/utils/utils'
+import PostsGridView from '@/page-components/blog/PostsGridView.astro'
+import PostsListView from '@/page-components/blog/PostsListView.astro'
+import SwapViewButtons from '@/components/SwapViewButtons.astro'
 
 // @ts-ignore
 export async function getStaticPaths({ paginate }) {
@@ -26,49 +26,56 @@ interface Props {
 
 const { page } = Astro.props
 const { data: posts } = page
-
-console.log(posts)
 ---
 
 <PageLayout metaTitle='Blog'>
-  <PageTitle
-    title='Blog'
-    subtitle='A blog built using Contentlayer. Posts are written in MDX.'
-  />
+  <div class='flex justify-between'>
+    <PageTitle
+      title='Blog'
+      subtitle='A blog built using Contentlayer. Posts are written in MDX.'
+    />
+    <SwapViewButtons />
+  </div>
   <hr class='my-8 border-muted' />
 
+  {page.total == 0 && <p>No posts published.</p>}
   {
-    posts?.length ? (
-      <div class='grid gap-10 sm:grid-cols-2'>
-        {
-          // destructuring data from the collection
-          // review `config.ts` inside the content folder to destructure the right data
-          posts.map(({ slug, data: { image, title, summary, date } }) => (
-            <article class='group relative flex flex-col space-y-2'>
-              {image && (
-                <Image
-                  src={image}
-                  alt={title}
-                  width={804}
-                  height={452}
-                  class='rounded-md border bg-muted transition-colors'
-                />
-              )}
-              <h2 class='text-2xl font-extrabold'>{title}</h2>
-              {summary && <p class='text-muted-foreground'>{summary}</p>}
+    page.total > 0 && (
+      // <!-- GRID VIEW -->
+      <PostsGridView posts={posts} />
+    )
+  }
 
-              {date && (
-                <p class='text-sm text-muted-foreground'>{formatDate(date)}</p>
-              )}
-              <Link href={slug} class='absolute inset-0'>
-                <span class='sr-only'>View Article</span>
-              </Link>
-            </article>
-          ))
-        }
-      </div>
-    ) : (
-      <p>No posts published.</p>
+  {
+    page.total > 0 && (
+      //<!-- LIST VIEW -->
+      <PostsListView posts={posts} />
     )
   }
 </PageLayout>
+
+<script is:inline>
+  const buttonsList = document.querySelector('[icon-list-button]')
+  const buttonsGrid = document.querySelector('[icon-grid-button]')
+
+  const divGrid = document.querySelector('#grid')
+  const divList = document.querySelector('#list')
+
+  buttonsGrid?.classList.add('hidden')
+  divList?.classList.add('hidden')
+
+  console.log(buttonsList)
+
+  buttonsList?.addEventListener('click', changeToGrid)
+  buttonsGrid?.addEventListener('click', changeToList)
+
+  function changeToGrid() {
+    divGrid?.classList.add('hidden')
+    divList?.classList.remove('hidden')
+  }
+
+  function changeToList() {
+    divGrid?.classList.remove('hidden')
+    divList?.classList.add('hidden')
+  }
+</script>

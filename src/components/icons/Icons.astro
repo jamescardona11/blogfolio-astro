@@ -14,6 +14,8 @@ import ClockIcon from './source/ClockIcon.astro'
 import ContributionsIcon from './source/ContributionsIcon.astro'
 import LikeIcon from './source/LikeIcon.astro'
 import ViewsIcon from './source/ViewsIcon.astro'
+import ListIcon from './source/ListIcon.astro'
+import GridIcon from './source/GridIcon.astro'
 
 const components = {
   github: Github,
@@ -28,7 +30,9 @@ const components = {
   clock: ClockIcon,
   contributions: ContributionsIcon,
   likes: LikeIcon,
-  views: ViewsIcon
+  views: ViewsIcon,
+  list: ListIcon,
+  grid: GridIcon
 }
 
 export type IconKey = keyof typeof components
@@ -46,7 +50,7 @@ const fSize = size ?? 5
 
 const className =
   c ??
-  `fill-current text-gray-700 hover:text-primary-500 dark:text-gray-200 dark:hover:text-primary-400 h-${fSize} w-${fSize}`
+  `fill-zinc-500 dark:hover:fill-zinc-100 hover:fill-zinc-700 h-${fSize} w-${fSize}`
 ---
 
 {

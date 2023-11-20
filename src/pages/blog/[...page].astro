@@ -5,14 +5,15 @@ import { getCollection } from 'astro:content'
 import PageTitle from '@/components/PageTitle.astro'
 import PageLayout from '@/layouts/PageLayout.astro'
 
+import Pagination from '@/components/old/Pagination.astro'
+import PostsGridView from '@/page-components/blog/PostsGridView.astro'
+import PostsListView from '@/page-components/blog/PostsListView.astro'
+import SwapViewButtons from '@/components/SwapViewButtons.astro'
+
 import {
   excludeDrafts,
   sortBlogPosts
 } from '@/lib/data/data-sources/local/functions'
-
-import PostsGridView from '@/page-components/blog/PostsGridView.astro'
-import PostsListView from '@/page-components/blog/PostsListView.astro'
-import SwapViewButtons from '@/components/SwapViewButtons.astro'
 
 // @ts-ignore
 export async function getStaticPaths({ paginate }) {
@@ -39,43 +40,13 @@ const { data: posts } = page
   <hr class='my-8 border-muted' />
 
   {page.total == 0 && <p>No posts published.</p>}
-  {
-    page.total > 0 && (
-      // <!-- GRID VIEW -->
-      <PostsGridView posts={posts} />
-    )
-  }
+  <!-- GRID VIEW -->
+  <PostsGridView posts={posts} />
 
-  {
-    page.total > 0 && (
-      //<!-- LIST VIEW -->
-      <PostsListView posts={posts} />
-    )
-  }
+  <!-- LIST VIEW -->
+  <PostsListView posts={posts} />
+
+  {(page.url.next || page.url.prev) && <Pagination page={page} />}
 </PageLayout>
 
-<script is:inline>
-  const buttonsList = document.querySelector('[icon-list-button]')
-  const buttonsGrid = document.querySelector('[icon-grid-button]')
-
-  const divGrid = document.querySelector('#grid')
-  const divList = document.querySelector('#list')
-
-  buttonsGrid?.classList.add('hidden')
-  divList?.classList.add('hidden')
-
-  console.log(buttonsList)
-
-  buttonsList?.addEventListener('click', changeToGrid)
-  buttonsGrid?.addEventListener('click', changeToList)
-
-  function changeToGrid() {
-    divGrid?.classList.add('hidden')
-    divList?.classList.remove('hidden')
-  }
-
-  function changeToList() {
-    divGrid?.classList.remove('hidden')
-    divList?.classList.add('hidden')
-  }
-</script>
+<script is:inline src='src/scripts/swap-view.js'></script>

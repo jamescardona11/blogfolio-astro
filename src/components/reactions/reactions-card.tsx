@@ -1,4 +1,4 @@
-import { type ReactionType } from '@lib/models/reactions'
+import { type ReactionType } from '@/lib/types/reactions.type'
 
 import { cn } from '@/utils/cn'
 import { hexToRgb } from '@/utils/color'

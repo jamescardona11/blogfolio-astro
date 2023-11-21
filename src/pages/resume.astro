@@ -4,13 +4,11 @@ import { getResumeData } from '@/lib/data/resume-provider'
 import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import RightSide from '@/layouts/two-columns/RightSide.astro'
-
-import DownloadCVCard from '@/components/resume/CVCard.astro'
-import LanguagesCard from '@/components/resume/LanguagesCard.astro'
-
-import ExperienceSection from '@/components/resume/ExperienceSection.astro'
-import RecommendationsSection from '@/components/resume/RecommendationSection.astro'
-import EducationSection from '@/components/resume/EducationSection.astro'
+import ExperienceSection from '@/components/for-pages/resume/ExperienceSection.astro'
+import EducationSection from '@/components/for-pages/resume/EducationSection.astro'
+import LanguagesCard from '@/components/for-pages/resume/LanguagesCard.astro'
+import RecommendationSection from '@/components/for-pages/resume/RecommendationSection.astro'
+import CVCard from '@/components/for-pages/resume/CVCard.astro'
 
 const { work, recommendation, education } = await getResumeData()
 ---
@@ -18,11 +16,11 @@ const { work, recommendation, education } = await getResumeData()
 <TwoColumnsLayout metaTitle='My Resume'>
   <MiddleArea styles='space-y-8'>
     <ExperienceSection title='Work Experience' items={work} />
-    <RecommendationsSection title={'Recommendations'} items={recommendation} />
+    <RecommendationSection title={'Recommendations'} items={recommendation} />
     <EducationSection title={'Education'} items={education} />
   </MiddleArea>
   <RightSide styles='space-y-6'>
     <LanguagesCard />
-    <DownloadCVCard />
+    <CVCard />
   </RightSide>
 </TwoColumnsLayout>

@@ -1,8 +1,8 @@
-import { getToolboxFromNotion } from './data-sources/remote/notion/others/uses'
-import type { UsesByCategory } from '../models/uses-item'
+import type { UsesByCategory } from '@lib/types/uses.type'
+import { getUsesFromNotion } from './remote/notion/others/uses'
 
-export async function getUses(): Promise<UsesByCategory> {
-  const usesData = await getUsesData()
+export async function getUsesData(): Promise<UsesByCategory> {
+  const usesData = await getUses()
   const data = usesData?.toSorted((a, b) => a.name.localeCompare(b.name))
 
   const software = data?.filter(item => item.type === 'Software')
@@ -18,8 +18,8 @@ export async function getUses(): Promise<UsesByCategory> {
   }
 }
 
-async function getUsesData() {
-  const uses = await getToolboxFromNotion()
+async function getUses() {
+  const uses = await getUsesFromNotion()
 
   if (!uses.ok) {
     console.log(uses.error)

@@ -1,5 +1,5 @@
 ---
-import type { CodeBlockGroup } from '@/lib/data/notion-core/notion-blocks'
+import type { CodeBlockGroup } from '@/lib/core/notion-core/notion-blocks'
 import CodeBlock from './CodeBlock.astro'
 
 interface Props {
@@ -78,4 +78,4 @@ const tabs: string[] = group.items.map(
   }
 </style>
 
-<script src='src/scripts/tabs-controller.js'></script>
+<script src='/src/scripts/tabs-controller.js'></script>

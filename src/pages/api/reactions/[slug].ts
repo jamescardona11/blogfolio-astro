@@ -3,9 +3,9 @@ export const prerender = false // server
 import type { APIRoute } from 'astro'
 
 import { createHash } from 'node:crypto'
-import prismadb from '@/lib/data/prisma/prismadb'
+import prismadb from '@/lib/core/prisma/prismadb'
 
-import { RANDOM_ENDCODE_VALUE } from '@lib/data/data-sources/remote/remote-constants'
+import { RANDOM_ENDCODE_VALUE } from '@/lib/data/remote/remote-constants'
 
 const select = {
   likes: true,

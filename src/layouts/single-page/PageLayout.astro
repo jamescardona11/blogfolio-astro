@@ -1,0 +1,17 @@
+---
+import RootLayout from '@/layouts/root/RootLayout.astro'
+import SectionContainer from '@/layouts/SectionContainer.astro'
+
+interface Props {
+  metaTitle?: string
+  metaDescription?: string
+}
+
+const { metaTitle: title, metaDescription: description } = Astro.props
+---
+
+<RootLayout metaTitle={title} metaDescription={description}>
+  <SectionContainer>
+    <slot />
+  </SectionContainer>
+</RootLayout>

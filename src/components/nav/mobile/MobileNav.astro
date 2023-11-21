@@ -1,5 +1,5 @@
 ---
-import Link from '../../Link.astro'
+import Link from '@components/Link.astro'
 import { NAVIGATION } from '@/consts'
 ---
 
@@ -61,8 +61,8 @@ import { NAVIGATION } from '@/consts'
 
   function onToggleNav() {
     const isNavHidden = document.body.style.overflow === ''
-    mobileMenuContainer.classList.toggle('translate-x-full', !isNavHidden)
-    mobileMenuContainer.classList.toggle('translate-x-0', isNavHidden)
+    mobileMenuContainer?.classList.toggle('translate-x-full', !isNavHidden)
+    mobileMenuContainer?.classList.toggle('translate-x-0', isNavHidden)
     document.body.style.overflow = isNavHidden ? 'hidden' : ''
   }
 </script>

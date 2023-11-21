@@ -1,0 +1,27 @@
+---
+import { socialNetwork } from '@/lib/data/static/about-me-data'
+import { siteMetadata } from '@/site-metadata'
+
+import BaseCard from '@components/BaseCard.astro'
+import Link from '@components/Link.astro'
+import Icons from '@components/icons/Icons.astro'
+---
+
+<BaseCard title='CV'>
+  <Link class='font-semibold text-primary-500' href={siteMetadata.cv}>
+    <div class='flex gap-1 items-center'>
+      <Icons kind='link' size={5} />
+      <span>English-CV</span>
+    </div>
+  </Link>
+  <div class='h-2'></div>
+  <Link
+    class='font-semibold text-primary-500'
+    href={socialNetwork.linkedin.link}
+  >
+    <div class='flex gap-2 items-center'>
+      <Icons kind='linkedin' size={4} />
+      <span class='font-semibold text-primary-500'>LinkedIn</span>
+    </div>
+  </Link>
+</BaseCard>

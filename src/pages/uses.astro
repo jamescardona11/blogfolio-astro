@@ -1,14 +1,15 @@
 ---
 import Link from '@/components/Link.astro'
-import PageTitle from '@/components/PageTitle.astro'
+
+import PageLayout from '@/layouts/single-page/PageLayout.astro'
+
 import Reactions from '@/components/reactions/reactions'
+import PageTitle from '@/components/PageTitle.astro'
 
-import UsesTabs from '@/components/uses/UsesTabs.astro'
+import { getUsesData } from '@/lib/data/uses-provider'
+import UsesTabs from '@/components/for-pages/uses/UsesTabs.astro'
 
-import PageLayout from '@/layouts/PageLayout.astro'
-import { getUses } from '@/lib/data/uses-provider'
-
-const usesByCategory = await getUses()
+const usesByCategory = await getUsesData()
 ---
 
 <PageLayout metaTitle='Uses - tools'>
@@ -35,3 +36,4 @@ const usesByCategory = await getUses()
     </Link>
   </p>
 </PageLayout>
+ @/lib/data/providers/uses-provider @/lib/data/uses-provider

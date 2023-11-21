@@ -1,15 +1,15 @@
-import type { DashboardModel } from '@lib/models/dashboard-model'
-import type { GithubStatsItem } from '@lib/models/github-stats-item'
-import type { WakatimeItem } from '@lib/models/wakatime-item'
+import type { DashboardType } from '@/lib/types/dashboard.type'
+import type { GithubStatsType } from '@/lib/types/github-stats.type'
+import type { WakatimeType } from '@/lib/types/wakatime.type'
 
-import { getGithubStats } from './data-sources/remote/dashboard/github'
-import { getStatsData } from './data-sources/remote/dashboard/stats'
-import { getWakatimeStats } from './data-sources/remote/dashboard/wakatime'
+import { getGithubStatsData } from './remote/dashboard/github'
+import { getAllStats } from './remote/dashboard/stats'
+import { getWakatimeStats } from './remote/dashboard/wakatime'
 
-export async function getDashboardData(): Promise<DashboardModel> {
-  const wakatimeStats = await getWakatimeData()
-  const githubStats = await getGithubStatsData()
-  const reactions = await getStatsData()
+export async function getDashboardData(): Promise<DashboardType> {
+  const wakatimeStats = await getWakatime()
+  const githubStats = await getGithubStats()
+  const reactions = await getAllStats()
 
   return {
     githubStats,
@@ -18,8 +18,8 @@ export async function getDashboardData(): Promise<DashboardModel> {
   }
 }
 
-async function getGithubStatsData(): Promise<GithubStatsItem> {
-  const githubStats = await getGithubStats()
+async function getGithubStats(): Promise<GithubStatsType> {
+  const githubStats = await getGithubStatsData()
 
   if (!githubStats.ok) {
     console.log(githubStats.error)
@@ -34,7 +34,7 @@ async function getGithubStatsData(): Promise<GithubStatsItem> {
       }
 }
 
-async function getWakatimeData(): Promise<WakatimeItem | null> {
+async function getWakatime(): Promise<WakatimeType | null> {
   const wakatimeStats = await getWakatimeStats()
 
   if (!wakatimeStats.ok) {

@@ -1,10 +1,10 @@
-import { getSkillsFromNotion } from './data-sources/remote/notion/about-me/skills'
-import { getSummaryFromNotion } from './data-sources/remote/notion/about-me/summary'
-import { getExperienceFromNotion } from './data-sources/remote/notion/resume/experience'
+import { getSkillsFromNotion } from './remote/notion/about-me/skills'
+import { getSummaryFromNotion } from './remote/notion/about-me/summary'
+import { getExperienceFromNotion } from './remote/notion/resume/experience'
 
 export async function getSummaryData() {
   const summaryData = await getSummaryBlocks()
-  const skills = await getSkillsData()
+  const skills = await getSkills()
   const currentWork = await getCurrentWork()
 
   return { summaryData, skills, currentWork }
@@ -19,7 +19,7 @@ async function getSummaryBlocks() {
   return summaryData.ok ? summaryData.data : []
 }
 
-async function getSkillsData() {
+async function getSkills() {
   const skillsData = await getSkillsFromNotion()
   if (!skillsData.ok) {
     console.log(skillsData.error)

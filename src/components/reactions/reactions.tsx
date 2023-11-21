@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { ReactionCard } from './reactions-card'
-import { type ReactionType, type ReactionsModel } from '@lib/models/reactions'
+import {
+  type ReactionType,
+  type ReactionStatsType
+} from '@/lib/types/reactions.type'
 
 function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
   const style = vertical != null ? 'flex flex-col gap-2' : 'flex gap-2'
 
   const [contentReactions, setContentReactions] =
-    useState<ReactionsModel | null>(null)
-  const [userReactions, setUserReactions] = useState<ReactionsModel>(
+    useState<ReactionStatsType | null>(null)
+  const [userReactions, setUserReactions] = useState<ReactionStatsType>(
     defaultReactions()
   )
 
@@ -112,7 +115,7 @@ function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
   )
 }
 
-function defaultReactions(): ReactionsModel {
+function defaultReactions(): ReactionStatsType {
   return {
     likes: 0,
     loves: 0,
@@ -122,10 +125,10 @@ function defaultReactions(): ReactionsModel {
 }
 
 function updateReactions(
-  reactions: ReactionsModel,
+  reactions: ReactionStatsType,
   type: string,
   count: number
-): ReactionsModel {
+): ReactionStatsType {
   return {
     likes: type === 'likes' ? reactions.likes + count : reactions.likes,
     loves: type === 'loves' ? reactions.loves + count : reactions.loves,

@@ -1,20 +1,21 @@
 ---
-import { type Page, getCollection, type CollectionEntry } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
 // import ListLayout from "@/layouts/ListLayout.astro";
 import { ITEMS_PER_PAGE } from '@/consts'
-
-import ListWithTagsLayout from '../../../layouts/ListWithTagsLayout.astro'
+import type { Page } from 'astro'
 import {
   excludeDrafts,
   sortBlogPosts
-} from '@/lib/data/data-sources/local/functions'
+} from '@/lib/data/local/mdx-blog-functions'
+import ListWithTagsLayout from '@/layouts/old/ListWithTagsLayout.astro'
 
 interface Props {
   page: Page<CollectionEntry<'blog'>>
   entry: CollectionEntry<'tags'>
 }
 
+// @ts-ignore
 export async function getStaticPaths({ paginate }) {
   const tags = await getCollection('tags')
   const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
@@ -43,4 +44,3 @@ const { Content } = await entry.render()
 >
   <Content />
 </ListWithTagsLayout>
- @/data/consts @/lib/data/static/consts @/consts @/lib/data/local/functions

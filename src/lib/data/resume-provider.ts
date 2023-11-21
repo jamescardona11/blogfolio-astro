@@ -1,17 +1,14 @@
-import { getExperienceFromNotion } from './data-sources/remote/notion/resume/experience'
-import {
-  educationData,
-  recommendationData
-} from './data-sources/static/resume-data'
+import { getExperienceFromNotion } from './remote/notion/resume/experience'
+import { educationData, recommendationData } from './static/resume-data'
 
-import type { RecommendationItem } from '../models/recommendation-item'
-import type { ExperienceItem } from '../models/experience-item'
-import type { ResumeModel } from '../models/resume-model'
+import type { RecommendationType } from '../types/recommendation.type'
+import type { ExperienceType } from '../types/experience.type'
+import type { ResumeType } from '../types/resume.type'
 
-export async function getResumeData(): Promise<ResumeModel> {
-  const workData = await getWorkExperienceData()
-  const recommendationData = getRecommendationData()
-  const educationData = getEducationData()
+export async function getResumeData(): Promise<ResumeType> {
+  const workData = await getWorkExperience()
+  const recommendationData = getRecommendation()
+  const educationData = getEducation()
 
   return {
     work: workData,
@@ -20,7 +17,7 @@ export async function getResumeData(): Promise<ResumeModel> {
   }
 }
 
-async function getWorkExperienceData() {
+async function getWorkExperience() {
   const experience = await getExperienceFromNotion()
 
   if (!experience.ok) {
@@ -30,10 +27,10 @@ async function getWorkExperienceData() {
   return experience.ok ? experience.data : []
 }
 
-function getRecommendationData(): RecommendationItem[] {
+function getRecommendation(): RecommendationType[] {
   return recommendationData
 }
 
-function getEducationData(): ExperienceItem[] {
+function getEducation(): ExperienceType[] {
   return educationData
 }

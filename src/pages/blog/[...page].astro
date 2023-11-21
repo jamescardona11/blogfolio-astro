@@ -3,17 +3,18 @@ import type { Page } from 'astro'
 import { getCollection } from 'astro:content'
 
 import PageTitle from '@/components/PageTitle.astro'
-import PageLayout from '@/layouts/PageLayout.astro'
+import PageLayout from '@/layouts/single-page/PageLayout.astro'
 
-import Pagination from '@/components/old/Pagination.astro'
-import PostsGridView from '@/page-components/blog/PostsGridView.astro'
-import PostsListView from '@/page-components/blog/PostsListView.astro'
-import SwapViewButtons from '@/components/SwapViewButtons.astro'
+import Pagination from '@/components/Pagination.astro'
 
+import SwapViewButtons from '@components/SwapViewButtons.astro'
+
+import PostsGridView from '@/components/for-pages/blog/PostsGridView.astro'
+import PostsListView from '@/components/for-pages/blog/PostsListView.astro'
 import {
   excludeDrafts,
   sortBlogPosts
-} from '@/lib/data/data-sources/local/functions'
+} from '@/lib/data/local/mdx-blog-functions'
 
 // @ts-ignore
 export async function getStaticPaths({ paginate }) {
@@ -49,4 +50,4 @@ const { data: posts } = page
   {(page.url.next || page.url.prev) && <Pagination page={page} />}
 </PageLayout>
 
-<script is:inline src='src/scripts/swap-view.js'></script>
+<script src='/src/scripts/swap-view.js'></script>

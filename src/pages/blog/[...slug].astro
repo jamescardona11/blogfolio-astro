@@ -1,8 +1,13 @@
 ---
-import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
-import PostLayout from '@/layouts/old/PostLayout.astro'
+import RootLayout from '@/layouts/root/RootLayout.astro'
+
 import { excludeDrafts } from '@/lib/data/local/mdx-blog-functions'
+import Link from '@/components/Link.astro'
+import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
+import SectionContainer from '@/layouts/SectionContainer.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', excludeDrafts)
@@ -11,6 +16,69 @@ export async function getStaticPaths() {
     props: { post, next: posts[index + 1], prev: posts[index - 1] }
   }))
 }
+
+interface Props {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+
+// TOOD: related, tags
+const {
+  slug,
+  data: { image, title, summary, date }
+} = post
+
+const { Content, headings, remarkPluginFrontmatter } = await post.render()
+
+console.log(post)
 ---
 
-<PostLayout {...Astro.props} />
+<RootLayout>
+  <SectionContainer>
+    <article class='container relative max-w-3xl py-6 lg:py-10'>
+      <Link
+        href='/blog'
+        class='absolute left-[-200px] top-14 hidden xl:inline-flex'
+      >
+        See all posts
+      </Link>
+      <div>
+        {
+          date && (
+            <p class='text-sm text-muted-foreground'>
+              Published on <FormattedDate date={date} />
+            </p>
+          )
+        }
+        <h1
+          class='mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl'
+        >
+          {title}
+        </h1>
+      </div>
+      {
+        image && (
+          <Image
+            src={image}
+            alt={title}
+            width={720}
+            height={405}
+            class='my-8 rounded-md border bg-muted transition-colors'
+          />
+        )
+      }
+      <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+        <!-- <slot /> -->
+        <Content />
+      </div>
+      <hr class='mt-12' />
+      <div class='flex justify-center py-6 lg:py-10'>
+        <Link href='/blog'>
+          <!-- <Icons.chevronLeft class='mr-2 h-4 w-4' /> -->
+           See all posts
+        </Link>
+      </div>
+    </article>
+  </SectionContainer>
+</RootLayout>

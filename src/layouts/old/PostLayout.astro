@@ -25,7 +25,7 @@ const related: CollectionEntry<'blog'>[] = await getEntries(post.data.related)
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
 ---
 
-<RootLayout title={post.data.title} description={post.data.summary}>
+<RootLayout metaTitle={post.data.title} metaDescription={post.data.summary}>
   <SectionContainer>
     <!-- <ScrollTopAndComments /> -->
     <article>

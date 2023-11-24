@@ -19,19 +19,21 @@ const blog = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
-    tags: z.array(reference('tags')).default(['default']),
-    lastmod: z.coerce.date().optional(),
-    draft: z.boolean().default(false),
     summary: z.string().optional(),
     image: z.string().optional(),
-    authors: z.array(reference('authors')).default(['default']),
-    // TODO: Add support for tags-and-list layout
-    layout: z.enum(['list', 'tags-and-list']).default('list'),
-    bibliography: z.string().optional(),
+    date: z.coerce.date(),
     canonicalUrl: z.string().optional(), // Maybe remove later, as Astro provide a better solution for canonical urls
+    lastmod: z.coerce.date().optional(),
+    tags: z.array(reference('tags')).default(['default']),
     // Add related posts
-    related: z.array(reference('blog')).default([])
+    related: z.array(reference('blog')).default([]),
+    serie: z
+      .object({
+        order: z.number(),
+        title: z.string()
+      })
+      .optional(),
+    draft: z.boolean().default(false)
   })
 })
 

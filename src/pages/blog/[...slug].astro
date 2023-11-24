@@ -4,10 +4,14 @@ import { getCollection, type CollectionEntry } from 'astro:content'
 
 import RootLayout from '@/layouts/root/RootLayout.astro'
 
-import { excludeDrafts } from '@/lib/data/local/mdx-blog-functions'
+import {
+  excludeDrafts,
+  getPostsSerie
+} from '@/lib/data/local/mdx-blog-functions'
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
+import { PostSeries } from '@/components/for-pages/blog/PostSeries'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', excludeDrafts)
@@ -25,13 +29,13 @@ const { post } = Astro.props
 
 // TOOD: related, tags
 const {
-  slug,
-  data: { image, title, summary, date }
+  data: { image, title, date, serie }
 } = post
 
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
 
-console.log(post)
+const postsSerie = await getPostsSerie(serie?.title)
+console.log(postsSerie)
 ---
 
 <RootLayout>
@@ -67,6 +71,12 @@ console.log(post)
             class='my-8 rounded-md border bg-muted transition-colors'
           />
         )
+      }
+
+      {
+        postsSerie != null && postsSerie.posts.length > 1 ? (
+          <PostSeries client:visible data={postsSerie} isInteractive={true} />
+        ) : null
       }
       <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
         <!-- <slot /> -->

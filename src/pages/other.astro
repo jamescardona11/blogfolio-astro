@@ -7,12 +7,9 @@ import Link from '@/components/Link.astro'
 
 import Tag from '@/components/old/Tag.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
-import {
-  excludeDrafts,
-  sortBlogPosts
-} from '@/lib/data/local/mdx-blog-functions'
+import { excludeDrafts, sortPosts } from '@/lib/data/local/mdx-posts-functions'
 
-const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
+const posts = await getCollection('blog', excludeDrafts).then(sortPosts)
 ---
 
 <RootLayout
@@ -104,3 +101,4 @@ const posts = await getCollection('blog', excludeDrafts).then(sortBlogPosts)
   <!--        </div>-->
   <!--)}-->
 </RootLayout>
+ @/lib/data/local/mdx-posts-functions

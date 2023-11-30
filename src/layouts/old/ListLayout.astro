@@ -9,7 +9,7 @@ import { Link } from '@radix-ui/react-navigation-menu'
 interface Props {
   title: string
   description: string
-  page: Page<CollectionEntry<'blog'>[]>
+  page: Page<CollectionEntry<'posts'>[]>
 }
 
 const { title, description, page } = Astro.props
@@ -39,7 +39,7 @@ const hasDefaultSlot = Astro.slots.has('default')
           ({
             slug,
             data: { date, title, summary, tags }
-          }: CollectionEntry<'blog'>) => (
+          }: CollectionEntry<'posts'>) => (
             <li class='py-4'>
               <article class='space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0'>
                 <dl>

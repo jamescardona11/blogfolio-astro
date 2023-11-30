@@ -9,9 +9,9 @@ import SectionContainer from '../SectionContainer.astro'
 import RootLayout from '../root/RootLayout.astro'
 
 interface Props {
-  post: CollectionEntry<'blog'>
-  next?: CollectionEntry<'blog'>
-  prev?: CollectionEntry<'blog'>
+  post: CollectionEntry<'posts'>
+  next?: CollectionEntry<'posts'>
+  prev?: CollectionEntry<'posts'>
 }
 
 const { post, next, prev } = Astro.props as Props
@@ -19,7 +19,7 @@ const authors: CollectionEntry<'authors'>[] = await getEntries(
   post.data.authors
 )
 const tags: CollectionEntry<'tags'> = await getEntries(post.data.tags)
-const related: CollectionEntry<'blog'>[] = await getEntries(post.data.related)
+const related: CollectionEntry<'posts'>[] = await getEntries(post.data.related)
 
 // TODO: Later add support for headings and remarkPluginFrontmatter
 const { Content, headings, remarkPluginFrontmatter } = await post.render()

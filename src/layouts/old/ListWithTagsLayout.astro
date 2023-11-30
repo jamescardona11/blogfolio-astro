@@ -5,7 +5,7 @@ import RootLayout from '../root/RootLayout.astro'
 interface Props {
   title: string
   description: string
-  page: Page<CollectionEntry<'blog'>[]>
+  page: Page<CollectionEntry<'posts'>[]>
 }
 
 const tags = await getCollection('tags')
@@ -88,7 +88,7 @@ const isBlogPage = Astro.url.pathname.startsWith('/blog')
               ({
                 slug,
                 data: { date, title, summary, tags }
-              }: CollectionEntry<'blog'>) => (
+              }: CollectionEntry<'posts'>) => (
                 <li class='py-5'>
                   <article class='space-y-2 flex flex-col xl:space-y-0'>
                     <dl>

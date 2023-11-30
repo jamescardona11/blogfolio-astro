@@ -16,7 +16,7 @@ const authors = defineCollection({
   })
 })
 
-const blog = defineCollection({
+const posts = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
@@ -27,7 +27,7 @@ const blog = defineCollection({
     lastmod: z.coerce.date().optional(),
     tags: z.array(reference('tags')).default(['default']),
     // Add related posts
-    related: z.array(reference('blog')).default([]),
+    related: z.array(reference('posts')).default([]),
     serie: z
       .object({
         order: z.number(),
@@ -49,4 +49,4 @@ const tags = defineCollection({
   })
 })
 
-export const collections = { blog, authors, tags }
+export const collections = { posts, authors, tags }

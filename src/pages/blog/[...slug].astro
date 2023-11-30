@@ -7,14 +7,14 @@ import RootLayout from '@/layouts/root/RootLayout.astro'
 import {
   excludeDrafts,
   getPostsSerie
-} from '@/lib/data/local/mdx-blog-functions'
+} from '@/lib/data/local/mdx-posts-functions'
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
 import PostSeries from '@/components/for-pages/blog/PostSeries.astro'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', excludeDrafts)
+  const posts = await getCollection('posts', excludeDrafts)
   return posts.map((post, index) => ({
     params: { slug: post.slug },
     props: { post, next: posts[index + 1], prev: posts[index - 1] }
@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  post: CollectionEntry<'blog'>
+  post: CollectionEntry<'posts'>
 }
 
 const { post } = Astro.props
@@ -91,3 +91,4 @@ const postsSerie = await getPostsSerie(serie?.title, title)
     </article>
   </SectionContainer>
 </RootLayout>
+ @/lib/data/local/mdx-posts-functions

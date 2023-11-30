@@ -2,9 +2,9 @@ import type { PostSerie } from '@/content/post-serie.type'
 import { getCollection, type CollectionEntry } from 'astro:content'
 
 // This code sorts blog posts by date. It's used to determine the order that posts are displayed on the blog index page.
-export const sortBlogPosts = (
-  posts: CollectionEntry<'blog'>[]
-): CollectionEntry<'blog'>[] => {
+export const sortPosts = (
+  posts: CollectionEntry<'posts'>[]
+): CollectionEntry<'posts'>[] => {
   return posts.sort((a, b) => {
     return new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   })
@@ -12,7 +12,7 @@ export const sortBlogPosts = (
 
 //  Exclude draft posts from the collection.
 // If the site is built in production mode, draft posts are excluded by default.
-export const excludeDrafts = ({ data }: CollectionEntry<'blog'>): boolean => {
+export const excludeDrafts = ({ data }: CollectionEntry<'posts'>): boolean => {
   return import.meta.env.PROD ? data.status != 'draft' : true
 }
 
@@ -22,9 +22,9 @@ export const getPostsSerie = async (
   currentTitle: string | undefined
 ): Promise<PostSerie | null> => {
   if (!serieTitle || !currentTitle) return null
-  const posts = await getCollection('blog', (post: CollectionEntry<'blog'>) =>
-    filterSerieBlogPost(serieTitle, post)
-  ).then(sortSerieBlogPosts)
+  const posts = await getCollection('posts', (post: CollectionEntry<'posts'>) =>
+    filterSeriePosts(serieTitle, post)
+  ).then(sortSeriePosts)
 
   return {
     title: serieTitle,
@@ -40,9 +40,9 @@ export const getPostsSerie = async (
   }
 }
 
-const filterSerieBlogPost = (
+const filterSeriePosts = (
   serie: string,
-  { data }: CollectionEntry<'blog'>
+  { data }: CollectionEntry<'posts'>
 ): boolean => {
   // Filter out draft posts in production
   let isNotDraft = import.meta.env.PROD ? data.status != 'draft' : true
@@ -52,9 +52,9 @@ const filterSerieBlogPost = (
   return isNotDraft && isSerie
 }
 
-const sortSerieBlogPosts = (
-  posts: CollectionEntry<'blog'>[]
-): CollectionEntry<'blog'>[] => {
+const sortSeriePosts = (
+  posts: CollectionEntry<'posts'>[]
+): CollectionEntry<'posts'>[] => {
   return posts.sort((a, b) => {
     return a.data.serie!.order - b.data.serie!.order
   })

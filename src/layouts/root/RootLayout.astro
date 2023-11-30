@@ -2,6 +2,7 @@
 import BaseHead from './BaseHead.astro'
 import Header from '@/components/nav/header/Header.astro'
 import Footer from '@/components/nav/footer/Footer.astro'
+import SectionContainer from '../SectionContainer.astro'
 
 interface Props {
   metaTitle?: string
@@ -13,13 +14,9 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 
 <html lang='en' class='scroll-smooth'>
   <BaseHead metaTitle={title} metaDescription={description} />
-  <body
-    class='font-sans antialiased bg-background text-foreground flex flex-col min-h-screen justify-between'
-  >
-    <Header />
-    <main class='mb-auto'>
+  <body class='font-sans antialiased bg-background text-foreground'>
+    <main>
       <slot />
     </main>
-    <Footer />
   </body>
 </html>

@@ -1,8 +1,8 @@
 ---
 import Footer from '@/components/nav/footer/Footer.astro'
 import Header from '@/components/nav/header/Header.astro'
-import SectionContainer from '@/layouts/SectionContainer.astro'
 import RootLayout from '@/layouts/root/RootLayout.astro'
+import SectionContainer from '@/layouts/SectionContainer.astro'
 
 interface Props {
   metaTitle?: string
@@ -13,11 +13,11 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
 <RootLayout metaTitle={title} metaDescription={description}>
-  <div class='flex flex-col justify-between min-h-screen'>
+  <div class='flex flex-col min-h-screen'>
     <Header />
-    <SectionContainer>
+    <SectionContainer className='mb-auto'>
       <div
-        class='grid grid-cols-1 gap-y-8 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_1fr] max-sm:px-2'
+        class='grid grid-cols-[1fr,min(640px,100%),1fr] gap-y-8 px-4 pt-12 font-sans text-base xl:grid-cols-[1fr,minmax(auto,200px),min(744px,100%),minmax(auto,200px),1fr] xl:gap-x-9 xl:px-0 [&>*]:col-start-2 xl:[&>*]:col-start-3'
       >
         <slot />
       </div>

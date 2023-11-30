@@ -4,12 +4,10 @@ import type { PostSerie } from '@/content/post-serie.type'
 
 interface Props {
   data: PostSerie
-  isInteractive: boolean | undefined
+  isInteractive?: boolean | undefined
 }
 
 const { data, isInteractive } = Astro.props
-
-console.log('data', data)
 
 const title = data.title
 const currentPost = data.posts.find(post => post.isCurrent)
@@ -115,7 +113,6 @@ const currentIndex = currentPost!.order
 
     function toggleCard() {
       if (cardContent == null) return
-      console.log('toggleCard')
 
       if (isOpen) {
         cardContent.classList.add('hidden')

@@ -2,6 +2,9 @@
 import RootLayout from '@/layouts/root/RootLayout.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
 
+import Footer from '@/components/nav/footer/Footer.astro'
+import Header from '@/components/nav/header/Header.astro'
+
 interface Props {
   metaTitle?: string
   metaDescription?: string
@@ -11,7 +14,11 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
 <RootLayout metaTitle={title} metaDescription={description}>
-  <SectionContainer>
-    <slot />
-  </SectionContainer>
+  <div class='flex flex-col justify-between min-h-screen'>
+    <Header />
+    <SectionContainer className='mb-auto'>
+      <slot />
+    </SectionContainer>
+    <Footer />
+  </div>
 </RootLayout>

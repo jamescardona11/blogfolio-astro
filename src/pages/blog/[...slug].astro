@@ -12,6 +12,7 @@ import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
 import PostSeries from '@/components/for-pages/blog/PostSeries.astro'
+import PostLayout from '@/layouts/PostLayout.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', excludeDrafts)
@@ -37,58 +38,106 @@ const { Content, headings, remarkPluginFrontmatter } = await post.render()
 const postsSerie = await getPostsSerie(serie?.title, title)
 ---
 
-<RootLayout>
-  <SectionContainer>
-    <article class='container relative max-w-3xl py-6 lg:py-10'>
-      <Link
-        href='/blog'
-        class='absolute left-[-200px] top-14 hidden xl:inline-flex'
-      >
-        See all posts
-      </Link>
-      <div>
-        {
-          date && (
-            <p class='text-sm text-muted-foreground'>
-              Published on <FormattedDate date={date} />
-            </p>
-          )
-        }
-        <h1
-          class='mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl'
-        >
-          {title}
-        </h1>
-      </div>
+<PostLayout>
+  <div>
+    <h1 class='text-2xl font-medium sm:text-3xl'>{title}</h1>
+
+    <div class='flex mt-2 space-x-2 text-lg text-rose-100/50'>
       {
-        image && (
-          <Image
-            src={image}
-            alt={title}
-            width={720}
-            height={405}
-            class='my-8 rounded-md border bg-muted transition-colors'
-          />
+        date && (
+          <p class='text-sm text-muted-foreground'>
+            Published on <FormattedDate date={date} />
+          </p>
         )
+      }
+      <div class='text-rose-100/30'>&middot;</div>
+      <div>METRICS</div>
+    </div>
+  </div>
+
+  <div class='sticky top-20 hidden h-0 xl:!col-start-4 xl:row-start-2 xl:block'>
+    <div class='space-y-6'>
+      {
+        headings != null ? (
+          <div>HEADINGS</div>
+        ) : // <div class='space-y-2 text-sm'>
+
+        null
       }
 
+      <div class='border-t border-rose-200/10'></div>
+
+      <div class='flex items-center justify-between'>
+        {/* <LikeButton2 slug={post.slug} /> */}
+        <div class=''>
+          <button class='text-sm text-rose-100/30 hover:text-rose-100/60'>
+            Back to top
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {
+    postsSerie != null && postsSerie.posts.length > 1 && (
+      <PostSeries data={postsSerie} isInteractive={true} />
+    )
+  }
+
+  <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+    <Content />
+  </div>
+
+  <div class='mt-16'>{/* <LikeButton2 slug={post.slug} /> */}</div>
+  {
+    postsSerie != null && postsSerie.posts.length > 1 ? (
+      <div class='my-16'>
+        <PostSeries data={postsSerie} />
+      </div>
+    ) : null
+  }
+  <!-- <Link
+      href='/blog'
+      class='absolute left-[-200px] top-14 hidden xl:inline-flex'
+    >
+      See all posts
+    </Link>
+    <div>
       {
-        postsSerie != null && postsSerie.posts.length > 1 && (
-          <PostSeries data={postsSerie} isInteractive={true} />
+        date && (
+          <p class='text-sm text-muted-foreground'>
+            Published on <FormattedDate date={date} />
+          </p>
         )
       }
-      <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
-        <!-- <slot /> -->
-        <Content />
-      </div>
-      <hr class='mt-12' />
-      <div class='flex justify-center py-6 lg:py-10'>
-        <Link href='/blog'>
-          <!-- <Icons.chevronLeft class='mr-2 h-4 w-4' /> -->
-           See all posts
-        </Link>
-      </div>
-    </article>
-  </SectionContainer>
-</RootLayout>
- @/lib/data/local/mdx-posts-functions
+      <h1
+        class='mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl'
+      >
+        {title}
+      </h1>
+    </div>
+    {
+      image && (
+        <Image
+          src={image}
+          alt={title}
+          width={720}
+          height={405}
+          class='my-8 rounded-md border bg-muted transition-colors'
+        />
+      )
+    }
+
+    {
+      postsSerie != null && postsSerie.posts.length > 1 && (
+        <PostSeries data={postsSerie} isInteractive={true} />
+      )
+    }
+    <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+      <Content />
+    </div>
+    <hr class='mt-12' />
+    <div class='flex justify-center py-6 lg:py-10'>
+      <Link href='/blog'>chevronLeft --- See all posts</Link>
+    </div> -->
+</PostLayout>

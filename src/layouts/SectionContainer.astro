@@ -1,6 +1,17 @@
+---
+interface Props {
+  className?: string
+}
+
+const { className } = Astro.props
+---
+
 <!-- base container -->
 <section
-  class='container mx-auto pt-6 pb-16 md:pt-10 md:pb-20 max-w-[62rem] flex flex-col'
+  class:list={[
+    'container mx-auto pt-6 pb-16 md:pt-10 md:pb-20 max-w-[62rem] flex flex-col',
+    className
+  ]}
 >
   <slot />
 </section>

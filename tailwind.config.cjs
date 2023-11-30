@@ -134,6 +134,29 @@ module.exports = {
             },
             'h1,h2,h3,h4,h5,h6': {
               color: theme('colors.gray.100')
+            },
+            pre: {
+              lineHeight: 2,
+              border: '1px solid',
+              borderColor: theme('colors.zinc.700'),
+              code: {
+                '.line::before': {
+                  content: 'counter(line)',
+                  counterIncrement: 'line',
+                  display: 'inline-block',
+                  width: '16px',
+                  marginRight: '16px',
+                  textAlign: 'right',
+                  color: theme('colors.zinc.500')
+                }
+              },
+              '> code': {
+                display: 'grid',
+                counterReset: 'line',
+                '> .line': {
+                  borderLeft: '2px solid transparent'
+                }
+              }
             }
           }
         }

@@ -1,4 +1,5 @@
 import { defineCollection, reference, z } from 'astro:content'
+import { postStatusEnum } from './post-status.type'
 
 const authors = defineCollection({
   type: 'content',
@@ -33,7 +34,7 @@ const blog = defineCollection({
         title: z.string()
       })
       .optional(),
-    draft: z.boolean().default(false)
+    status: postStatusEnum.default('draft')
   })
 })
 

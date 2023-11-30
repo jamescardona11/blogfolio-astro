@@ -11,7 +11,6 @@ import {
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
-import Icons from '@/components/icons/Icons.astro'
 import PostSeries from '@/components/for-pages/blog/PostSeries.astro'
 
 export async function getStaticPaths() {
@@ -35,8 +34,7 @@ const {
 
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
 
-const postsSerie = await getPostsSerie(serie?.title)
-// console.log(remarkPluginFrontmatter)
+const postsSerie = await getPostsSerie(serie?.title, title)
 ---
 
 <RootLayout>

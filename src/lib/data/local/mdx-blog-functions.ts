@@ -13,14 +13,15 @@ export const sortBlogPosts = (
 //  Exclude draft posts from the collection.
 // If the site is built in production mode, draft posts are excluded by default.
 export const excludeDrafts = ({ data }: CollectionEntry<'blog'>): boolean => {
-  return import.meta.env.PROD ? !data.draft : true
+  return import.meta.env.PROD ? data.status != 'draft' : true
 }
 
 // Get the serie collection for a blog reference using the title of the serie
 export const getPostsSerie = async (
-  serieTitle: string | undefined
+  serieTitle: string | undefined,
+  currentTitle: string | undefined
 ): Promise<PostSerie | null> => {
-  if (!serieTitle) return null
+  if (!serieTitle || !currentTitle) return null
   const posts = await getCollection('blog', (post: CollectionEntry<'blog'>) =>
     filterSerieBlogPost(serieTitle, post)
   ).then(sortSerieBlogPosts)
@@ -31,8 +32,9 @@ export const getPostsSerie = async (
       return {
         title: post.data.title,
         slug: post.slug,
-        status: post.data.draft ? 'draft' : 'published',
-        isCurrent: post.data.serie!.title == serieTitle
+        status: post.data.status,
+        isCurrent: post.data.title === currentTitle,
+        order: post.data.serie!.order
       }
     })
   }
@@ -43,7 +45,7 @@ const filterSerieBlogPost = (
   { data }: CollectionEntry<'blog'>
 ): boolean => {
   // Filter out draft posts in production
-  let isNotDraft = import.meta.env.PROD ? !data.draft : true
+  let isNotDraft = import.meta.env.PROD ? data.status != 'draft' : true
   // Filter out posts that are not part of the serie
   let isSerie = data.serie?.title === serie
 
@@ -54,6 +56,6 @@ const sortSerieBlogPosts = (
   posts: CollectionEntry<'blog'>[]
 ): CollectionEntry<'blog'>[] => {
   return posts.sort((a, b) => {
-    return b.data.serie!.order - a.data.serie!.order
+    return a.data.serie!.order - b.data.serie!.order
   })
 }

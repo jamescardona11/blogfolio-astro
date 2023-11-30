@@ -14,6 +14,8 @@ import ClockIcon from './source/ClockIcon.astro'
 import ContributionsIcon from './source/ContributionsIcon.astro'
 import LikeIcon from './source/LikeIcon.astro'
 import ViewsIcon from './source/ViewsIcon.astro'
+import ChevronDown from './source/ChevronDown.astro'
+import ChevronUp from './source/ChevronUp.astro'
 
 const components = {
   github: Github,
@@ -28,7 +30,9 @@ const components = {
   clock: ClockIcon,
   contributions: ContributionsIcon,
   likes: LikeIcon,
-  views: ViewsIcon
+  views: ViewsIcon,
+  chevronDown: ChevronDown,
+  chevronUp: ChevronUp
 }
 
 export type IconKey = keyof typeof components

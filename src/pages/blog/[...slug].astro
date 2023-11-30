@@ -11,7 +11,8 @@ import {
 import Link from '@/components/Link.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import SectionContainer from '@/layouts/SectionContainer.astro'
-import { PostSeries } from '@/components/for-pages/blog/PostSeries'
+import Icons from '@/components/icons/Icons.astro'
+import PostSeries from '@/components/for-pages/blog/PostSeries.astro'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', excludeDrafts)
@@ -35,7 +36,7 @@ const {
 const { Content, headings, remarkPluginFrontmatter } = await post.render()
 
 const postsSerie = await getPostsSerie(serie?.title)
-console.log(postsSerie)
+// console.log(remarkPluginFrontmatter)
 ---
 
 <RootLayout>
@@ -74,9 +75,9 @@ console.log(postsSerie)
       }
 
       {
-        postsSerie != null && postsSerie.posts.length > 1 ? (
-          <PostSeries client:visible data={postsSerie} isInteractive={true} />
-        ) : null
+        postsSerie != null && postsSerie.posts.length > 1 && (
+          <PostSeries data={postsSerie} isInteractive={true} />
+        )
       }
       <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
         <!-- <slot /> -->

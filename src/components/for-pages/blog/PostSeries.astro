@@ -1,0 +1,105 @@
+---
+import Icons from '@/components/icons/Icons.astro'
+import ChevronDown from '@components/icons/source/ChevronDown.astro'
+import ChevronUp from '@components/icons/source/ChevronUp.astro'
+import type { PostSerie } from '@/content/post-serie.type'
+
+interface Props {
+  data: PostSerie
+  isInteractive: boolean | undefined
+}
+
+const { data, isInteractive } = Astro.props
+
+console.log('Prosp', isInteractive)
+---
+
+<div
+  class='rounded-2xl bg-white/5 p-5 shadow-surface-elevation-low lg:px-8 lg:py-7'
+>
+  <div toggle-card class='group flex w-full items-center text-left'>
+    <div>
+      <div class='text-sm uppercase text-rose-100/50'>Series</div>
+      <div class='text-lg font-medium sm:text-xl'>
+        Post Series Title
+        <span class='font-normal text-rose-100/50'> &middot; 1 of 3</span>
+      </div>
+    </div>
+    <div
+      class:list={[
+        'ml-auto pl-4',
+        {
+          hidden: !isInteractive
+        }
+      ]}
+    >
+      <div
+        class='rounded-full dark:bg-zinc-700 p-2 dark:group-hover:bg-rose-100/25'
+      >
+        <Icons kind='chevronDown' class='hidden h-5 w-5' />
+        <Icons kind='chevronUp' class='hidden h-5 w-5' />
+      </div>
+    </div>
+  </div>
+
+  <div card-content class='hidden'>
+    <hr class='my-5 border-t-2 border-rose-200/5' />
+    <ul class='text-base'>
+      <li
+        class='relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full before:bg-rose-300/90 before:ring-[3px] before:ring-purple-400/20 before:ring-offset-1 before:ring-offset-black/10'
+      >
+        <span class='text-rose-50/90'>Post 1</span>
+      </li>
+      <li
+        class='relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full before:bg-rose-100/30'
+      >
+        <a href='/blog/post-2' class='custom-link-styles focus-visible-outline'>
+          Post 2
+        </a>
+      </li>
+      <li
+        class='relative my-3 pl-7 before:absolute before:left-1 before:top-[9px] before:h-1.5 before:w-1.5 before:rounded-full before:bg-rose-100/10'
+      >
+        <span class='text-rose-100/50'>Post 3</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script define:vars={{ isInteractive }}>
+  let isOpen = !isInteractive
+
+  const cardHeader = document.querySelector('[toggle-card]')
+  const cardContent = document.querySelector('[card-content]')
+  const chevronDownIcon = document.querySelector('[chevrondown-icon]')
+  const chevronUpIcon = document.querySelector('[chevronup-icon]')
+
+  init()
+
+  function init() {
+    if (isInteractive) {
+      // Add event listener to open the card
+      cardHeader.addEventListener('click', toggleCard)
+      cardHeader.classList.add('cursor-pointer')
+      chevronDownIcon.classList.remove('hidden')
+    } else {
+      cardContent.classList.remove('hidden')
+    }
+  }
+
+  function toggleCard() {
+    if (cardContent == null) return
+    console.log('toggleCard')
+
+    if (isOpen) {
+      cardContent.classList.add('hidden')
+      chevronUpIcon.classList.add('hidden')
+      chevronDownIcon.classList.remove('hidden')
+    } else {
+      cardContent.classList.remove('hidden')
+      chevronUpIcon.classList.remove('hidden')
+      chevronDownIcon.classList.add('hidden')
+    }
+    isOpen = !isOpen
+  }
+</script>

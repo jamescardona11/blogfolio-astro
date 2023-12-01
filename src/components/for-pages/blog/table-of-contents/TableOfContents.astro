@@ -1,6 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro'
-import { HEADING_CLASS, HEADING_HOVER, TOP_ID, TOP_SCROLL_ID } from './toc'
+import { HEADING_CLASS, HEADING_HOVER, TOP_ID } from './toc'
 
 interface Props {
   headings: MarkdownHeading[]
@@ -14,7 +14,7 @@ const { headings } = Astro.props
     <h2 class='text-md font-bold uppercase text-zinc-100/80'>On this page</h2>
     <ul>
       <a
-        id={TOP_SCROLL_ID}
+        id='preview-heading'
         href={'#' + TOP_ID}
         class:list={[HEADING_CLASS, HEADING_HOVER, 'pl-2']}
       >
@@ -44,7 +44,15 @@ const { headings } = Astro.props
 </starlight-toc>
 
 <script src='./starlight-toc'></script>
-<script src='./scroll-to-top'></script>
+
+<script>
+  const scrollToTopButton = document.getElementById('preview-heading')
+
+  scrollToTopButton?.addEventListener('click', e => {
+    e.preventDefault()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
+</script>
 
 <style>
   a[aria-current='true'] {

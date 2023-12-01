@@ -1,0 +1,15 @@
+<button
+  id='scrollToTopButton'
+  class='text-sm text-zinc-100/30 hover:text-zinc-100/60'
+  onclick=''
+>
+  Back to top
+</button>
+
+<script>
+  const scrollToTopButton = document.getElementById('scrollToTopButton')
+
+  scrollToTopButton?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
+</script>

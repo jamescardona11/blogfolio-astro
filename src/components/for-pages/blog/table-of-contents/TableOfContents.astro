@@ -1,0 +1,29 @@
+---
+import type { MarkdownHeading } from 'astro'
+import { getTOC, MAX_HEADING_LEVEL, MIN_HEADING_LEVEL } from './toc'
+import TableOfContentItem from './TableOfContentItem.astro'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+const toc = getTOC(headings)
+---
+
+{
+  toc && (
+    <starlight-toc
+      data-min-h={MIN_HEADING_LEVEL}
+      data-max-h={MAX_HEADING_LEVEL}
+    >
+      <nav aria-labelledby='starlight__on-this-page'>
+        <h2 id='starlight__on-this-page'>On this page</h2>
+        <TableOfContentItem toc={toc} />
+      </nav>
+    </starlight-toc>
+  )
+}
+
+<script src='./starlight-toc'></script>

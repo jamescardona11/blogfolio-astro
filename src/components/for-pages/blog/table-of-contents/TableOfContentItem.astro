@@ -1,5 +1,5 @@
 ---
-import type { TocItem } from './toc'
+import { TOP_ID, type TocItem } from './toc'
 
 interface Props {
   toc: TocItem[]
@@ -11,16 +11,23 @@ const { toc, depth = 0 } = Astro.props
 
 <ul>
   {
-    toc.map(heading => (
-      <li>
-        <a href={'#' + heading.slug}>
-          <span>{heading.text}</span>
-        </a>
-        {heading.children.length > 0 && (
-          <Astro.self toc={heading.children} depth={depth + 1} />
-        )}
-      </li>
-    ))
+    toc.map(heading => {
+      const href = heading.slug === TOP_ID ? '#' : '#' + heading.slug
+      return (
+        <Fragment>
+          <li>
+            <a href={href}>
+              <span>{heading.text}</span>
+            </a>
+            {heading.children.length > 0 && (
+              <Fragment>
+                <Astro.self toc={heading.children} depth={depth + 1} />
+              </Fragment>
+            )}
+          </li>
+        </Fragment>
+      )
+    })
   }
 </ul>
 

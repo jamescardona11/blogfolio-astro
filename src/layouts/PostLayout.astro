@@ -12,7 +12,7 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 <RootLayout metaTitle={title} metaDescription={description}>
   <div
     class:list={[
-      'grid gap-y-8 font-sans text-base',
+      'grid gap-y-8 font-sans text-base max-w-none',
       'gap-y-8 xl:gap-x-9 xl:px-0',
       'grid-cols-[1fr,min(640px,100%),1fr]',
       'xl:grid-cols-[1fr,minmax(auto,200px),min(744px,100%),minmax(auto,200px),1fr]',

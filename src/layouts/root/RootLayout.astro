@@ -1,7 +1,6 @@
 ---
 import Header from '@/components/nav/header/Header.astro'
 import BaseHead from './BaseHead.astro'
-import SectionContainer from '../SectionContainer.astro'
 import Footer from '@/components/nav/footer/Footer.astro'
 
 interface Props {
@@ -18,9 +17,11 @@ const { metaTitle: title, metaDescription: description } = Astro.props
     class='font-sans antialiased bg-background text-foreground flex flex-col justify-between min-h-screen'
   >
     <Header />
-    <SectionContainer>
+    <main
+      class='container mx-auto py-16 md:py-16 max-w-[62rem] flex flex-col mb-auto'
+    >
       <slot />
-    </SectionContainer>
+    </main>
     <Footer />
   </body>
 </html>

@@ -38,7 +38,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
 
 <PostLayout>
   <div>
-    <h1 class='text-2xl font-medium sm:text-3xl'>{title}</h1>
+    <h1 id={TOP_ID} class='text-2xl font-medium sm:text-3xl'>{title}</h1>
 
     <div class='flex mt-2 space-x-2 text-lg text-zinc-100/50'>
       {
@@ -55,13 +55,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
 
   <div class='sticky top-20 hidden h-0 xl:!col-start-4 xl:row-start-2 xl:block'>
     <div class='space-y-6'>
-      {
-        headings != null ? (
-          <TableOfContents headings={headings} />
-        ) : // <div class='space-y-2 text-sm'>
-
-        null
-      }
+      {headings != null && <TableOfContents headings={headings} />}
 
       <div class='border-t border-zinc-200/10'></div>
 
@@ -82,7 +76,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
     )
   }
 
-  <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+  <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
     <Content />
   </div>
 
@@ -109,7 +103,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
         )
       }
       <h1
-        class='mt-2 inline-block font-heading text-4xl leading-tight lg:text-5xl'
+        class='inline-block mt-2 text-4xl leading-tight font-heading lg:text-5xl'
       >
         {title}
       </h1>
@@ -121,7 +115,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
           alt={title}
           width={720}
           height={405}
-          class='my-8 rounded-md border bg-muted transition-colors'
+          class='my-8 transition-colors border rounded-md bg-muted'
         />
       )
     }
@@ -131,7 +125,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
         <PostSeries data={postsSerie} isInteractive={true} />
       )
     }
-    <div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+    <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
       <Content />
     </div>
     <hr class='mt-12' />

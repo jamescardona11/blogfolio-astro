@@ -12,11 +12,17 @@ const { toc, depth = 0 } = Astro.props
 <ul>
   {
     toc.map(heading => {
-      const href = heading.slug === TOP_ID ? '#' : '#' + heading.slug
+      const id = heading.slug === TOP_ID ? 'scrollLink' : undefined
       return (
         <Fragment>
           <li>
-            <a href={href}>{heading.text}</a>
+            <a
+              id={id}
+              href={'#' + heading.slug}
+              class='block transition-all text-zinc-100/50 underline-offset-2 hover:text-zinc-100 hover:decoration-zinc-200/50'
+            >
+              {heading.text}
+            </a>
             {heading.children.length > 0 && (
               <Fragment>
                 <Astro.self toc={heading.children} depth={depth + 1} />
@@ -28,6 +34,30 @@ const { toc, depth = 0 } = Astro.props
     })
   }
 </ul>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Encuentra el enlace que activará el desplazamiento
+    const scrollLink = document.getElementById('scrollLink')
+
+    // Agrega un evento de clic al enlace
+    scrollLink.addEventListener('click', function (e) {
+      e.preventDefault()
+
+      // Encuentra el elemento de destino
+      const targetElement = document.querySelector('h1')
+
+      // Calcula el desplazamiento, incluyendo el margen deseado
+      const offset = targetElement.offsetTop - 50
+
+      // Usa el método `scrollTo` para el desplazamiento personalizado
+      window.scrollTo({
+        top: offset,
+        behavior: 'smooth'
+      })
+    })
+  })
+</script>
 
 <style define:vars={{ depth }}>
   ul {
@@ -46,8 +76,8 @@ const { toc, depth = 0 } = Astro.props
   a[aria-current='true'],
   a[aria-current='true']:hover,
   a[aria-current='true']:focus {
-    font-weight: 600;
-    color: #ff1891;
-    background-color: #ff18;
+    color: var(--color-zinc-100);
+    text-decoration: underline;
+    text-decoration-color: var(--color-zinc-100);
   }
 </style>

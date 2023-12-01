@@ -1,29 +1,54 @@
 ---
 import type { MarkdownHeading } from 'astro'
-import { getTOC, MAX_HEADING_LEVEL, MIN_HEADING_LEVEL } from './toc'
-import TableOfContentItem from './TableOfContentItem.astro'
+import { HEADING_CLASS, HEADING_HOVER, TOP_ID, TOP_SCROLL_ID } from './toc'
 
 interface Props {
   headings: MarkdownHeading[]
 }
 
 const { headings } = Astro.props
-
-const toc = getTOC(headings)
 ---
 
-{
-  toc && (
-    <starlight-toc
-      data-min-h={MIN_HEADING_LEVEL}
-      data-max-h={MAX_HEADING_LEVEL}
-    >
-      <nav>
-        <h2 class='font-semibold uppercase text-zinc-100/80'>On this page</h2>
-        <TableOfContentItem toc={toc} />
-      </nav>
-    </starlight-toc>
-  )
-}
+<starlight-toc>
+  <nav>
+    <h2 class='text-md font-bold uppercase text-zinc-100/80'>On this page</h2>
+    <ul>
+      <a
+        id={TOP_SCROLL_ID}
+        href={'#' + TOP_ID}
+        class:list={[HEADING_CLASS, HEADING_HOVER, 'pl-2']}
+      >
+        Preview
+      </a>
+      {
+        headings.map(heading => (
+          <li>
+            <a
+              href={'#' + heading.slug}
+              class:list={[
+                HEADING_CLASS,
+                HEADING_HOVER,
+                {
+                  'pl-2': heading.depth === 2,
+                  'pl-4': heading.depth === 3
+                }
+              ]}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</starlight-toc>
 
 <script src='./starlight-toc'></script>
+<script src='./scroll-to-top'></script>
+
+<style>
+  a[aria-current='true'] {
+    color: var(--color-zinc-100);
+    text-decoration: underline;
+  }
+</style>

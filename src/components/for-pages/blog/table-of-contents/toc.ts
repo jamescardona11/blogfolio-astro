@@ -1,42 +1,17 @@
-import type { MarkdownHeading } from 'astro'
-
 const minHeadingLevel = 1
 const maxHeadingLevel = 4
 const topId = '_top'
+const topScrollId = '_top_scroll'
 
-interface TocItem extends MarkdownHeading {
-  children: TocItem[]
-}
-
-function getTOC(headings: MarkdownHeading[]) {
-  const title = 'Overview'
-
-  headings = headings.filter(
-    ({ depth }) => depth >= minHeadingLevel && depth <= maxHeadingLevel
-  )
-
-  const toc: Array<TocItem> = [
-    { depth: 2, slug: topId, text: title, children: [] }
-  ]
-
-  for (const heading of headings) injectChild(toc, { ...heading, children: [] })
-
-  return toc
-}
+const headingClass =
+  'block text-sm transition-all text-zinc-100/50 underline-offset-2 pt-1 hover:text-zinc-100'
+const headingHover = 'hover:text-zinc-100 hover:decoration-zinc-200/50'
 
 export {
   minHeadingLevel as MIN_HEADING_LEVEL,
   maxHeadingLevel as MAX_HEADING_LEVEL,
   topId as TOP_ID,
-  getTOC
-}
-export type { TocItem }
-
-function injectChild(items: TocItem[], item: TocItem): void {
-  const lastItem = items.at(-1)
-  if (!lastItem || lastItem.depth >= item.depth) {
-    items.push(item)
-  } else {
-    return injectChild(lastItem.children, item)
-  }
+  topScrollId as TOP_SCROLL_ID,
+  headingClass as HEADING_CLASS,
+  headingHover as HEADING_HOVER
 }

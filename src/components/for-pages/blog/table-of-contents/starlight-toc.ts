@@ -1,11 +1,9 @@
-import { TOP_ID } from './toc'
+import { MAX_HEADING_LEVEL, MIN_HEADING_LEVEL, TOP_ID } from './toc'
 
 export class StarlightTOC extends HTMLElement {
   private _current = this.querySelector(
     'a[aria-current="true"]'
   ) as HTMLAnchorElement | null
-  private minH = parseInt(this.dataset.minH || '2', 10)
-  private maxH = parseInt(this.dataset.maxH || '3', 10)
 
   protected set current(link: HTMLAnchorElement) {
     if (link === this._current) return
@@ -29,7 +27,7 @@ export class StarlightTOC extends HTMLElement {
         const level = el.tagName[1]
         if (level) {
           const int = parseInt(level, 10)
-          if (int >= this.minH && int <= this.maxH) return true
+          if (int >= MIN_HEADING_LEVEL && int <= MAX_HEADING_LEVEL) return true
         }
       }
       return false

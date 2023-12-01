@@ -9,6 +9,7 @@ interface ReactionCardProps {
   count: number | undefined
   isActive: boolean
   color: string
+  size: 'sm' | 'lg'
   incrementCB: (type: ReactionType) => void
   decrementCB: (type: ReactionType) => void
 }
@@ -18,6 +19,7 @@ export const ReactionCard: React.FC<ReactionCardProps> = ({
   count,
   isActive,
   color,
+  size,
   incrementCB,
   decrementCB
 }) => {
@@ -38,22 +40,34 @@ export const ReactionCard: React.FC<ReactionCardProps> = ({
       role='button'
       onClick={handleClick}
       className={cn(
-        `${
-          isActive ? 'bg-[rgba(var(--custom-color)/0.05)]' : ''
-        }  w-28 h-10 px-4 py-2 active:scale-x-90 active:scale-y-90 rounded-3xl select-none transition ease-in-out border border-zinc-300 dark:border-zinc-700`,
+        `${isActive ? 'bg-[rgba(var(--custom-color)/0.05)]' : ''}`,
+        'active:scale-x-90 active:scale-y-90 rounded-3xl select-none transition ease-in-out border border-zinc-300 dark:border-zinc-700',
         'hover:bg-[rgba(var(--custom-color)/0.15)]',
-        'hover:border-[rgba(var(--custom-color)/0.16)]'
+        'hover:border-[rgba(var(--custom-color)/0.16)]',
+        'flex items-center justify-center',
+        `${size == 'sm' ? 'w-24 h-8 px-2' : 'w-28 h-10 px-4'}`
       )}
       // @ts-ignore
       style={{ '--custom-color': newColor }}
     >
-      <p className='m-0'>
-        <span className='mr-1.5 text-l'>{getReactionChildren(type)}</span>{' '}
+      <p className='flex'>
+        <span
+          className={cn(`${size == 'sm' ? 'text-xs mr-1' : 'text-l mr-1.5'}`)}
+        >
+          {getReactionChildren(type)}
+        </span>
         {count != null && (
-          <span className='text-base font-black font-headings'>{count}</span>
+          <span
+            className={cn(
+              `${size == 'sm' ? 'text-xs mr-1' : 'text-l mr-1.5'}`,
+              'font-black font-headings'
+            )}
+          >
+            {count}
+          </span>
         )}
         {count == null && (
-          <span className='text-base font-black font-headings'>...</span>
+          <span className='text-xs font-black font-headings'>...</span>
         )}
       </p>
     </div>

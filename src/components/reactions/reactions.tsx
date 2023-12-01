@@ -5,8 +5,16 @@ import {
   type ReactionStatsType
 } from '@/lib/types/reactions.type'
 
-function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
-  const style = vertical != null ? 'flex flex-col gap-2' : 'flex gap-2'
+function Reactions({
+  slug,
+  vertical,
+  size = 'lg'
+}: {
+  slug: string
+  vertical?: boolean
+  size?: 'sm' | 'lg'
+}) {
+  const style = vertical ? 'flex flex-col gap-2' : 'flex gap-2'
 
   const [contentReactions, setContentReactions] =
     useState<ReactionStatsType | null>(null)
@@ -81,6 +89,7 @@ function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
         decrementCB={decrementCB}
         type={'likes'}
         color='#4078c0'
+        size={size}
         count={contentReactions?.likes}
         isActive={userReactions.likes > 0}
       />
@@ -90,6 +99,7 @@ function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
         decrementCB={decrementCB}
         type={'loves'}
         color='#c94091'
+        size={size}
         count={contentReactions?.loves}
         isActive={userReactions.loves > 0}
       />
@@ -99,6 +109,7 @@ function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
         decrementCB={decrementCB}
         type={'claps'}
         color='#26de81'
+        size={size}
         count={contentReactions?.claps}
         isActive={userReactions.claps > 0}
       />
@@ -108,6 +119,7 @@ function Reactions({ slug, vertical }: { slug: string; vertical?: boolean }) {
         decrementCB={decrementCB}
         type={'party'}
         color='#f7b731'
+        size={size}
         count={contentReactions?.party}
         isActive={userReactions.party > 0}
       />

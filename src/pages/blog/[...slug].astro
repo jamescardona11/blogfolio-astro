@@ -6,12 +6,13 @@ import {
   excludeDrafts,
   getPostsSerie
 } from '@/lib/data/local/mdx-posts-functions'
-import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
-import PostSeries from '@/components/for-pages/blog/PostSeries.astro'
+
 import PostLayout from '@/layouts/PostLayout.astro'
-import TableOfContents from '@/components/for-pages/blog/table-of-contents/TableOfContents.astro'
-import { TOP_ID } from '@/components/for-pages/blog/table-of-contents/toc'
-import ScrollToTop from '@/components/for-pages/blog/ScrollToTop.astro'
+import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
+import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
+
+import PostRightPanel from '@/components/for-pages/blog/posts/PostRightPanel.astro'
+import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', excludeDrafts)
@@ -29,6 +30,7 @@ const { post } = Astro.props
 
 // TOOD: related, tags
 const {
+  slug,
   data: { image, title, date, serie }
 } = post
 
@@ -38,6 +40,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
 ---
 
 <PostLayout>
+  <!-- TOP -->
   <div>
     <h1 id={TOP_ID} class='text-2xl font-medium sm:text-3xl'>{title}</h1>
 
@@ -54,18 +57,8 @@ const postsSerie = await getPostsSerie(serie?.title, title)
     </div>
   </div>
 
-  <div class='sticky top-5 hidden h-0 xl:!col-start-4 xl:row-start-2 xl:block'>
-    <div class='space-y-6'>
-      {headings != null && <TableOfContents headings={headings} />}
-
-      <div class='border-t border-zinc-200/10'></div>
-
-      <div class='flex items-center justify-between'>
-        {/* <LikeButton2 slug={post.slug} /> */}
-        <ScrollToTop />
-      </div>
-    </div>
-  </div>
+  <!-- RIGHT -->
+  <PostRightPanel headings={headings} slug={slug} />
 
   {
     postsSerie != null && postsSerie.posts.length > 1 && (

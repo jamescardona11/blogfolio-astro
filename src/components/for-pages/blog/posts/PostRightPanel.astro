@@ -1,0 +1,30 @@
+---
+export const prerender = false // server
+
+import type { MarkdownHeading } from 'astro'
+import ScrollToTop from './ScrollToTop.astro'
+import TableOfContents from './table-of-contents/TableOfContents.astro'
+import Reactions from '@/components/reactions/reactions'
+
+interface Props {
+  slug: string
+  headings: MarkdownHeading[]
+}
+
+const { slug, headings } = Astro.props
+---
+
+<div class='sticky top-5 hidden h-0 xl:!col-start-4 xl:row-start-2 xl:block'>
+  <div class='space-y-6'>
+    {headings != null && <TableOfContents headings={headings} />}
+
+    <div class='border-t border-zinc-200/10'></div>
+
+    <div class='flex flex-col items-start justify-between'>
+      <ScrollToTop />
+      <div class='w-full h-12 my-4'>
+        <Reactions client:idle slug={slug} size='sm' />
+      </div>
+    </div>
+  </div>
+</div>

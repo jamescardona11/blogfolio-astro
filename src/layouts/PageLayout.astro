@@ -10,5 +10,7 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
 <RootLayout metaTitle={title} metaDescription={description}>
-  <slot />
+  <div class='max-w-[62rem]'>
+    <slot />
+  </div>
 </RootLayout>

@@ -16,9 +16,7 @@ const { toc, depth = 0 } = Astro.props
       return (
         <Fragment>
           <li>
-            <a href={href}>
-              <span>{heading.text}</span>
-            </a>
+            <a href={href}>{heading.text}</a>
             {heading.children.length > 0 && (
               <Fragment>
                 <Astro.self toc={heading.children} depth={depth + 1} />

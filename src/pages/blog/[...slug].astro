@@ -40,7 +40,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
   <div>
     <h1 class='text-2xl font-medium sm:text-3xl'>{title}</h1>
 
-    <div class='flex mt-2 space-x-2 text-lg text-rose-100/50'>
+    <div class='flex mt-2 space-x-2 text-lg text-zinc-100/50'>
       {
         date && (
           <p class='text-sm text-muted-foreground'>
@@ -48,7 +48,7 @@ const postsSerie = await getPostsSerie(serie?.title, title)
           </p>
         )
       }
-      <div class='text-rose-100/30'>&middot;</div>
+      <div class='text-zinc-100/30'>&middot;</div>
       <div>METRICS</div>
     </div>
   </div>
@@ -63,12 +63,12 @@ const postsSerie = await getPostsSerie(serie?.title, title)
         null
       }
 
-      <div class='border-t border-rose-200/10'></div>
+      <div class='border-t border-zinc-200/10'></div>
 
       <div class='flex items-center justify-between'>
         {/* <LikeButton2 slug={post.slug} /> */}
         <div class=''>
-          <button class='text-sm text-rose-100/30 hover:text-rose-100/60'>
+          <button class='text-sm text-zinc-100/30 hover:text-zinc-100/60'>
             Back to top
           </button>
         </div>

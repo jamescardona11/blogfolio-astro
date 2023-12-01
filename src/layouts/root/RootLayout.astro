@@ -14,10 +14,10 @@ const { metaTitle: title, metaDescription: description } = Astro.props
 <html lang='en' class='scroll-smooth'>
   <BaseHead metaTitle={title} metaDescription={description} />
   <body
-    class='font-sans antialiased bg-background text-foreground flex flex-col justify-between min-h-screen'
+    class='flex flex-col justify-between min-h-screen font-sans antialiased bg-background text-foreground'
   >
     <Header />
-    <main class='container mx-auto py-16 md:py-16 flex flex-col mb-auto'>
+    <main class='container flex flex-col py-16 mx-auto mb-auto md:py-20'>
       <slot />
     </main>
     <Footer />

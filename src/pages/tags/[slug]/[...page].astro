@@ -1,7 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-// import ListLayout from "@/layouts/ListLayout.astro";
 import { ITEMS_PER_PAGE } from '@/consts'
 import type { Page } from 'astro'
 import { excludeDrafts, sortPosts } from '@/lib/data/local/mdx-posts-functions'
@@ -41,4 +40,3 @@ const { Content } = await entry.render()
 >
   <Content />
 </ListWithTagsLayout>
- @/lib/data/local/mdx-posts-functions

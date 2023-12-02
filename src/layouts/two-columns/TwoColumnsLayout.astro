@@ -9,9 +9,9 @@ interface Props {
 const { metaTitle: title, metaDescription: description } = Astro.props
 ---
 
-<RootLayout metaTitle={title} metaDescription={description}>
+<RootLayout metaTitle={title} metaDescription={description} maxWidth={true}>
   <div
-    class='grid grid-cols-1 gap-y-8 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_1fr] max-sm:px-2 max-w-[62rem]'
+    class='grid grid-cols-1 gap-y-8 md:gap-y-16 md:grid-cols-2 md:grid-rows-[auto_1fr] max-sm:px-2'
   >
     <slot />
   </div>

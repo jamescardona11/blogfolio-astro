@@ -2,24 +2,17 @@
 interface Props {
   variant?: 'left' | 'right' | 'none'
   title?: string
-
   styles?: string
   showHover?: boolean
 }
 
-const {
-  variant = 'none',
-  title,
-
-  styles,
-  showHover = false
-} = Astro.props
+const { variant = 'none', title, styles, showHover = false } = Astro.props
 ---
 
 <div
   class:list={[
     styles,
-    'p-5 rounded-lg border border-zinc-200 dark:border-muted dark:bg-muted',
+    'p-5 rounded-xl border border-zinc-200 dark:border-muted dark:bg-muted',
     {
       '-rotate-1': variant === 'left',
       'rotate-1': variant === 'right'

@@ -1,19 +1,25 @@
 ---
+import PageLayout from '@/layouts/PageLayout.astro'
 import PageTitle from '@/components/PageTitle.astro'
+import SwapViewButtons from '@/components/SwapViewButtons.astro'
 import BacklogCard from '@/components/for-pages/projects/BacklogCard.astro'
 import LearningProjectsCard from '@/components/for-pages/projects/LearningProjectsCard.astro'
 import ProjectsList from '@/components/for-pages/projects/ProjectsList.astro'
-import PageLayout from '@/layouts/PageLayout.astro'
+
 import { getProjectsData } from '@/lib/data/projects-provider'
 
 const projects = await getProjectsData()
 ---
 
 <PageLayout metaTitle="Things I've made in an attempt to make my mark">
-  <PageTitle
-    title="Things I've made in an attempt to make my mark"
-    subtitle="Goal: Don't stop learning."
-  />
+  <div class='flex justify-between'>
+    <PageTitle
+      title="Things I've made in an attempt to make my mark"
+      subtitle="Goal: Don't stop learning."
+    />
+    <SwapViewButtons />
+  </div>
+  <hr class='my-8 border-muted' />
   <ProjectsList
     title='Now'
     subtitle='Projects I currently work on.'

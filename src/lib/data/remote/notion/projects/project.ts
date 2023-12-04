@@ -39,6 +39,8 @@ export async function getProjectsFromNotion() {
       const name = row.name.title[0].text.content
       const slug = slugger(name)
 
+      console.log(row)
+
       return new Project(
         row.id!, // id
         slug, // slug
@@ -46,14 +48,12 @@ export async function getProjectsFromNotion() {
         row.status?.status?.name ?? '', // status
         row.type.select.name, // type
         row.description?.rich_text[0]?.text?.content, // description
-        row.isOpenSource?.checkbox, // isOpenSource
         row.linkProject?.url, // linkProject
+        row.linkLabel?.rich_text[0]?.text?.content ?? 'Project Link', // linkLabel
         row.linkRepository?.url, // linkRepository
-        row.techStack?.multi_select.map(
-          // techStack
-          (skill: { name: any }) => skill.name
-        ),
-        row.icon?.files[0]?.file?.url // icon
+        row.techStack?.multi_select.map((skill: { name: any }) => skill.name), // techStack
+        row.icon?.files[0]?.file?.url, // icon
+        row.hasContent?.checkbox ?? false // hasContent
       )
     })
 

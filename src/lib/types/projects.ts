@@ -5,11 +5,12 @@ export class Project {
   status: string
   type: string
   description?: string
-  isOpenSource?: boolean
   linkProject?: string
+  linkLabel?: string
   linkRepository?: string
   techStack?: string[]
   icon?: string
+  hasContent?: boolean
 
   constructor(
     id: string,
@@ -18,11 +19,12 @@ export class Project {
     status: string,
     type: string,
     description?: string,
-    isOpenSource?: boolean,
     linkProject?: string,
+    linkLabel?: string,
     linkRepository?: string,
     techStack?: string[],
-    icon?: string
+    icon?: string,
+    hasContent?: boolean
   ) {
     this.id = id
     this.slug = slug
@@ -30,11 +32,16 @@ export class Project {
     this.status = status
     this.type = type
     this.description = description
-    this.isOpenSource = isOpenSource
     this.linkProject = linkProject
+    this.linkLabel = linkLabel
     this.linkRepository = linkRepository
     this.techStack = techStack
     this.icon = icon
+    this.hasContent = hasContent
+  }
+
+  isOpenSource(): boolean {
+    return this.linkRepository != null
   }
 
   isLearning(): boolean {

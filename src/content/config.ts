@@ -44,7 +44,7 @@ const projects = defineCollection({
     name: z.string(),
     status: z.enum(['Backlog', 'Paused', 'In Progress', 'Completed']),
     type: z.enum(['Professional', 'Side-Project', 'Learning']),
-    description: z.string().optional(),
+    description: z.string(),
     isOpenSource: z.boolean().optional().default(false),
     linkProject: z.string().optional(),
     linkRepository: z.string().optional(),

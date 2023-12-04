@@ -3,13 +3,13 @@ export type NExperienceRow = {
     id: string
     title: Array<{ text: { content: string } }>
   }
-  startedDate: { id: string; rich_text: Array<{ text: { content: string } }> }
-  endDate?: { id: string; rich_text: Array<{ text: { content?: string } }> }
-  company: { id: string; rich_text: Array<{ text: { content: string } }> }
-  description: { id: string; rich_text: Array<{ text: { content: string } }> }
-  link?: { id: string; url: string }
-  technicalSkills?: { id: string; multi_select: Array<{ name: string }> }
-  image?: { id: string; files: Array<{ file: { url: string } }> }
+  startedDate: { rich_text: Array<{ text: { content: string } }> }
+  endDate?: { rich_text: Array<{ text: { content?: string } }> }
+  company: { rich_text: Array<{ text: { content: string } }> }
+  description: { rich_text: Array<{ text: { content: string } }> }
+  link?: { url: string }
+  technicalSkills?: { multi_select: Array<{ name: string }> }
+  image?: { files: Array<{ file: { url: string } }> }
 }
 
 export type NLearningPathRow = {
@@ -18,25 +18,25 @@ export type NLearningPathRow = {
     title: Array<{ text: { content: string } }>
   }
 
-  url?: { id: string; url: string }
-  tags?: { id: string; select: { name: string } }
+  url?: { url: string }
+  tags?: { select: { name: string } }
 }
 
 export type NProjectRow = {
   id?: string
+  slug: string
   name: {
     id: string
     title: Array<{ text: { content: string } }>
   }
-  slug: { id: string; formula: { string: string } }
-  status: { id: string; status: { name: string } }
-  type: { id: string; select: { name: string } }
-  tag?: { id: string; select: { name: string } }
-  linkLabel?: { id: string; rich_text: Array<{ text: { content: string } }> }
-  link?: { id: string; url: string }
-  description?: { id: string; rich_text: Array<{ text: { content: string } }> }
-  techStack?: { id: string; multi_select: Array<{ name: string }> }
-  icon?: { id: string; files: Array<{ file: { url: string } }> }
+  status: { status: { name: string } }
+  type: { select: { name: string } }
+  description?: { rich_text: Array<{ text: { content: string } }> }
+  isOpenSource?: { checkbox: boolean }
+  linkProject?: { url: string }
+  linkRepository?: { url: string }
+  techStack?: { multi_select: Array<{ name: string }> }
+  icon?: { files: Array<{ file: { url: string } }> }
 }
 
 export type NBlogPostRow = {
@@ -45,14 +45,14 @@ export type NBlogPostRow = {
     id: string
     title: Array<{ text: { content: string } }>
   }
-  cover?: { id: string; files: Array<{ file: { url: string } }> }
-  description?: { id: string; rich_text: Array<{ text: { content: string } }> }
-  where: { id: string; select: { name: string } }
-  series: { id: string; select: { name: string } }
-  order: { id: string; number: { format: number } }
-  tag?: { id: string; select: { name: string } }
-  link?: { id: string; url: string }
-  publishedAt: { id: string; date: { start: string } }
+  cover?: { files: Array<{ file: { url: string } }> }
+  description?: { rich_text: Array<{ text: { content: string } }> }
+  where: { select: { name: string } }
+  series: { select: { name: string } }
+  order: { number: { format: number } }
+  tag?: { select: { name: string } }
+  link?: { url: string }
+  publishedAt: { date: { start: string } }
 }
 
 export type NUsesRow = {
@@ -61,10 +61,10 @@ export type NUsesRow = {
     id: string
     title: Array<{ text: { content: string } }>
   }
-  type: { id: string; select: { name: string } }
-  tags?: { id: string; multi_select: Array<{ name: string }> }
-  link?: { id: string; url: string }
-  description?: { id: string; rich_text: Array<{ text: { content: string } }> }
+  type: { select: { name: string } }
+  tags?: { multi_select: Array<{ name: string }> }
+  link?: { url: string }
+  description?: { rich_text: Array<{ text: { content: string } }> }
 }
 
 export type NSkillRow = {
@@ -72,8 +72,8 @@ export type NSkillRow = {
     id: string
     title: Array<{ text: { content: string } }>
   }
-  color?: { id: string; rich_text: Array<{ text: { content: string } }> }
-  icon?: { id: string; files: Array<{ file: { url: string } }> }
+  color?: { rich_text: Array<{ text: { content: string } }> }
+  icon?: { files: Array<{ file: { url: string } }> }
 }
 
 export type NFunFactRow = {

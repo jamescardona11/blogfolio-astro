@@ -1,6 +1,10 @@
-import type { Project, ProjectStatus } from '@/lib/types/projects'
+import type { Project, ProjectFilterState } from '@/lib/types/projects'
 
-export function filterProjects(projects: Project[], filter: ProjectStatus) {
+export function filterProjects(
+  projects: Project[],
+  filter: ProjectFilterState
+) {
+  console.log(projects)
   if (filter === 'completed') {
     return projects.filter(
       project => project.wasCompleted() && !project.isLearning()

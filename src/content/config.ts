@@ -42,7 +42,7 @@ const projects = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
-    status: z.enum(['In Progress', 'Backlog', 'Completed']),
+    status: z.enum(['Backlog', 'Paused', 'In Progress', 'Completed']),
     type: z.enum(['Professional', 'Side-Project', 'Learning']),
     description: z.string().optional(),
     isOpenSource: z.boolean().optional().default(false),

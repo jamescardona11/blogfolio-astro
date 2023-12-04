@@ -3,7 +3,7 @@ import { slug as slugger } from 'github-slugger'
 import { NOTION_PROJECTS_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
 import { type NProjectRow } from '@/lib/core/notion-core/notion-response-types'
-import { type Project } from '@/lib/types/projects'
+import { Project } from '@/lib/types/projects'
 import { createSuccessResponse } from '@/lib/core/api_response'
 
 const notionDatabaseId = NOTION_PROJECTS_DB
@@ -14,7 +14,7 @@ export async function getProjectsFromNotion() {
   const query = await notionClient.getDatabase(notionDatabaseId, {
     sorts: [
       {
-        property: 'Date',
+        property: 'date',
         direction: 'descending'
       }
     ]
@@ -33,26 +33,29 @@ export async function getProjectsFromNotion() {
     return p
   })
 
-  const projects = rows.map(row => {
-    const name = row.name.title[0].text.content
-    const slug = slugger(name)
+  const projects = rows
+    .filter(e => e.id != null)
+    .map(row => {
+      const name = row.name.title[0].text.content
+      const slug = slugger(name)
 
-    return {
-      id: row.id,
-      slug: slug,
-      name: row.name.title[0].text.content,
-      status: row.status?.status?.name ?? '',
-      type: row.type.select.name,
-      description: row.description?.rich_text[0]?.text?.content,
-      isOpenSource: row.tag?.select?.name,
-      linkProject: row.link?.url,
-      linkRepository: row.link?.url,
-      techStack: row.techStack?.multi_select.map(
-        (skill: { name: any }) => skill.name
-      ),
-      icon: row.icon?.files[0]?.file?.url
-    } as Project
-  })
+      return new Project(
+        row.id!, // id
+        slug, // slug
+        row.name.title[0].text.content, // name
+        row.status?.status?.name ?? '', // status
+        row.type.select.name, // type
+        row.description?.rich_text[0]?.text?.content, // description
+        row.isOpenSource?.checkbox, // isOpenSource
+        row.linkProject?.url, // linkProject
+        row.linkRepository?.url, // linkRepository
+        row.techStack?.multi_select.map(
+          // techStack
+          (skill: { name: any }) => skill.name
+        ),
+        row.icon?.files[0]?.file?.url // icon
+      )
+    })
 
   const uniqueProjects = new Map<string, Project>()
   projects.forEach(project => {

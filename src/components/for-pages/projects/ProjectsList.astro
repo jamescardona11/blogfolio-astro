@@ -1,5 +1,5 @@
 ---
-import type { Project, ProjectStatus } from '@/lib/types/projects'
+import type { Project, ProjectFilterState } from '@/lib/types/projects'
 
 import ProjectCard from '@/components/ProjectCard.astro'
 import { filterProjects } from './filter-projects'
@@ -8,7 +8,7 @@ interface Props {
   title?: string
   subtitle?: string
   projects: Project[]
-  filter: ProjectStatus
+  filter: ProjectFilterState
 }
 
 const { projects, title, subtitle, filter } = Astro.props

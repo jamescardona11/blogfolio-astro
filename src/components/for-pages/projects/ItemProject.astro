@@ -15,7 +15,11 @@ const { project } = Astro.props
     <span class='text-sky-500 mr-2'> {'—'}</span>
 
     <a class='font-sans font-[650] text-sm truncate'>{project.name}</a>
-    {project.link != null && <Icons kind='link' class='h-6 w-6 flex-none' />}
+    {
+      project.linkProject != null && (
+        <Icons kind='link' class='h-6 w-6 flex-none' />
+      )
+    }
 
     {
       !project.isBacklog() && (

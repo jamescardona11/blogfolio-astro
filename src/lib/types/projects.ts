@@ -66,12 +66,12 @@ export class Project {
   }
 }
 
-export type ProjectStatus = 'completed' | 'backlog' | 'active' | 'learning'
+export type ProjectFilterState = 'completed' | 'backlog' | 'active' | 'learning'
 
 export type ProjectListProps = {
   title?: string
   subtitle?: string
-  filter: ProjectStatus
+  filter: ProjectFilterState
   projects: Project[] | null
   isLoading: boolean
 }

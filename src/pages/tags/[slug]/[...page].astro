@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content'
 
 import { ITEMS_PER_PAGE } from '@/consts'
 import type { Page } from 'astro'
-import { excludeDrafts, sortPosts } from '@/lib/data/local/mdx-posts-functions'
+import { excludeDrafts, sortPosts } from '@/lib/data/local/mdx-posts'
 import ListWithTagsLayout from '@/layouts/old/ListWithTagsLayout.astro'
 
 interface Props {
@@ -40,3 +40,4 @@ const { Content } = await entry.render()
 >
   <Content />
 </ListWithTagsLayout>
+ @/lib/data/local/mdx-posts

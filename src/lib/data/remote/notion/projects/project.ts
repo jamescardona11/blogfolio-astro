@@ -43,10 +43,10 @@ export async function getProjectsFromNotion() {
       name: row.name.title[0].text.content,
       status: row.status?.status?.name ?? '',
       type: row.type.select.name,
-      tag: row.tag?.select?.name,
-      linkLabel: row.linkLabel?.rich_text[0]?.text?.content,
-      link: row.link?.url,
       description: row.description?.rich_text[0]?.text?.content,
+      isOpenSource: row.tag?.select?.name,
+      linkProject: row.link?.url,
+      linkRepository: row.link?.url,
       techStack: row.techStack?.multi_select.map(
         (skill: { name: any }) => skill.name
       ),

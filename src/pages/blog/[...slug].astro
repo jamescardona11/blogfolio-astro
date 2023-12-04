@@ -2,10 +2,7 @@
 import { Image } from 'astro:assets'
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-import {
-  excludeDrafts,
-  getPostsSerie
-} from '@/lib/data/local/mdx-posts-functions'
+import { excludeDrafts, getPostsSerie } from '@/lib/data/local/mdx-posts'
 
 import PostLayout from '@/layouts/PostLayout.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
@@ -125,3 +122,4 @@ const postsSerie = await getPostsSerie(serie?.title, title)
 </PostLayout>
 
 <script src='/src/scripts/copy-button.js'></script>
+ @/lib/data/local/mdx-posts

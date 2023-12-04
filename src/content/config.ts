@@ -38,6 +38,22 @@ const posts = defineCollection({
   })
 })
 
+const projects = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    status: z.enum(['In Progress', 'Backlog', 'Completed']),
+    type: z.enum(['Professional', 'Side-Project', 'Learning']),
+    description: z.string().optional(),
+    isOpenSource: z.boolean().optional().default(false),
+    linkProject: z.string().optional(),
+    linkRepository: z.string().optional(),
+    techStack: z.array(z.string()).optional().default([]),
+    icon: z.string().optional(),
+    date: z.coerce.date()
+  })
+})
+
 const tags = defineCollection({
   type: 'content',
   schema: z.object({
@@ -49,4 +65,4 @@ const tags = defineCollection({
   })
 })
 
-export const collections = { posts, authors, tags }
+export const collections = { posts, projects, authors, tags }

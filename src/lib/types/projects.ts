@@ -1,38 +1,38 @@
 export class Project {
-  id: string
-  name: string
+  id: string // Notion id or slug when using local data
   slug: string
+  name: string
   status: string
   type: string
-  tag?: string
-  linkLabel?: string
-  link?: string
   description?: string
+  isOpenSource?: boolean
+  linkProject?: string
+  linkRepository?: string
   techStack?: string[]
   icon?: string
 
   constructor(
     id: string,
-    name: string,
     slug: string,
+    name: string,
     status: string,
     type: string,
-    tags?: string,
-    linkLabel?: string,
-    link?: string,
     description?: string,
+    isOpenSource?: boolean,
+    linkProject?: string,
+    linkRepository?: string,
     techStack?: string[],
     icon?: string
   ) {
     this.id = id
-    this.name = name
     this.slug = slug
+    this.name = name
     this.status = status
     this.type = type
-    this.tag = tags
-    this.linkLabel = linkLabel
-    this.link = link
     this.description = description
+    this.isOpenSource = isOpenSource
+    this.linkProject = linkProject
+    this.linkRepository = linkRepository
     this.techStack = techStack
     this.icon = icon
   }

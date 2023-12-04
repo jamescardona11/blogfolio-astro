@@ -1,52 +1,32 @@
 ---
-import Card from '@/components/old/Card.astro'
-import RootLayout from '@/layouts/root/RootLayout.astro'
-
-const projectsData = [
-  {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/public/static/images/google.png',
-    href: 'https://www.google.com'
-  },
-  {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine'
-  }
-]
+import PageTitle from '@/components/PageTitle.astro'
+import BacklogCard from '@/components/for-pages/projects/BacklogCard.astro'
+import LearningProjectsCard from '@/components/for-pages/projects/LearningProjectsCard.astro'
+import ProjectsList from '@/components/for-pages/projects/ProjectsList.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
 ---
 
-<RootLayout metaTitle='Projects'>
-  <div class='divide-y divide-gray-200 dark:divide-gray-700'>
-    <div class='space-y-2 pb-8 pt-6 md:space-y-5'>
-      <h1
-        class='text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'
-      >
-        Projects
-      </h1>
-      <p class='text-lg leading-7 text-gray-500 dark:text-gray-400'>
-        Showcase your projects with a hero image (16 x 9)
-      </p>
-    </div>
-    <div class='container py-12'>
-      <div class='-m-4 flex flex-wrap'>
-        {
-          projectsData.map(d => (
-            <Card
-              title={d.title}
-              description={d.description}
-              imgSrc={d.imgSrc}
-              href={d.href}
-            />
-          ))
-        }
-      </div>
-    </div>
-  </div>
-</RootLayout>
+<PageLayout metaTitle="Things I've made in an attempt to make my mark">
+  <PageTitle
+    title="Things I've made in an attempt to make my mark"
+    subtitle="Goal: Don't stop learning."
+  />
+  <ProjectsList
+    title='Now'
+    subtitle='Projects I currently work on.'
+    filter='active'
+    projects={projects.data}
+  />
+
+  <ProjectsList
+    title='Past'
+    subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
+    filter='completed'
+    projects={projects.data}
+  />
+
+  <h2 class='text-2xl font-bold mt-8'>Others</h2>
+
+  <BacklogCard filter='backlog' projects={projects.data} />
+  <LearningProjectsCard filter='learning' projects={projects.data} />
+</PageLayout>

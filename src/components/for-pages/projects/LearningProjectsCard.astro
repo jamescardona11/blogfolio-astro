@@ -1,0 +1,49 @@
+---
+import type { Project } from '@/lib/types/projects'
+import { filterProjects } from './filter-projects'
+import BaseCard from '@/components/BaseCard.astro'
+import ItemProject from './ItemProject.astro'
+
+interface Props {
+  projects: Project[]
+  filter: 'completed' | 'active' | 'backlog'
+}
+
+const { projects, filter } = Astro.props
+
+const filteredProjects = filterProjects(projects ?? [], filter)
+  .sort((a, _) => {
+    return a.isInProgress() ? -1 : 1
+  })
+  .slice(0, 5)
+---
+
+<BaseCard title='Learning projects' styles='mt-8'>
+  <ul class='space-y-1'>
+    {
+      filteredProjects.map(project => {
+        // if (project.link != null) {
+        // TODO
+        // return (
+        //   <Link
+        //     key={project.id}
+        //     href={project.link ?? ''}
+        //     style={{
+        //       cursor: project.link != null ? 'pointer' : 'default'
+        //     }}
+        //   >
+        //     <li>
+        //       <ItemProject project={project} />
+        //     </li>
+        //   </Link>
+        // )
+
+        return (
+          <li>
+            <ItemProject project={project} />
+          </li>
+        )
+      })
+    }
+  </ul>
+</BaseCard>

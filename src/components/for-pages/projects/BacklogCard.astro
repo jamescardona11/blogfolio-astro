@@ -1,0 +1,21 @@
+---
+import type { Project, ProjectStatus } from '@/lib/types/projects'
+import { filterProjects } from './filter-projects'
+import BaseCard from '@/components/BaseCard.astro'
+import ItemProject from './ItemProject.astro'
+
+interface Props {
+  projects: Project[]
+  filter: ProjectStatus
+}
+
+const { projects, filter } = Astro.props
+
+const filteredProjects = filterProjects(projects ?? [], filter)
+---
+
+<BaseCard title='Backlog' styles='mt-8'>
+  <ul class='space-y-1'>
+    {filteredProjects.map(project => <ItemProject project={project} />)}
+  </ul>
+</BaseCard>

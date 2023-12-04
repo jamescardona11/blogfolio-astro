@@ -1,0 +1,56 @@
+---
+---
+
+import ProjectCard from '@/components/old/ui/project-card'
+import { type ProjectListProps } from '@/models/projects'
+import { filterProjects } from '../filter-projects'
+
+const ProjectList: React.FC<ProjectListProps> = ({
+  title,
+  subtitle,
+  filter,
+  projects,
+  isLoading
+}) => {
+  const filteredProjects = filterProjects(projects ?? [], filter)
+
+  return (
+    <>
+      {isLoading ? (
+        <SkeletonProjectList />
+      ) : (
+        <div class='mt-8'>
+          {title != null && <h2 class='text-2xl font-bold'>{title}</h2>}
+          {subtitle != null && (
+            <p class='lg:pb-12 pb-4 text-base'>{subtitle}</p>
+          )}
+
+          <div class='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5'>
+            {filteredProjects.map(project => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+// todo: add skeleton loader
+const SkeletonProjectList = () => {
+  return (
+    <>
+      <div role='status' class='max-w-sm animate-pulse'>
+        <div class='h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4'></div>
+        <div class='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5'></div>
+        <div class='h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5'></div>
+        <div class='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5'></div>
+        <div class='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5'></div>
+        <div class='h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]'></div>
+        <span class='sr-only'>Loading...</span>
+      </div>
+    </>
+  )
+}
+
+export default ProjectList

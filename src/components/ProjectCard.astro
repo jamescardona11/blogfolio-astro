@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets'
+
+import type { Project } from '@/lib/types/projects'
+import Link from './Link.astro'
+import Icons from './icons/Icons.astro'
+import Chip from './Chip.astro'
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+---
+
+<Link
+  class='p-5 border rounded-2xl border-zinc-200 dark:border-zinc-900 dark:bg-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+  href={`/projects/${project.slug}`}
+>
+  <div class='flex flex-col justify-between h-full'>
+    <div>
+      <div
+        class:list={[
+          'flex items-center justify-center w-10 h-10 mb-2 border border-zinc-20 dark:border-zinc-800 rounded-xl bg-zinc-100 dark:bg-zinc-800'
+        ]}
+      >
+        {
+          project.icon != null && (
+            <Image
+              src={project.icon}
+              width={18}
+              height={18}
+              alt={project.name}
+            />
+          )
+        }
+
+        {
+          project.icon == null && project.isSideProject() && (
+            <Icons kind='sideProjects' />
+          )
+        }
+
+        {
+          project.icon == null && project.isProfessional() && (
+            <Icons kind='profesional' />
+          )
+        }
+      </div>
+      {
+        project?.tag != null && (
+          <div class='inline-flex items-center h-5 px-2 text-xs font-medium text-center text-green-600 bg-green-100 rounded-full'>
+            {project.tag}
+          </div>
+        )
+      }
+      <span class='text-lg font-sans font-[650] mb-1 text-ellipsis'>
+        {project.name}
+      </span>
+      <p class='mb-2 text-sm text-zinc-500 dark:text-zinc-400'>
+        {project.description}
+      </p>
+    </div>
+
+    <div>
+      <p class='z-10 flex flex-wrap gap-1 mt-6 mb-6 font-mono'>
+        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+      </p>
+      <div class='flex items-center justify-between'>
+        <div
+          class='relative z-10 flex mt-auto text-sm font-medium transition text-zinc-400 group-hover:text-primary dark:text-zinc-200'
+        >
+          {
+            project.link != null && (
+              <Link
+                href={project.link}
+                target='_blank'
+                class='flex items-center'
+              >
+                <Icons kind='link' class='flex-none w-6 h-6' />
+                <span class='ml-2'>{project.linkLabel}</span>
+                <span class='w-2 h-2 ml-2 bg-green-700 rounded-full' />
+              </Link>
+            )
+          }
+
+          {
+            project.link == null && project.isInProgress() && (
+              <p class='flex items-center text-zinc-400 gap-x-2'>
+                {project.status}{' '}
+                <span class='w-2 h-2 rounded-full bg-sky-700' />
+              </p>
+            )
+          }
+
+          {
+            project.link == null && !project.isInProgress() && (
+              <p class='flex items-center text-zinc-400 gap-x-2'>
+                Shut down <span class='w-2 h-2 bg-red-700 rounded-full' />
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</Link>

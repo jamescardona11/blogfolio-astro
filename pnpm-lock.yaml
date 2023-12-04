@@ -56,6 +56,9 @@ dependencies:
   colord:
     specifier: ^2.9.3
     version: 2.9.3
+  github-slugger:
+    specifier: ^2.0.0
+    version: 2.0.0
   kbar:
     specifier: 0.1.0-beta.43
     version: 0.1.0-beta.43(@types/react-dom@18.2.14)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)

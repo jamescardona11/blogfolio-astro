@@ -1,3 +1,5 @@
+import { slug as slugger } from 'github-slugger'
+
 import { NOTION_PROJECTS_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
 import { type NProjectRow } from '@/lib/core/notion-core/notion-response-types'
@@ -31,24 +33,31 @@ export async function getProjectsFromNotion() {
     return p
   })
 
-  const projects = rows.map(
-    row =>
-      ({
-        id: row.id,
-        slug: row.slug.formula.string,
-        name: row.name.title[0].text.content,
-        status: row.status?.status?.name ?? '',
-        type: row.type.select.name,
-        tag: row.tag?.select?.name,
-        linkLabel: row.linkLabel?.rich_text[0]?.text?.content,
-        link: row.link?.url,
-        description: row.description?.rich_text[0]?.text?.content,
-        techStack: row.techStack?.multi_select.map(
-          (skill: { name: any }) => skill.name
-        ),
-        icon: row.icon?.files[0]?.file?.url
-      }) as Project
-  )
+  const projects = rows.map(row => {
+    const name = row.name.title[0].text.content
+    const slug = slugger(name)
 
-  return createSuccessResponse(projects)
+    return {
+      id: row.id,
+      slug: slug,
+      name: row.name.title[0].text.content,
+      status: row.status?.status?.name ?? '',
+      type: row.type.select.name,
+      tag: row.tag?.select?.name,
+      linkLabel: row.linkLabel?.rich_text[0]?.text?.content,
+      link: row.link?.url,
+      description: row.description?.rich_text[0]?.text?.content,
+      techStack: row.techStack?.multi_select.map(
+        (skill: { name: any }) => skill.name
+      ),
+      icon: row.icon?.files[0]?.file?.url
+    } as Project
+  })
+
+  const uniqueProjects = new Map<string, Project>()
+  projects.forEach(project => {
+    uniqueProjects.set(project.slug, project)
+  })
+
+  return createSuccessResponse(Array.from(uniqueProjects.values()))
 }

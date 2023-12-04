@@ -1,35 +1,20 @@
-// import { getExperienceFromNotion } from './remote/notion/resume/experience'
-// import { educationData, recommendationData } from './static/resume-data'
+import type { Project } from '../types/projects'
+import { getProjectsFromNotion } from './remote/notion/project/project'
 
-// import type { RecommendationType } from '../types/recommendation.type'
-// import type { ExperienceType } from '../types/experience.type'
+export async function getProjectsData(): Promise<Project[]> {
+  const projects = await getRemoteProjects()
 
-// import type { Project } from '../types/projects'
+  return projects
+}
 
-// export async function getProjectsData(): Promise<Project[]> {
-//   const
+async function getLocalProjects() {}
 
-//   return {
-//     work: workData,
-//     recommendation: recommendationData,
-//     education: educationData
-//   }
-// }
+async function getRemoteProjects() {
+  const experience = await getProjectsFromNotion()
 
-// async function getProjectFromBt() {
-//   const experience = await getExperienceFromNotion()
+  if (!experience.ok) {
+    console.log(experience.error)
+  }
 
-//   if (!experience.ok) {
-//     console.log(experience.error)
-//   }
-
-//   return experience.ok ? experience.data : []
-// }
-
-// function getRecommendation(): RecommendationType[] {
-//   return recommendationData
-// }
-
-// function getEducation(): ExperienceType[] {
-//   return educationData
-// }
+  return experience.ok ? experience.data : []
+}

@@ -1,6 +1,6 @@
 import { NOTION_LEARNING_PATH_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
-import { type NLearningPathRow } from '@/lib/core/notion-core/notion-response-models'
+import { type NLearningPathRow } from '@/lib/core/notion-core/notion-response-types'
 import { type LearningPathType } from '@/lib/types/learning-path.type'
 import { createSuccessResponse } from '@/lib/core/api_response'
 

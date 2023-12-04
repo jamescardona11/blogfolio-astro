@@ -1,6 +1,6 @@
 import { NOTION_SKILLS_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
-import { type NSkillRow } from '@/lib/core/notion-core/notion-response-models'
+import { type NSkillRow } from '@/lib/core/notion-core/notion-response-types'
 import { type SkillType } from '@/lib/types/skill.type'
 import { createSuccessResponse } from '@/lib/core/api_response'
 

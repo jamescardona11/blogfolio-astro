@@ -5,7 +5,7 @@ import type {
 
 import { NOTION_BLOG_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
-import { type NBlogPostRow } from '@/lib/core/notion-core/notion-response-models'
+import { type NBlogPostRow } from '@/lib/core/notion-core/notion-response-types'
 import { type PostType } from '@/lib/types/post.type'
 
 import {

@@ -1,0 +1,16 @@
+---
+interface Props {
+  className?: any
+}
+
+const { className } = Astro.props
+---
+
+<div
+  class:list={[
+    'inline-flex items-center rounded-full hover:text-primary gap-2 px-2.5 py-1 text-xs bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:text-primary',
+    ...className
+  ]}
+>
+  <slot />
+</div>

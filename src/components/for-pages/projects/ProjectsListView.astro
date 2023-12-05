@@ -23,7 +23,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
           title='Now'
           subtitle='Projects I currently work on.'
         />
-        <div class='flex flex-col space-y-4'>
+        <div class='flex flex-col gap-6'>
           {activeProjects.map(project => (
             <ProjectListCard project={project} />
           ))}
@@ -40,7 +40,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
         />
 
-        <div class='flex flex-col space-y-4'>
+        <div class='flex flex-col gap-6'>
           {completedProjects.map(project => (
             <ProjectListCard project={project} />
           ))}

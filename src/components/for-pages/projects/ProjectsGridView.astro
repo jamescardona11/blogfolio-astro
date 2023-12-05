@@ -2,7 +2,6 @@
 import type { Project } from '@/lib/types/projects'
 
 import SectionTitleProjects from './SectionTitleProjects.astro'
-import ProjectCard from '@/components/for-pages/projects/ProjectCard.astro'
 
 import { filterProjects } from '@/utils/filter-projects'
 import ProjectBackgroudCard from './ProjectBackgroudCard.astro'
@@ -15,8 +14,6 @@ const { projects } = Astro.props
 
 const activeProjects = filterProjects(projects ?? [], 'active')
 const completedProjects = filterProjects(projects ?? [], 'completed')
-
-console.log(completedProjects)
 ---
 
 <div grid-view class='hidden mt-8'>

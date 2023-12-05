@@ -7,6 +7,8 @@ import Chip from '@/components/Chip.astro'
 import ProjectIcon from './ProjectIcon.astro'
 import ProjectLink from './ProjectLink.astro'
 
+import { getBackground } from '@/utils/get-background'
+
 interface Props {
   project: Project
 }
@@ -14,41 +16,25 @@ interface Props {
 const { project } = Astro.props
 
 const href = project.hasContent ? `/projects/${project.slug}` : ''
-
-const backgrounds = [
-  '/static/backgrounds/1.png',
-  '/static/backgrounds/2.png',
-  '/static/backgrounds/3.png',
-  '/static/backgrounds/4.png',
-  '/static/backgrounds/5.png',
-  '/static/backgrounds/6.png',
-  '/static/backgrounds/7.png',
-  '/static/backgrounds/8.png',
-  '/static/backgrounds/9.png'
-]
-
-const image =
-  project.background != null && project.background?.trim() !== ''
-    ? project.background!
-    : backgrounds[Math.floor(Math.random() * backgrounds.length)]
+const background = getBackground(project)
 ---
 
-<div class='rounded-xl'>
-  <Link href={href} class='group relative flex flex-col'>
+<div
+  class='rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
+>
+  <Link href={href} class='flex flex-col'>
     <div class='flex items-center justify-center'>
       <Image
-        src={image}
+        src={background}
         width={1200}
         height={630}
-        class:list={[
-          'rounded-lg transform hover:scale-105 transition duration-700 ease-out'
-        ]}
+        class='rounded-lg'
         alt={project.name}
       />
 
       <div class='absolute flex flex-col items-center'>
         <ProjectIcon project={project} />
-        <span class='text-lg font-sans font-[650] text-ellipsis text-center'>
+        <span class='text-lg font-bold text-ellipsis text-center'>
           {project.name}
         </span>
       </div>

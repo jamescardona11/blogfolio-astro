@@ -1,13 +1,13 @@
 ---
 import { Image } from 'astro:assets'
-
 import { Project } from '@/lib/types/projects'
 
 import Link from '@/components/Link.astro'
-import Icons from '@/components/icons/Icons.astro'
-import BaseCard from '@/components/BaseCard.astro'
+
 import Chip from '@/components/Chip.astro'
 import ProjectIcon from './ProjectIcon.astro'
+import ProjectLink from './ProjectLink.astro'
+import { getBackground } from '@/utils/get-background'
 
 interface Props {
   project: Project
@@ -16,65 +16,42 @@ interface Props {
 const { project } = Astro.props
 
 const href = project.hasContent ? `/projects/${project.slug}` : ''
+const background = getBackground(project)
 ---
 
-<BaseCard showHover={project.hasContent}>
-  <Link href={href}>
-    <div class='flex gap-4 items-center'>
-      <ProjectIcon project={project} />
-
-      <div class='flex flex-col'>
-        <span class='text-lg font-sans font-[650] mb-1 text-ellipsis'>
-          {project.name}
-        </span>
-
-        <p class='text-sm text-muted-foreground'>{project.description}</p>
-
-        <div
-          class='mt-2 text-sm font-medium transition text-zinc-400 group-hover:text-primary dark:text-zinc-200'
-        >
-          {
-            project.linkProject != null && (
-              <a
-                href={project.project}
-                target='_blank'
-                class='flex items-center'
-              >
-                <Icons kind='link' />
-                <span class='ml-1'>{project.linkLabel}</span>
-                <span class='w-2 h-2 ml-2 bg-green-700 rounded-full' />
-              </a>
-            )
-          }
-
-          {
-            project.project == null && project.isInProgress() && (
-              <p class='flex items-center text-zinc-400 gap-x-2'>
-                {project.status}{' '}
-                <span class='w-2 h-2 rounded-full bg-sky-700' />
-              </p>
-            )
-          }
-
-          {
-            project.project == null && !project.isInProgress() && (
-              <p class='flex items-center text-zinc-400 gap-x-2'>
-                Shut down <span class='w-2 h-2 bg-red-700 rounded-full' />
-              </p>
-            )
-          }
-
-          <div class='mt-2 -ml-1'>
-            <div class='flex flex-wrap gap-1'>
-              {
-                project?.techStack?.map(techStackItem => (
-                  <Chip>{techStackItem}</Chip>
-                ))
-              }
-            </div>
+<Link
+  href={href}
+  class='rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
+>
+  <div class='flex gap-4 items-center'>
+    <div class='flex items-center justify-center'>
+      <Image
+        src={background}
+        width={200}
+        height={500}
+        class='rounded-lg'
+        alt={project.name}
+      />
+      {
+        background.startsWith('/static') && (
+          <div class='absolute flex flex-col items-center'>
+            <ProjectIcon project={project} />
           </div>
-        </div>
+        )
+      }
+    </div>
+
+    <div class='flex flex-col'>
+      <span class='text-lg font-bold mb-1 text-ellipsis'>
+        {project.name}
+      </span>
+
+      <p class='text-sm text-muted-foreground'>{project.description}</p>
+
+      <ProjectLink project={project} />
+      <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
       </div>
     </div>
-  </Link>
-</BaseCard>
+  </div>
+</Link>

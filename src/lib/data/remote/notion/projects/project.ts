@@ -51,6 +51,7 @@ export async function getProjectsFromNotion() {
         row.linkRepository?.url, // linkRepository
         row.techStack?.multi_select.map((skill: { name: any }) => skill.name), // techStack
         row.icon?.files[0]?.file?.url, // icon
+        undefined, // background - No support for Notion
         row.hasContent?.checkbox ?? false // hasContent
       )
     })

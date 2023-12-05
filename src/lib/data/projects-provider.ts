@@ -26,6 +26,7 @@ async function getLocalProjects() {
       mdxProject.data.linkLabel, //linkLabel
       mdxProject.data.linkRepository, //linkRepository
       mdxProject.data.techStack, //techStack
+      mdxProject.data.background, //background
       mdxProject.data.icon //icon
     )
   })

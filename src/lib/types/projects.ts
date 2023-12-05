@@ -10,6 +10,7 @@ export class Project {
   linkRepository?: string
   techStack?: string[]
   icon?: string
+  background?: string
   hasContent?: boolean
 
   constructor(
@@ -24,6 +25,7 @@ export class Project {
     linkRepository?: string,
     techStack?: string[],
     icon?: string,
+    background?: string, // No support for Notion
     hasContent?: boolean
   ) {
     this.id = id
@@ -37,6 +39,7 @@ export class Project {
     this.linkRepository = linkRepository
     this.techStack = techStack
     this.icon = icon
+    this.background = background
     this.hasContent = hasContent
   }
 

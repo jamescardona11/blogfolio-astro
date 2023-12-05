@@ -2,8 +2,8 @@
 import type { Project } from '@/lib/types/projects'
 
 import ProjectListCard from './ProjectListCard.astro'
+import SectionTitleProjects from './SectionTitleProjects.astro'
 import { filterProjects } from '@/utils/filter-projects'
-import HeaderProjectView from './HeaderProjectView.astro'
 
 interface Props {
   projects: Project[]
@@ -19,7 +19,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     activeProjects.length > 0 && (
       <div>
-        <HeaderProjectView
+        <SectionTitleProjects
           title='Now'
           subtitle='Projects I currently work on.'
         />
@@ -35,7 +35,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     completedProjects.length > 0 && (
       <div class='mt-8'>
-        <HeaderProjectView
+        <SectionTitleProjects
           title='Past'
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
         />

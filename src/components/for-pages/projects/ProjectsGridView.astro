@@ -1,10 +1,11 @@
 ---
 import type { Project } from '@/lib/types/projects'
 
-import HeaderProjectView from './HeaderProjectView.astro'
+import SectionTitleProjects from './SectionTitleProjects.astro'
 import ProjectCard from '@/components/for-pages/projects/ProjectCard.astro'
 
 import { filterProjects } from '@/utils/filter-projects'
+import ProjectBackgroudCard from './ProjectBackgroudCard.astro'
 
 interface Props {
   projects: Project[]
@@ -20,14 +21,14 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     activeProjects.length > 0 && (
       <div>
-        <HeaderProjectView
+        <SectionTitleProjects
           title='Now'
           subtitle='Projects I currently work on.'
         />
 
         <div class='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5'>
           {activeProjects.map(project => (
-            <ProjectCard project={project} />
+            <ProjectBackgroudCard project={project} />
           ))}
         </div>
       </div>
@@ -37,7 +38,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     completedProjects.length > 0 && (
       <div class='mt-8'>
-        <HeaderProjectView
+        <SectionTitleProjects
           title='Past'
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
         />

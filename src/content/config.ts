@@ -49,6 +49,7 @@ const projects = defineCollection({
     linkLabel: z.string().optional(),
     linkRepository: z.string().optional(),
     techStack: z.array(z.string()).optional().default([]),
+    background: z.string().optional(),
     icon: z.string().optional(),
     date: z.coerce.date()
   })

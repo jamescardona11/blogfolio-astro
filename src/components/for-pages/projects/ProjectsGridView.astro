@@ -16,7 +16,7 @@ const activeProjects = filterProjects(projects ?? [], 'active')
 const completedProjects = filterProjects(projects ?? [], 'completed')
 ---
 
-<div grid-view class='hidden mt-8'>
+<div grid-view class='hidden'>
   {
     activeProjects.length > 0 && (
       <div>
@@ -36,7 +36,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
 
   {
     completedProjects.length > 0 && (
-      <div class='mt-8'>
+      <div class='mt-20'>
         <SectionTitleProjects
           title='Past'
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'

@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets'
+
+import { Project } from '@/lib/types/projects'
+
+import Link from '@/components/Link.astro'
+import Icons from '@/components/icons/Icons.astro'
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+
+const href = project.hasContent ? `/projects/${project.slug}` : ''
+---
+
+<Link href={href}>
+  <div class='flex flex-col justify-between h-full'>
+    <div class='flex justify-between'>
+      <!-- Show Icon/image project -->
+      <!-- Rocket is professional project when no icon-->
+      <!-- Start is side project when no icon-->
+      <div
+        class='flex items-center justify-center w-10 h-10 mb-2 border border-zinc-200 dark:border-zinc-700 rounded-full dark:bg-zinc-800'
+      >
+        {
+          project.icon != null && (
+            <Image
+              src={project.icon}
+              width={18}
+              height={18}
+              alt={project.name}
+            />
+          )
+        }
+
+        {
+          project.icon == null && project.isSideProject() && (
+            <Icons kind='sideProjects' />
+          )
+        }
+
+        {
+          project.icon == null && project.isProfessional() && (
+            <Icons kind='profesional' />
+          )
+        }
+      </div>
+    </div>
+
+    <span class='text-lg font-sans font-[650] mb-1 text-ellipsis'>
+      {project.name}
+    </span>
+
+    <p class='text-sm text-muted-foreground'>{project.description}</p>
+
+    <div
+      class='mt-2 text-sm font-medium transition text-zinc-400 group-hover:text-primary dark:text-zinc-200'
+    >
+      {
+        project.linkProject != null && (
+          <a
+            href={project.linkProject}
+            target='_blank'
+            class='flex items-center'
+          >
+            <Icons kind='link' />
+            <span class='ml-1'>{project.linkLabel}</span>
+            <span class='w-2 h-2 ml-2 bg-green-700 rounded-full' />
+          </a>
+        )
+      }
+
+      {
+        project.linkProject == null && project.isInProgress() && (
+          <p class='flex items-center text-zinc-400 gap-x-2'>
+            {project.status} <span class='w-2 h-2 rounded-full bg-sky-700' />
+          </p>
+        )
+      }
+
+      {
+        project.linkProject == null && !project.isInProgress() && (
+          <p class='flex items-center text-zinc-400 gap-x-2'>
+            Shut down <span class='w-2 h-2 bg-red-700 rounded-full' />
+          </p>
+        )
+      }
+    </div>
+  </div>
+</Link>

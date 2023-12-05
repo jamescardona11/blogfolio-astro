@@ -1,0 +1,48 @@
+---
+import type { Project } from '@/lib/types/projects'
+
+import ProjectListCard from './ProjectListCard.astro'
+import { filterProjects } from '@/utils/filter-projects'
+import HeaderProjectView from './HeaderProjectView.astro'
+
+interface Props {
+  projects: Project[]
+}
+
+const { projects } = Astro.props
+
+const activeProjects = filterProjects(projects ?? [], 'active')
+const completedProjects = filterProjects(projects ?? [], 'completed')
+---
+
+<div list-view class='hidden'>
+  {
+    activeProjects.length > 0 && (
+      <div class='mt-8'>
+        <HeaderProjectView
+          title='Now'
+          subtitle='Projects I currently work on.'
+        />
+
+        {activeProjects.map(project => (
+          <ProjectListCard project={project} />
+        ))}
+      </div>
+    )
+  }
+
+  {
+    completedProjects.length > 0 && (
+      <div class='mt-8'>
+        <HeaderProjectView
+          title='Past'
+          subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
+        />
+
+        {completedProjects.map(project => (
+          <ProjectListCard project={project} />
+        ))}
+      </div>
+    )
+  }
+</div>

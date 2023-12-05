@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content'
 
-import type { Project } from '@lib/types/projects'
+import { Project } from '@lib/types/projects'
 import { getProjectsFromNotion } from './remote/notion/projects/project'
 
 export async function getProjectsData(): Promise<Project[]> {
@@ -15,19 +15,19 @@ async function getLocalProjects() {
   const mdxProjects = await getCollection('projects')
 
   return mdxProjects.map(mdxProject => {
-    return {
-      id: mdxProject.id,
-      slug: mdxProject.slug,
-      name: mdxProject.data.name,
-      status: mdxProject.data.status,
-      type: mdxProject.data.type,
-      description: mdxProject.data.description,
-      isOpenSource: mdxProject.data.isOpenSource,
-      linkProject: mdxProject.data.linkProject,
-      linkRepository: mdxProject.data.linkRepository,
-      techStack: mdxProject.data.techStack,
-      icon: mdxProject.data.icon
-    } as Project
+    return new Project(
+      mdxProject.id, //id
+      mdxProject.slug, //slug
+      mdxProject.data.name, //name
+      mdxProject.data.status, //status
+      mdxProject.data.type, //type
+      mdxProject.data.description, //description
+      mdxProject.data.linkProject, //linkProject
+      mdxProject.data.linkLabel, //linkLabel
+      mdxProject.data.linkRepository, //linkRepository
+      mdxProject.data.techStack, //techStack
+      mdxProject.data.icon //icon
+    )
   })
 }
 

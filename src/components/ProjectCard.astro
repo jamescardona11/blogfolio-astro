@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 
-import type { Project } from '@/lib/types/projects'
+import { Project } from '@/lib/types/projects'
 import Link from './Link.astro'
 import Icons from './icons/Icons.astro'
 import Chip from './Chip.astro'
@@ -16,7 +16,7 @@ const { project } = Astro.props
 const href = project.hasContent ? `/projects/${project.slug}` : ''
 ---
 
-<BaseCard showHover={true}>
+<BaseCard showHover={project.hasContent}>
   <Link href={href}>
     <div class='flex flex-col justify-between h-full'>
       <div class='flex justify-between'>

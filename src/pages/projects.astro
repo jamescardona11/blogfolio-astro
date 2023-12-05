@@ -4,9 +4,10 @@ import PageTitle from '@/components/PageTitle.astro'
 import SwapViewButtons from '@/components/SwapViewButtons.astro'
 import BacklogCard from '@/components/for-pages/projects/BacklogCard.astro'
 import LearningProjectsCard from '@/components/for-pages/projects/LearningProjectsCard.astro'
-import ProjectsList from '@/components/for-pages/projects/ProjectsList.astro'
+import ProjectsGridView from '@/components/for-pages/projects/ProjectsGridView.astro'
 
 import { getProjectsData } from '@/lib/data/projects-provider'
+import ProjectsListView from '@/components/for-pages/projects/ProjectsListView.astro'
 
 const projects = await getProjectsData()
 ---
@@ -19,20 +20,16 @@ const projects = await getProjectsData()
     />
     <SwapViewButtons />
   </div>
-  <hr class='my-8 border-muted' />
-  <ProjectsList
-    title='Now'
-    subtitle='Projects I currently work on.'
-    filter='active'
-    projects={projects}
-  />
 
-  <ProjectsList
-    title='Past'
-    subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
-    filter='completed'
-    projects={projects}
-  />
+  <hr class='my-8 border-muted' />
+
+  {projects.length == 0 && <p>No projects published.</p>}
+
+  <!-- GRID VIEW -->
+  <ProjectsGridView projects={projects} />
+
+  <!-- LIST VIEW -->
+  <ProjectsListView projects={projects} />
 
   <h2 class='text-2xl font-bold mt-8'>Others</h2>
 

@@ -1,0 +1,53 @@
+---
+import type { Project } from '@/lib/types/projects'
+
+import HeaderProjectView from './HeaderProjectView.astro'
+import ProjectCard from '@/components/ProjectCard.astro'
+
+import { filterProjects } from '@/utils/filter-projects'
+
+interface Props {
+  projects: Project[]
+}
+
+const { projects } = Astro.props
+
+const activeProjects = filterProjects(projects ?? [], 'active')
+const completedProjects = filterProjects(projects ?? [], 'completed')
+---
+
+<div grid-view class='hidden mt-8'>
+  {
+    activeProjects.length > 0 && (
+      <div class='mt-8'>
+        <HeaderProjectView
+          title='Now'
+          subtitle='Projects I currently work on.'
+        />
+
+        <div class='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5'>
+          {activeProjects.map(project => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  {
+    completedProjects.length > 0 && (
+      <div class='mt-8'>
+        <HeaderProjectView
+          title='Past'
+          subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
+        />
+
+        <div class='grid sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-5'>
+          {completedProjects.map(project => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+</div>

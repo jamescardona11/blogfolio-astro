@@ -15,7 +15,10 @@ interface Props {
 
 const { project } = Astro.props
 
-const href = project.hasContent ? `/projects/${project.slug}` : ''
+const href = project.hasContent
+  ? `/projects/${project.slug}`
+  : project.projectLink
+
 const background = getBackground.get(project)
 ---
 

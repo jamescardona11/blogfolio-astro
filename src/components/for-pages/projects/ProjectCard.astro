@@ -5,6 +5,7 @@ import Icons from '@components/icons/Icons.astro'
 import Chip from '@components/Chip.astro'
 import BaseCard from '@components/BaseCard.astro'
 import ProjectIcon from './ProjectIcon.astro'
+import ProjectLink from './ProjectLink.astro'
 
 interface Props {
   project: Project
@@ -32,51 +33,10 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
       <span class='text-lg font-sans font-[650] mb-1 text-ellipsis'>
         {project.name}
       </span>
-
       <p class='text-sm text-muted-foreground'>{project.description}</p>
-
-      <div
-        class='mt-2 text-sm font-medium transition text-zinc-400 group-hover:text-primary dark:text-zinc-200'
-      >
-        {
-          project.linkProject != null && (
-            <a
-              href={project.linkProject}
-              target='_blank'
-              class='flex items-center'
-            >
-              <Icons kind='link' />
-              <span class='ml-1'>{project.linkLabel}</span>
-              <span class='w-2 h-2 ml-2 bg-green-700 rounded-full' />
-            </a>
-          )
-        }
-
-        {
-          project.linkProject == null && project.isInProgress() && (
-            <p class='flex items-center text-zinc-400 gap-x-2'>
-              {project.status} <span class='w-2 h-2 rounded-full bg-sky-700' />
-            </p>
-          )
-        }
-
-        {
-          project.linkProject == null && !project.isInProgress() && (
-            <p class='flex items-center text-zinc-400 gap-x-2'>
-              Shut down <span class='w-2 h-2 bg-red-700 rounded-full' />
-            </p>
-          )
-        }
-      </div>
-
-      <div class='mt-2 -ml-1'>
-        <div class='flex flex-wrap gap-1'>
-          {
-            project?.techStack?.map(techStackItem => (
-              <Chip>{techStackItem}</Chip>
-            ))
-          }
-        </div>
+      <ProjectLink project={project} />
+      <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
       </div>
     </div>
   </Link>

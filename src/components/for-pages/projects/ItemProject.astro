@@ -14,9 +14,11 @@ const { project } = Astro.props
   <div class='grow inline-flex mr-1 truncate'>
     <span class='text-sky-500 mr-2'> {'—'}</span>
 
-    <a class='font-sans font-[650] text-sm truncate'>{project.name}</a>
+    <a href={project.projectLink} class='font-sans font-[650] text-sm truncate'
+      >{project.name}</a
+    >
     {
-      project.linkProject != null && (
+      project.projectLink != null && (
         <Icons kind='link' class='h-6 w-6 flex-none' />
       )
     }

@@ -5,6 +5,7 @@ import { Project } from '@/lib/types/projects'
 import Link from '@/components/Link.astro'
 import Chip from '@/components/Chip.astro'
 import ProjectIcon from './ProjectIcon.astro'
+import ProjectLink from './ProjectLink.astro'
 
 interface Props {
   project: Project
@@ -32,29 +33,32 @@ const image =
     : backgrounds[Math.floor(Math.random() * backgrounds.length)]
 ---
 
-<Link href={href} class='group relative flex flex-col rounded-xl border p-4'>
-  <div class='flex items-center justify-center'>
-    <Image
-      src={image}
-      width={1200}
-      height={630}
-      class:list={[
-        'rounded-lg transform hover:scale-105 transition duration-700 ease-out'
-      ]}
-      alt={project.name}
-    />
+<div class='rounded-xl'>
+  <Link href={href} class='group relative flex flex-col'>
+    <div class='flex items-center justify-center'>
+      <Image
+        src={image}
+        width={1200}
+        height={630}
+        class:list={[
+          'rounded-lg transform hover:scale-105 transition duration-700 ease-out'
+        ]}
+        alt={project.name}
+      />
 
-    <div class='absolute flex flex-col items-center'>
-      <ProjectIcon project={project} />
-      <span class='text-lg font-sans font-[650] mb-1 text-ellipsis'>
-        {project.name}
-      </span>
+      <div class='absolute flex flex-col items-center'>
+        <ProjectIcon project={project} />
+        <span class='text-lg font-sans font-[650] text-ellipsis text-center'>
+          {project.name}
+        </span>
+      </div>
     </div>
-  </div>
-  <div class='flex-1 px-2 py-4'>
-    <p class='text-sm text-muted-foreground'>{project.description}</p>
-    <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
-      {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+    <div class='flex-1 px-2 py-4'>
+      <p class='text-sm text-muted-foreground'>{project.description}</p>
+      <ProjectLink project={project} />
+      <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+      </div>
     </div>
-  </div>
-</Link>
+  </Link>
+</div>

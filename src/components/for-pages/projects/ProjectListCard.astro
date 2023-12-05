@@ -36,7 +36,7 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
           {
             project.linkProject != null && (
               <a
-                href={project.linkProject}
+                href={project.project}
                 target='_blank'
                 class='flex items-center'
               >
@@ -48,7 +48,7 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
           }
 
           {
-            project.linkProject == null && project.isInProgress() && (
+            project.project == null && project.isInProgress() && (
               <p class='flex items-center text-zinc-400 gap-x-2'>
                 {project.status}{' '}
                 <span class='w-2 h-2 rounded-full bg-sky-700' />
@@ -57,7 +57,7 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
           }
 
           {
-            project.linkProject == null && !project.isInProgress() && (
+            project.project == null && !project.isInProgress() && (
               <p class='flex items-center text-zinc-400 gap-x-2'>
                 Shut down <span class='w-2 h-2 bg-red-700 rounded-full' />
               </p>

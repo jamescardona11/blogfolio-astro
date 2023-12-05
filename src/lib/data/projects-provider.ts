@@ -22,9 +22,8 @@ async function getLocalProjects() {
       mdxProject.data.status, //status
       mdxProject.data.type, //type
       mdxProject.data.description, //description
-      mdxProject.data.linkProject, //linkProject
-      mdxProject.data.linkLabel, //linkLabel
-      mdxProject.data.linkRepository, //linkRepository
+      mdxProject.data.projectLink, //linkProject
+      mdxProject.data.repositoryLink, //linkRepository
       mdxProject.data.techStack, //techStack
       mdxProject.data.background, //background
       mdxProject.data.icon //icon

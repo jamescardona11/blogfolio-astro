@@ -22,22 +22,6 @@ const filteredProjects = filterProjects(projects ?? [], filter)
   <ul class='space-y-1'>
     {
       filteredProjects.map(project => {
-        // if (project.link != null) {
-        // TODO
-        // return (
-        //   <Link
-        //     key={project.id}
-        //     href={project.link ?? ''}
-        //     style={{
-        //       cursor: project.link != null ? 'pointer' : 'default'
-        //     }}
-        //   >
-        //     <li>
-        //       <ItemProject project={project} />
-        //     </li>
-        //   </Link>
-        // )
-
         return (
           <li>
             <ItemProject project={project} />

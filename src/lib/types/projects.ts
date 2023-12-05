@@ -5,9 +5,8 @@ export class Project {
   status: string
   type: string
   description?: string
-  linkProject?: string
-  linkLabel?: string
-  linkRepository?: string
+  projectLink?: string
+  repositoryLink?: string
   techStack?: string[]
   icon?: string
   background?: string
@@ -20,9 +19,8 @@ export class Project {
     status: string,
     type: string,
     description?: string,
-    linkProject?: string,
-    linkLabel?: string,
-    linkRepository?: string,
+    projectLink?: string,
+    repositoryLink?: string,
     techStack?: string[],
     icon?: string,
     background?: string, // No support for Notion
@@ -34,9 +32,8 @@ export class Project {
     this.status = status
     this.type = type
     this.description = description
-    this.linkProject = linkProject
-    this.linkLabel = linkLabel
-    this.linkRepository = linkRepository
+    this.projectLink = projectLink
+    this.repositoryLink = repositoryLink
     this.techStack = techStack
     this.icon = icon
     this.background = background
@@ -44,7 +41,7 @@ export class Project {
   }
 
   isOpenSource(): boolean {
-    return this.linkRepository != null
+    return this.repositoryLink != null
   }
 
   isLearning(): boolean {

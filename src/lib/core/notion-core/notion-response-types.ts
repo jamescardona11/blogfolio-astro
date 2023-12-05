@@ -32,11 +32,11 @@ export type NProjectRow = {
   status: { status: { name: string } }
   type: { select: { name: string } }
   description?: { rich_text: Array<{ text: { content: string } }> }
-  linkProject?: { url: string }
-  linkLabel?: { rich_text: Array<{ text: { content: string } }> }
-  linkRepository?: { url: string }
+  projectLink?: { url: string }
+  repositoryLink?: { url: string }
   techStack?: { multi_select: Array<{ name: string }> }
   icon?: { files: Array<{ file: { url: string } }> }
+  background?: { files: Array<{ file: { url: string } }> }
   hasContent?: { checkbox: boolean }
 }
 

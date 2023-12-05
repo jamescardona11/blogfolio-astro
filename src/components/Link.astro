@@ -8,18 +8,29 @@ const { href, ...rest } = Astro.props
 const isInternalLink = href && href.toString().startsWith('/')
 const isAnchorLink = href && href.toString().startsWith('#')
 const isEmpty = !href || href.toString().trim() === ''
+
+console.log('isInternalLink', isInternalLink)
+console.log('isAnchorLink', isAnchorLink)
 ---
 
 {
-  isEmpty ? (
-    <div>
+  isEmpty && (
+    <div {...rest}>
       <slot />
     </div>
-  ) : isInternalLink || isAnchorLink ? (
+  )
+}
+
+{
+  (isInternalLink || isAnchorLink) && (
     <a href={href} {...rest}>
       <slot />
     </a>
-  ) : (
+  )
+}
+
+{
+  !isInternalLink && !isAnchorLink && !isEmpty && (
     <a target='_blank' rel='noopener noreferrer' href={href} {...rest}>
       <slot />
     </a>

@@ -46,12 +46,11 @@ export async function getProjectsFromNotion() {
         row.status?.status?.name ?? '', // status
         row.type.select.name, // type
         row.description?.rich_text[0]?.text?.content, // description
-        row.linkProject?.url, // linkProject
-        row.linkLabel?.rich_text[0]?.text?.content ?? 'Project Link', // linkLabel
-        row.linkRepository?.url, // linkRepository
+        row.projectLink?.url, // linkProject
+        row.repositoryLink?.url, // linkRepository
         row.techStack?.multi_select.map((skill: { name: any }) => skill.name), // techStack
         row.icon?.files[0]?.file?.url, // icon
-        undefined, // background - No support for Notion
+        row.background?.files[0]?.file?.url, // background
         row.hasContent?.checkbox ?? false // hasContent
       )
     })

@@ -2,10 +2,10 @@
 import { Image } from 'astro:assets'
 
 import { Project } from '@/lib/types/projects'
-import Link from './Link.astro'
-import Icons from './icons/Icons.astro'
-import Chip from './Chip.astro'
-import BaseCard from './BaseCard.astro'
+import Link from '@components/Link.astro'
+import Icons from '@components/icons/Icons.astro'
+import Chip from '@components/Chip.astro'
+import BaseCard from '@components/BaseCard.astro'
 
 interface Props {
   project: Project
@@ -64,16 +64,6 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
 
       <p class='text-sm text-muted-foreground'>{project.description}</p>
 
-      <div class='mt-2 -ml-1'>
-        <div class='flex flex-wrap gap-1'>
-          {
-            project?.techStack?.map(techStackItem => (
-              <Chip>{techStackItem}</Chip>
-            ))
-          }
-        </div>
-      </div>
-
       <div
         class='mt-2 text-sm font-medium transition text-zinc-400 group-hover:text-primary dark:text-zinc-200'
       >
@@ -106,6 +96,16 @@ const href = project.hasContent ? `/projects/${project.slug}` : ''
             </p>
           )
         }
+      </div>
+
+      <div class='mt-2 -ml-1'>
+        <div class='flex flex-wrap gap-1'>
+          {
+            project?.techStack?.map(techStackItem => (
+              <Chip>{techStackItem}</Chip>
+            ))
+          }
+        </div>
       </div>
     </div>
   </Link>

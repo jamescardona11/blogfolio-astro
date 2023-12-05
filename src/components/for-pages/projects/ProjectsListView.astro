@@ -23,10 +23,11 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
           title='Now'
           subtitle='Projects I currently work on.'
         />
-
-        {activeProjects.map(project => (
-          <ProjectListCard project={project} />
-        ))}
+        <div class='flex flex-col space-y-4'>
+          {activeProjects.map(project => (
+            <ProjectListCard project={project} />
+          ))}
+        </div>
       </div>
     )
   }
@@ -39,9 +40,11 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
         />
 
-        {completedProjects.map(project => (
-          <ProjectListCard project={project} />
-        ))}
+        <div class='flex flex-col space-y-4'>
+          {completedProjects.map(project => (
+            <ProjectListCard project={project} />
+          ))}
+        </div>
       </div>
     )
   }

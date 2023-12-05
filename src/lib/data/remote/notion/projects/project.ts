@@ -39,8 +39,6 @@ export async function getProjectsFromNotion() {
       const name = row.name.title[0].text.content
       const slug = slugger(name)
 
-      console.log(row)
-
       return new Project(
         row.id!, // id
         slug, // slug

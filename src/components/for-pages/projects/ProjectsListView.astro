@@ -15,10 +15,10 @@ const activeProjects = filterProjects(projects ?? [], 'active')
 const completedProjects = filterProjects(projects ?? [], 'completed')
 ---
 
-<div list-view class='hidden'>
+<div list-view class='hidden mt-8'>
   {
     activeProjects.length > 0 && (
-      <div class='mt-8'>
+      <div>
         <HeaderProjectView
           title='Now'
           subtitle='Projects I currently work on.'

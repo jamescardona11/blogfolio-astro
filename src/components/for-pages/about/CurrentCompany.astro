@@ -14,16 +14,14 @@ const { currentWork } = Astro.props
     <BaseCard title='Current job' variant='right'>
       <div class='mr-1 truncate'>
         <span class='text-sky-500 mr-2'> {'>👨🏻‍💻'} </span>
-        <a class='font-sans font-[650] text-sm truncate'>
-          {currentWork.position}
-        </a>
+        <a class='font-bold text-sm truncate'>{currentWork.position}</a>
       </div>
       <div class='mr-1 truncate'>
         <span class='text-sky-500 mr-2'> {'>🏢'} </span>
         <a
           href={currentWork.link}
           target='_blank'
-          class='font-sans font-[650] text-sm truncate'
+          class='font-bold text-sm truncate'
           rel='noreferrer'
         >
           {currentWork.site}

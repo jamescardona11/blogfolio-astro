@@ -16,14 +16,13 @@ interface Props {
 const { project } = Astro.props
 
 const href = project.hasContent ? `/projects/${project.slug}` : ''
-const background = getBackground(project)
+const background = getBackground.get(project)
 ---
 
-<Link
-  href={href}
-  class='rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
->
-  <div class='flex gap-4 items-center'>
+<Link href={href}>
+  <div
+    class='flex gap-4 items-center rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
+  >
     <div class='flex items-center justify-center'>
       <Image
         src={background}

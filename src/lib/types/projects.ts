@@ -23,7 +23,7 @@ export class Project {
     repositoryLink?: string,
     techStack?: string[],
     icon?: string,
-    background?: string, // No support for Notion
+    background?: string,
     hasContent?: boolean
   ) {
     this.id = id

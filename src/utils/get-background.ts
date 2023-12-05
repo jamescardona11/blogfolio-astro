@@ -1,4 +1,4 @@
-import type { Project } from '@/lib/types/projects'
+import { Project } from '@/lib/types/projects'
 
 const backgrounds = [
   '/static/backgrounds/1.png',
@@ -12,8 +12,27 @@ const backgrounds = [
   '/static/backgrounds/9.png'
 ]
 
-export function getBackground(project: Project) {
-  return project.background != null && project.background?.trim() !== ''
-    ? project.background!
-    : backgrounds[Math.floor(Math.random() * backgrounds.length)]
+class GetBackground {
+  projects: Map<string, string>
+
+  constructor() {
+    this.projects = new Map()
+  }
+
+  get(project: Project): string {
+    if (this.projects.has(project.slug)) {
+      return this.projects.get(project.slug)!
+    }
+
+    const b =
+      project.background != null && project.background?.trim() !== ''
+        ? project.background!
+        : backgrounds[Math.floor(Math.random() * backgrounds.length)]
+
+    this.projects.set(project.slug, b)
+    return b
+  }
 }
+const getBackground = new GetBackground()
+
+export { getBackground }

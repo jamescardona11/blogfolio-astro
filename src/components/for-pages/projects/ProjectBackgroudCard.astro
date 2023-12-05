@@ -6,7 +6,6 @@ import Link from '@/components/Link.astro'
 import Chip from '@/components/Chip.astro'
 import ProjectIcon from './ProjectIcon.astro'
 import ProjectLink from './ProjectLink.astro'
-
 import { getBackground } from '@/utils/get-background'
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 const { project } = Astro.props
 
 const href = project.hasContent ? `/projects/${project.slug}` : ''
-const background = getBackground(project)
+const background = getBackground.get(project)
 ---
 
 <div

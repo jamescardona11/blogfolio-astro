@@ -8,9 +8,6 @@ const { href, ...rest } = Astro.props
 const isInternalLink = href && href.toString().startsWith('/')
 const isAnchorLink = href && href.toString().startsWith('#')
 const isEmpty = href === undefined || href?.toString().trim() === ''
-
-console.log('isInternalLink', isInternalLink)
-console.log('isAnchorLink', isAnchorLink)
 ---
 
 {

@@ -1,12 +1,59 @@
 import { getCollection } from 'astro:content'
+import { Project } from '@/lib/types/projects'
 
-import { Project } from '@lib/types/projects'
-import { getProjectsFromNotion } from './remote/notion/projects/project'
+import { getProjectsFromNotion } from './remote/notion/projects/projects'
+import { getProjectBlocksFromNotion } from './remote/notion/projects/project'
+import type { DataContent } from '../types/content.type'
 
 export async function getProjectsData(): Promise<Project[]> {
-  const projects = await getLocalProjects()
+  // const projects = await getLocalProjects() // Local
+  const projects = await getRemoteProjects() // Remote
 
   return projects
+}
+
+export async function getProjectContent(
+  project: Project
+): Promise<DataContent> {
+  if (project.hasContent) {
+    // const  result = await getMdxProjectData(project.slug) // Local
+    const result = await getBlocksProjectData(project.id) // Remote
+
+    return result
+  }
+
+  return {
+    blocks: null,
+    Content: null
+  } as DataContent
+}
+
+/// Get blocks from notion
+async function getBlocksProjectData(id: string): Promise<DataContent> {
+  const blocksResponse = await getProjectBlocksFromNotion(id)
+  if (!blocksResponse.ok) {
+    console.log(blocksResponse.error)
+  }
+
+  const blocks = blocksResponse.ok ? blocksResponse.data : []
+
+  return {
+    blocks: blocks,
+    Content: null
+  } as DataContent
+}
+
+/// Get project data from local mdx files
+async function getMdxProjectData(slug: string): Promise<DataContent> {
+  const mdxProjects = await getCollection('projects')
+  const project = mdxProjects.find(project => project.slug === slug)!
+
+  const { Content } = await project.render()
+
+  return {
+    blocks: null,
+    Content: Content
+  } as DataContent
 }
 
 /// Get all projects from local mdx files

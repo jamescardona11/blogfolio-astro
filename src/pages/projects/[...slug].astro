@@ -1,0 +1,54 @@
+---
+import PostLayout from '@/layouts/PostLayout.astro'
+import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
+
+import {
+  getProjectContent,
+  getProjectsData
+} from '@/lib/data/projects-provider'
+import type { Project } from '@/lib/types/projects'
+import RenderBlocks from '@/components/notion/RenderBlocks.astro'
+
+export async function getStaticPaths() {
+  const projects = await getProjectsData()
+
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project }
+  }))
+}
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+
+const result = await getProjectContent(project)
+
+const { Content } = result
+const { blocks } = result
+---
+
+<PostLayout>
+  <!-- TOP -->
+  <div>
+    <h1 class='text-2xl font-medium sm:text-3xl'>{project.name}</h1>
+  </div>
+
+  {
+    Content && (
+      <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
+        <Content />
+      </div>
+    )
+  }
+
+  {
+    blocks && (
+      <div>
+        <RenderBlocks blocks={blocks} />
+      </div>
+    )
+  }
+</PostLayout>

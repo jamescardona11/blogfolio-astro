@@ -7,7 +7,7 @@ import type {
 
 import {
   factory,
-  type Block,
+  type NotionBlock,
   type TextBlock,
   type NotionColor,
   type StyleAnnotations,
@@ -16,7 +16,7 @@ import {
 
 export const mapNotionBlocks = (
   notionBlocks: Array<PartialBlockObjectResponse | BlockObjectResponse>
-): Block[] => {
+): NotionBlock[] => {
   const blocks = notionBlocks.filter(isFullBlock).reduce((prev, block) => {
     switch (block.type) {
       case 'paragraph': {
@@ -255,7 +255,7 @@ export const mapNotionBlocks = (
         return [...prev, factory.unsupported()]
       }
     }
-  }, [] as Block[])
+  }, [] as NotionBlock[])
 
   return blocks
 }
@@ -263,8 +263,8 @@ export const mapNotionBlocks = (
 const transformNotionHeading = (
   richText: RichTextItemResponse[],
   level: 'h1' | 'h2' | 'h3'
-): Block[] => {
-  let blocks: Block[] = []
+): NotionBlock[] => {
+  let blocks: NotionBlock[] = []
 
   richText.forEach(t => {
     if (t.plain_text == '\n') {

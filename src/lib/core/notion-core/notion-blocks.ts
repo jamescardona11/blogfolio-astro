@@ -104,7 +104,7 @@ export type Unsupported = {
   type: 'unsupported'
 }
 
-export type Block =
+export type NotionBlock =
   | TextBlock
   | Heading
   | UnorderedList

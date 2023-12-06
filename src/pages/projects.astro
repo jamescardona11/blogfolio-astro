@@ -33,6 +33,6 @@ const projects = await getProjectsData()
 
   <h2 class='text-2xl font-bold mt-20'>Others</h2>
 
-  <BacklogCard filter='backlog' projects={projects} />
-  <LearningProjectsCard filter='learning' projects={projects} />
+  <BacklogCard projects={projects} />
+  <LearningProjectsCard projects={projects} />
 </PageLayout>

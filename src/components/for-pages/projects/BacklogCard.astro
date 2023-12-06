@@ -7,16 +7,21 @@ import { filterProjects } from '@/utils/filter-projects'
 
 interface Props {
   projects: Project[]
-  filter: ProjectFilterState
 }
 
-const { projects, filter } = Astro.props
+const { projects } = Astro.props
 
-const filteredProjects = filterProjects(projects ?? [], filter)
+const filteredProjects = filterProjects(projects ?? [], 'backlog')
 ---
 
-<BaseCard title='Backlog' styles='mt-8'>
-  <ul class='space-y-1'>
-    {filteredProjects.map(project => <ItemProject project={project} />)}
-  </ul>
-</BaseCard>
+{
+  filteredProjects.length > 0 && (
+    <BaseCard title='Backlog' styles='mt-8'>
+      <ul class='space-y-1'>
+        {filteredProjects.map(project => (
+          <ItemProject project={project} />
+        ))}
+      </ul>
+    </BaseCard>
+  )
+}

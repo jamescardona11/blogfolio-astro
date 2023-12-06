@@ -1,33 +1,35 @@
 ---
-import type { Project, ProjectFilterState } from '@/lib/types/projects'
-import { filterProjects } from '../../../utils/filter-projects'
+import type { Project } from '@/lib/types/projects'
+
 import BaseCard from '@/components/BaseCard.astro'
 import ItemProject from './ItemProject.astro'
+import { filterProjects } from '@/utils/filter-projects'
 
 interface Props {
   projects: Project[]
-  filter: ProjectFilterState
 }
 
-const { projects, filter } = Astro.props
+const { projects } = Astro.props
 
-const filteredProjects = filterProjects(projects ?? [], filter)
+const filteredProjects = filterProjects(projects ?? [], 'learning')
   .sort((a, _) => {
     return a.isInProgress() ? -1 : 1
   })
   .slice(0, 5)
 ---
 
-<BaseCard title='Learning projects' styles='mt-8'>
-  <ul class='space-y-1'>
-    {
-      filteredProjects.map(project => {
-        return (
-          <li>
-            <ItemProject project={project} />
-          </li>
-        )
-      })
-    }
-  </ul>
-</BaseCard>
+{
+  filteredProjects.length > 0 && (
+    <BaseCard title='Learning projects' styles='mt-8'>
+      <ul class='space-y-1'>
+        {filteredProjects.map(project => {
+          return (
+            <li>
+              <ItemProject project={project} />
+            </li>
+          )
+        })}
+      </ul>
+    </BaseCard>
+  )
+}

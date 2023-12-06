@@ -4,7 +4,7 @@ import { Project } from '@lib/types/projects'
 import { getProjectsFromNotion } from './remote/notion/projects/project'
 
 export async function getProjectsData(): Promise<Project[]> {
-  const projects = await getRemoteProjects()
+  const projects = await getLocalProjects()
 
   return projects
 }
@@ -25,8 +25,9 @@ async function getLocalProjects() {
       mdxProject.data.projectLink, //linkProject
       mdxProject.data.repositoryLink, //linkRepository
       mdxProject.data.techStack, //techStack
+      mdxProject.data.icon, //icon
       mdxProject.data.background, //background
-      mdxProject.data.icon //icon
+      mdxProject.body != null && mdxProject.body !== '' //body
     )
   })
 }

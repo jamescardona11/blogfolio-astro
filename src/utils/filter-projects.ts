@@ -3,7 +3,7 @@ import type { Project, ProjectFilterState } from '@/lib/types/projects'
 export function filterProjects(
   projects: Project[],
   filter: ProjectFilterState
-) {
+): Project[] {
   if (filter === 'completed') {
     return projects.filter(
       project => project.wasCompleted() && !project.isLearning()

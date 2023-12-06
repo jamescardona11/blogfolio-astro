@@ -9,6 +9,8 @@ interface Props {
 }
 
 const { project } = Astro.props
+
+console.log(project.icon)
 ---
 
 <div
@@ -18,7 +20,7 @@ const { project } = Astro.props
   <!-- Rocket is professional project when no icon-->
   <!-- Start is side project when no icon-->
   {
-    project.icon != null && (
+    project.icon && (
       <Image src={project.icon} width={18} height={18} alt={project.name} />
     )
   }

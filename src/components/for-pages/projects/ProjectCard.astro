@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets'
 import { Project } from '@/lib/types/projects'
-import Link from '@components/Link.astro'
-import Chip from '@components/Chip.astro'
-import BaseCard from '@components/BaseCard.astro'
-import ProjectIcon from './ProjectIcon.astro'
-import ProjectLink from './ProjectLink.astro'
+
+import Link from '@/components/Link.astro'
+import Chip from '@/components/Chip.astro'
+import IconForProject from './IconForProject.astro'
+import LinkForProject from './LinkForProject.astro'
+import { getBackground } from '@/utils/get-background'
 
 interface Props {
   project: Project
@@ -12,31 +14,40 @@ interface Props {
 
 const { project } = Astro.props
 
-const href = project.hasContent ? `/projects/${project.slug}` : ''
+const href = project.hasContent
+  ? `/projects/${project.slug}`
+  : project.projectLink
+
+const background = getBackground.get(project)
+console.log(background)
 ---
 
-<BaseCard showHover={project.hasContent}>
-  <Link href={href}>
-    <div class='flex flex-col justify-between h-full'>
-      <div class='flex justify-between'>
-        <ProjectIcon project={project} />
-        {
-          project?.isOpenSource() && (
-            <div class='inline-flex items-center h-5 px-2 text-xs font-medium text-center text-green-600 bg-green-100 rounded-full'>
-              Open-Source
-            </div>
-          )
-        }
-      </div>
+<div
+  class='rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
+>
+  <Link href={href} class='flex flex-col'>
+    <div class='flex items-center justify-center'>
+      <Image
+        src={background}
+        width={1200}
+        height={630}
+        class='rounded-lg'
+        alt={project.name}
+      />
 
-      <span class='text-lg font-bold mb-1 text-ellipsis'>
-        {project.name}
-      </span>
+      <div class='absolute flex flex-col items-center'>
+        <IconForProject project={project} />
+        <span class='text-lg font-bold text-ellipsis text-center'>
+          {project.name}
+        </span>
+      </div>
+    </div>
+    <div class='flex-1 px-2 py-4'>
       <p class='text-sm text-muted-foreground'>{project.description}</p>
-      <ProjectLink project={project} />
+      <LinkForProject project={project} />
       <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
         {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
       </div>
     </div>
   </Link>
-</BaseCard>
+</div>

@@ -2,7 +2,7 @@
 import type { Project } from '@/lib/types/projects'
 
 import BaseCard from '@/components/BaseCard.astro'
-import ItemProject from './ItemProject.astro'
+import InlineItemProject from './InlineItemProject.astro'
 import { filterProjects } from '@/utils/filter-projects'
 
 interface Props {
@@ -25,7 +25,7 @@ const filteredProjects = filterProjects(projects ?? [], 'learning')
         {filteredProjects.map(project => {
           return (
             <li>
-              <ItemProject project={project} />
+              <InlineItemProject project={project} />
             </li>
           )
         })}

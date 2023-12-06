@@ -1,8 +1,8 @@
 ---
 import type { Project } from '@/lib/types/projects'
 
-import ProjectListCard from './ProjectListCard.astro'
-import SectionTitleProjects from './SectionTitleProjects.astro'
+import ProjectListItem from './ProjectListItem.astro'
+import SectionTitleByStatus from './SectionTitleByStatus.astro'
 import { filterProjects } from '@/utils/filter-projects'
 
 interface Props {
@@ -19,13 +19,13 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     activeProjects.length > 0 && (
       <div>
-        <SectionTitleProjects
+        <SectionTitleByStatus
           title='Now'
           subtitle='Projects I currently work on.'
         />
         <div class='flex flex-col gap-6'>
           {activeProjects.map(project => (
-            <ProjectListCard project={project} />
+            <ProjectListItem project={project} />
           ))}
         </div>
       </div>
@@ -35,14 +35,14 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
   {
     completedProjects.length > 0 && (
       <div class='mt-20'>
-        <SectionTitleProjects
+        <SectionTitleByStatus
           title='Past'
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
         />
 
         <div class='flex flex-col gap-6'>
           {completedProjects.map(project => (
-            <ProjectListCard project={project} />
+            <ProjectListItem project={project} />
           ))}
         </div>
       </div>

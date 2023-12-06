@@ -2,12 +2,14 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import PageTitle from '@/components/PageTitle.astro'
 import SwapViewButtons from '@/components/SwapViewButtons.astro'
-import BacklogCard from '@/components/for-pages/projects/BacklogCard.astro'
-import LearningProjectsCard from '@/components/for-pages/projects/LearningProjectsCard.astro'
+
+import BacklogSection from '@/components/for-pages/projects/BacklogSection.astro'
+import LearningSection from '@/components/for-pages/projects/LearningSection.astro'
+
 import ProjectsGridView from '@/components/for-pages/projects/ProjectsGridView.astro'
+import ProjectsListView from '@/components/for-pages/projects/ProjectsListView.astro'
 
 import { getProjectsData } from '@/lib/data/projects-provider'
-import ProjectsListView from '@/components/for-pages/projects/ProjectsListView.astro'
 
 const projects = await getProjectsData()
 ---
@@ -33,6 +35,6 @@ const projects = await getProjectsData()
 
   <h2 class='text-2xl font-bold mt-20'>Others</h2>
 
-  <BacklogCard projects={projects} />
-  <LearningProjectsCard projects={projects} />
+  <BacklogSection projects={projects} />
+  <LearningSection projects={projects} />
 </PageLayout>

@@ -5,8 +5,8 @@ import { Project } from '@/lib/types/projects'
 import Link from '@/components/Link.astro'
 
 import Chip from '@/components/Chip.astro'
-import ProjectIcon from './ProjectIcon.astro'
-import ProjectLink from './ProjectLink.astro'
+import IconForProject from './IconForProject.astro'
+import LinkForProject from './LinkForProject.astro'
 import { getBackground } from '@/utils/get-background'
 
 interface Props {
@@ -37,7 +37,7 @@ const background = getBackground.get(project)
       {
         background.startsWith('/static') && (
           <div class='absolute flex flex-col items-center'>
-            <ProjectIcon project={project} />
+            <IconForProject project={project} />
           </div>
         )
       }
@@ -50,7 +50,7 @@ const background = getBackground.get(project)
 
       <p class='text-sm text-muted-foreground'>{project.description}</p>
 
-      <ProjectLink project={project} />
+      <LinkForProject project={project} />
       <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
         {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
       </div>

@@ -1,0 +1,42 @@
+---
+import { Project } from '@/lib/types/projects'
+import Link from '@components/Link.astro'
+import Chip from '@components/Chip.astro'
+import BaseCard from '@components/BaseCard.astro'
+import ProjectIcon from '../for-pages/projects/IconForProject.astro'
+import ProjectLink from '../for-pages/projects/LinkForProject.astro'
+
+interface Props {
+  project: Project
+}
+
+const { project } = Astro.props
+
+const href = project.hasContent ? `/projects/${project.slug}` : ''
+---
+
+<BaseCard showHover={project.hasContent}>
+  <Link href={href}>
+    <div class='flex flex-col justify-between h-full'>
+      <div class='flex justify-between'>
+        <ProjectIcon project={project} />
+        {
+          project?.isOpenSource() && (
+            <div class='inline-flex items-center h-5 px-2 text-xs font-medium text-center text-green-600 bg-green-100 rounded-full'>
+              Open-Source
+            </div>
+          )
+        }
+      </div>
+
+      <span class='text-lg font-bold mb-1 text-ellipsis'>
+        {project.name}
+      </span>
+      <p class='text-sm text-muted-foreground'>{project.description}</p>
+      <ProjectLink project={project} />
+      <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+      </div>
+    </div>
+  </Link>
+</BaseCard>

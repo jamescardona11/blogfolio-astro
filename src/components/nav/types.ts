@@ -10,19 +10,3 @@ export type NavItemProps = {
   icon?: IconKey
   subMenu?: NavItemProps[]
 }
-
-export type SidebarNavItem = {
-  title: string
-  disabled?: boolean
-  external?: boolean
-  icon?: IconKey
-} & (
-  | {
-      href: string
-      items?: never
-    }
-  | {
-      href?: string
-      items: []
-    }
-)

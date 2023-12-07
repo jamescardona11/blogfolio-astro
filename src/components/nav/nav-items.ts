@@ -21,26 +21,12 @@ const navItemsList: NavItemProps[] = [
     // icon: 'pageProjects'
   },
   {
-    href: '/dsa',
-    title: 'DSA',
-    keywords: [
-      'dsa',
-      'leetcode',
-      'algo',
-      'algorithm',
-      'data structure',
-      'data structures'
-    ]
-    // icon: 'pageDSA'
+    href: '/about',
+    title: 'About me',
+    keywords: ['about', 'me', 'myself', 'jamescardona11', 'james cardona']
+    // icon: 'pageAbout'
   },
-  {
-    href: '/courses',
-    title: 'Courses',
-    keywords: ['courses', 'course', 'academy', 'tutorial', 'tutorials'],
-    // icon: 'pageCourse',
-    hideCommand: true,
-    hideNavigation: true
-  },
+
   {
     href: '/more',
     title: 'More',
@@ -54,19 +40,14 @@ const navItemsList: NavItemProps[] = [
         keywords: ['resume', 'cv']
         // icon: 'pageResume'
       },
-      {
-        href: '/about',
-        title: 'About me',
-        keywords: ['about', 'me', 'myself', 'jamescardona11', 'james cardona']
-        // icon: 'pageAbout'
-      },
+
       {
         href: '/uses',
         title: 'Uses',
         keywords: ['uses', 'tools', 'gear']
         // icon: 'pageUses'
       },
-      { href: '/rss', title: 'RSS', hideCommand: true },
+      { href: '/rss.xml', title: 'RSS', hideCommand: true },
       {
         href: '/dashboard',
         title: 'Dashboard',
@@ -77,34 +58,10 @@ const navItemsList: NavItemProps[] = [
   }
 ]
 
-const extraNavItems: NavItemProps[] = [
-  {
-    href: '/resume',
-    title: 'Resume',
-    keywords: ['resume', 'cv']
-    // icon: 'pageResume'
-  },
-  {
-    href: '/uses',
-    title: 'Uses',
-    keywords: ['uses', 'tools', 'gear']
-    // icon: 'pageUses'
-  },
-  { href: '/rss', title: 'RSS', hideCommand: true, hideNavigation: true },
-  {
-    href: '/dashboard',
-    title: 'Dashboard',
-    keywords: ['dashboard', 'stats']
-    // icon: 'pageDashboard'
-  }
-]
-
 const siteNavLinks: NavItemProps[] = [
   { href: '/privacy', title: 'Privacy', hideCommand: true },
   { href: '/terms', title: 'Terms', hideCommand: true },
-  { href: '/roadmap', title: 'Roadmap', hideCommand: true },
-  { href: '/how-to-build', title: 'Build this site', hideCommand: true },
   { href: '/source', title: 'Source', hideCommand: true }
 ]
 
-export { navItemsList, extraNavItems, siteNavLinks }
+export { navItemsList, siteNavLinks }

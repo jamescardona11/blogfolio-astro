@@ -5,7 +5,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger
-} from '@/components/ui/navigation-menu'
+} from '@/components/nav/header/NavigationMenu'
 
 import type { NavItemProps } from '../types'
 

@@ -17,30 +17,42 @@ const { posts } = Astro.props
     {
       // destructuring data from the collection
       // review `config.ts` inside the content folder to destructure the right data
-      posts.map(({ slug, data: { image, title, summary, date } }) => (
-        <article class='group relative flex flex-col space-y-2'>
-          {image && (
-            <Image
-              src={image}
-              alt={title}
-              width={804}
-              height={452}
-              class='rounded-md border bg-muted transition-colors'
-            />
-          )}
-          <h2 class='text-2xl font-extrabold'>{title}</h2>
+      posts.map(({ slug, data: { image, title, summary, date } }) => {
+        const backgroundImage = image ? image : '/static/blog_placeholder.png'
+        return (
+          <Fragment>
+            <article class='group relative flex flex-col space-y-2'>
+              <Fragment>
+                <Image
+                  src={backgroundImage}
+                  alt={title}
+                  width={804}
+                  height={452}
+                  class='rounded-md border bg-muted transition-colors'
+                />
+              </Fragment>
 
-          {date && (
-            <p class='text-sm text-muted-foreground'>
-              <FormattedDate date={date} />
-            </p>
-          )}
-          {summary && <p class='text-muted-foreground'>{summary}</p>}
-          <Link href={`/blog/${slug}`} class='absolute inset-0'>
-            <span class='sr-only'>View Article</span>
-          </Link>
-        </article>
-      ))
+              <h2 class='text-2xl font-extrabold'>{title}</h2>
+
+              {date && (
+                <Fragment>
+                  <p class='text-sm text-muted-foreground'>
+                    <FormattedDate date={date} />
+                  </p>
+                </Fragment>
+              )}
+              {summary && (
+                <Fragment>
+                  <p class='text-muted-foreground'>{summary}</p>
+                </Fragment>
+              )}
+              <Link href={`/blog/${slug}`} class='absolute inset-0'>
+                <span class='sr-only'>View Article</span>
+              </Link>
+            </article>
+          </Fragment>
+        )
+      })
     }
   </div>
 </div>

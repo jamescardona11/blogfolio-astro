@@ -1,9 +1,9 @@
 import { getCollection } from 'astro:content'
 import { Project } from '@/lib/types/projects'
+import type { DataContent } from '@lib/types/content.type'
 
 import { getProjectsFromNotion } from './remote/notion/projects/projects'
 import { getProjectBlocksFromNotion } from './remote/notion/projects/project'
-import type { DataContent } from '../types/content.type'
 
 export async function getProjectsData(): Promise<Project[]> {
   // const projects = await getLocalProjects() // Local

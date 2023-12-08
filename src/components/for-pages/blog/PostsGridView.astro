@@ -4,6 +4,9 @@ import type { CollectionEntry } from 'astro:content'
 
 import Link from '@components/Link.astro'
 import FormattedDate from './FormattedDate.astro'
+import Scale from '@/components/Scale.astro'
+import TextShadow from '@/components/TextShadow.astro'
+import Chip from '@/components/Chip.astro'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
@@ -17,40 +20,43 @@ const { posts } = Astro.props
     {
       // destructuring data from the collection
       // review `config.ts` inside the content folder to destructure the right data
-      posts.map(({ slug, data: { image, title, summary, date } }) => {
+      posts.map(({ slug, data: { image, title, summary, date, tags } }) => {
         const backgroundImage = image ? image : '/static/blog_placeholder.png'
+        const href = `/blog/${slug}`
         return (
-          <Fragment>
-            <article class='group relative flex flex-col space-y-2'>
-              <Fragment>
+          <article class='group relative flex flex-col space-y-2'>
+            <Link href={href}>
+              <Scale>
                 <Image
                   src={backgroundImage}
                   alt={title}
                   width={804}
                   height={452}
-                  class='rounded-md border bg-muted transition-colors'
+                  class='rounded-lg border bg-muted transition-colors'
                 />
-              </Fragment>
+              </Scale>
+            </Link>
 
-              <h2 class='text-2xl font-extrabold'>{title}</h2>
+            <TextShadow href={href} type='h3'>
+              {title}
+            </TextShadow>
 
-              {date && (
-                <Fragment>
-                  <p class='text-sm text-muted-foreground'>
-                    <FormattedDate date={date} />
-                  </p>
-                </Fragment>
-              )}
-              {summary && (
-                <Fragment>
-                  <p class='text-muted-foreground'>{summary}</p>
-                </Fragment>
-              )}
-              <Link href={`/blog/${slug}`} class='absolute inset-0'>
-                <span class='sr-only'>View Article</span>
-              </Link>
-            </article>
-          </Fragment>
+            {date && (
+              <p class='text-sm text-muted-foreground'>
+                <FormattedDate date={date} />
+              </p>
+            )}
+            {summary && (
+              <div class='grow text-sm text-muted-foreground'>
+                {summary}
+                <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+                  {tags?.map(tag => (
+                    <Chip>{tag}</Chip>
+                  ))}
+                </div>
+              </div>
+            )}
+          </article>
         )
       })
     }

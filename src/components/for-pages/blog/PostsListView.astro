@@ -7,6 +7,7 @@ import FormattedDate from './FormattedDate.astro'
 import Icons from '@/components/icons/Icons.astro'
 import TextShadow from '@/components/TextShadow.astro'
 import Scale from '@/components/Scale.astro'
+import Chip from '@/components/Chip.astro'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
@@ -19,17 +20,17 @@ const { posts } = Astro.props
   {
     // destructuring data from the collection
     // review `content/config.ts destructure the right data
-    posts.map(function ({ slug, data: { image, title, summary, date } }) {
+    posts.map(function ({ slug, data: { image, title, summary, date, tags } }) {
       const backgroundImage = image ? image : '/static/blog_placeholder.png'
       const href = `/blog/${slug}`
 
       return (
         <article class='py-5 border-b border-slate-100 dark:border-slate-800 '>
-          <div class='flex items-start '>
+          <div class='flex items-start'>
             <Link href={href}>
               <Scale>
                 <Image
-                  class='rounded w-16 h-16 sm:w-[88px] sm:h-[88px] object-cover mr-6'
+                  class='rounded-lg border w-16 h-16 sm:w-[88px] sm:h-[88px] object-cover mr-6 '
                   src={backgroundImage}
                   width={88}
                   height={88}
@@ -43,10 +44,17 @@ const { posts } = Astro.props
                 <FormattedDate date={date} />
               </div>
               <TextShadow href={href}>{title}</TextShadow>
+
               <div class='flex justify-between'>
-                <div class='grow text-sm text-slate-500 dark:text-slate-400'>
+                <div class='grow text-sm text-muted-foreground'>
                   {summary}
+                  <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+                    {tags?.map(tag => (
+                      <Chip>{tag}</Chip>
+                    ))}
+                  </div>
                 </div>
+
                 <Link
                   class='hidden lg:flex shrink-0 text-foreground items-center justify-center w-12 group'
                   href={href}

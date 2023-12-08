@@ -33,7 +33,7 @@ const background = getBackground.get(project)
           src={background}
           width={200}
           height={500}
-          class='rounded-lg'
+          class='rounded-lgbg-muted transition-colors'
           alt={project.name}
         />
         {
@@ -49,18 +49,13 @@ const background = getBackground.get(project)
 
   <div class='flex flex-col'>
     <TextShadow href={href}>{project.name}</TextShadow>
-
-    <p class='text-sm text-muted-foreground'>{project.description}</p>
-
-    <LinkForProject project={project} />
+    <div class='grow text-sm text-muted-foreground'>
+      <p>{project.description}</p>
+      <LinkForProject project={project} />
+    </div>
 
     <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
       {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
     </div>
-  </div>
-  <div
-    class='hidden lg:flex shrink-0 text-foreground items-center justify-center w-12 group'
-  >
-    <Icons kind='arrow' href={href} />
   </div>
 </div>

@@ -1,0 +1,18 @@
+---
+import Link from './Link.astro'
+
+interface Props {
+  href: string | undefined
+}
+
+const { href } = Astro.props
+---
+
+<h3 class='font-sans text-lg font-bold mb-1 text-ellipsis'>
+  <Link
+    href={href}
+    class='inline-flex relative hover:text-zinc-800 dark:hover:text-zinc-200 duration-150 ease-out before:scale-x-0 before:origin-center before:absolute before:inset-0 before:bg-zinc-500 dark:before:bg-zinc-500 before:opacity-30 before:-z-10 before:translate-y-1/4 before:-rotate-2 hover:before:scale-100 before:duration-150 before:ease-in-out'
+  >
+    <slot />
+  </Link>
+</h3>

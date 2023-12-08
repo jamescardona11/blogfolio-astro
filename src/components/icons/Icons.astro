@@ -18,6 +18,7 @@ import ChevronDown from './source/ChevronDown.astro'
 import ChevronUp from './source/ChevronUp.astro'
 import ProfessionalIcon from './source/ProfessionalIcon.astro'
 import SideProjectIcon from './source/SideProjectIcon.astro'
+import Arrow from './source/Arrow.astro'
 
 const components = {
   github: Github,
@@ -35,6 +36,7 @@ const components = {
   views: ViewsIcon,
   chevronDown: ChevronDown,
   chevronUp: ChevronUp,
+  arrow: Arrow,
   profesional: ProfessionalIcon,
   sideProjects: SideProjectIcon
 }
@@ -52,19 +54,19 @@ const SvgIcon = components[kind]
 
 const fSize = size ?? 5
 
-const className =
+let className =
   c ??
   `fill-zinc-500 dark:hover:fill-zinc-100 hover:fill-zinc-700 h-${fSize} w-${fSize}`
+
+className =
+  href && className
+    ? className
+    : 'text-sm text-gray-500 transition hover:text-gray-600'
 ---
 
 {
   href ? (
-    <a
-      class='text-sm text-gray-500 transition hover:text-gray-600'
-      target='_blank'
-      rel='noopener noreferrer'
-      href={href}
-    >
+    <a class={className} target='_blank' rel='noopener noreferrer' href={href}>
       <span class='sr-only'>{kind}</span>
       <SvgIcon class={className} style={style} />
     </a>

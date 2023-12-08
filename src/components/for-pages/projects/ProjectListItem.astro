@@ -8,6 +8,9 @@ import Chip from '@/components/Chip.astro'
 import IconForProject from './IconForProject.astro'
 import LinkForProject from './LinkForProject.astro'
 import { getBackground } from '@/utils/get-background'
+import Scale from '@/components/Scale.astro'
+import Icons from '@/components/icons/Icons.astro'
+import TextShadow from '@/components/TextShadow.astro'
 
 interface Props {
   project: Project
@@ -22,38 +25,42 @@ const href = project.hasContent
 const background = getBackground.get(project)
 ---
 
-<Link href={href}>
-  <div
-    class='flex gap-4 items-center rounded-xl group relative transform hover:scale-105 transition duration-700 ease-out'
-  >
-    <div class='flex items-center justify-center'>
-      <Image
-        src={background}
-        width={200}
-        height={500}
-        class='rounded-lg'
-        alt={project.name}
-      />
-      {
-        background.startsWith('/static') && (
-          <div class='absolute flex flex-col items-center'>
-            <IconForProject project={project} />
-          </div>
-        )
-      }
-    </div>
-
-    <div class='flex flex-col'>
-      <span class='text-lg font-bold mb-1 text-ellipsis'>
-        {project.name}
-      </span>
-
-      <p class='text-sm text-muted-foreground'>{project.description}</p>
-
-      <LinkForProject project={project} />
-      <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
-        {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+<div class='flex gap-4 items-center rounded-xl'>
+  <Link href={href}>
+    <Scale>
+      <div class='flex items-center justify-center'>
+        <Image
+          src={background}
+          width={200}
+          height={500}
+          class='rounded-lg'
+          alt={project.name}
+        />
+        {
+          background.startsWith('/static') && (
+            <div class='absolute flex flex-col items-center'>
+              <IconForProject project={project} />
+            </div>
+          )
+        }
       </div>
+    </Scale>
+  </Link>
+
+  <div class='flex flex-col'>
+    <TextShadow href={href}>{project.name}</TextShadow>
+
+    <p class='text-sm text-muted-foreground'>{project.description}</p>
+
+    <LinkForProject project={project} />
+
+    <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+      {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
     </div>
   </div>
-</Link>
+  <div
+    class='hidden lg:flex shrink-0 text-foreground items-center justify-center w-12 group'
+  >
+    <Icons kind='arrow' href={href} />
+  </div>
+</div>

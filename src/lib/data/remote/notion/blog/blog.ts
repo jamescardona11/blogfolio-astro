@@ -49,8 +49,6 @@ export async function getPostsFromNotion() {
     const title = row.title.title[0].text.content
     const slug = slugger(title)
 
-    console.log(row.serie)
-
     return {
       id: row.id,
       slug: slug,
@@ -70,7 +68,7 @@ export async function getPostsFromNotion() {
 
 /// Get a blog post by id
 export async function getBlogBlocksById(pageId: string) {
-  console.log('GET /api/blog/pageId')
+  console.log(`GET /api/blog/${pageId}`)
 
   let content: Array<PartialBlockObjectResponse | BlockObjectResponse> = []
   let nextCursor

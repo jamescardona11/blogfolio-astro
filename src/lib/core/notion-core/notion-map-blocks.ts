@@ -286,8 +286,7 @@ const transformNotionHeading = (
 
       if (level === 'h1') blocks.push(factory.heading1(heading, hashLink))
       if (level === 'h2') blocks.push(factory.heading2(heading, hashLink))
-
-      blocks.push(factory.heading3(heading, hashLink))
+      if (level === 'h3') blocks.push(factory.heading3(heading, hashLink))
 
       if (pendingBreak) {
         blocks.push(factory.break())

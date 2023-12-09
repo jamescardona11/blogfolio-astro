@@ -1,8 +1,7 @@
 ---
 import { Image } from 'astro:assets'
-import { getCollection, type CollectionEntry } from 'astro:content'
 
-import { excludeDrafts, getPostsSerie } from '@/lib/data/local/mdx-posts'
+import { getPostsSerie } from '@/lib/data/local/mdx-posts'
 
 import PostLayout from '@/layouts/PostLayout.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
@@ -10,9 +9,12 @@ import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
 
 import PostRightPanel from '@/components/for-pages/blog/posts/PostRightPanel.astro'
 import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
+import type { Post } from '@/lib/types/post.type'
+import { getBlogContent, getPostsData } from '@/lib/data/blog-provider'
+import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', excludeDrafts)
+  const posts = await getPostsData()
   return posts.map((post, index) => ({
     params: { slug: post.slug },
     props: { post, next: posts[index + 1], prev: posts[index - 1] }
@@ -20,20 +22,20 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  post: CollectionEntry<'posts'>
+  post: Post
 }
 
 const { post } = Astro.props
 
 // TOOD: related, tags
-const {
-  slug,
-  data: { image, title, date, serie }
-} = post
+const { slug, cover, title, date, tags, serie } = post
 
-const { Content, headings, remarkPluginFrontmatter } = await post.render()
+const result = await getBlogContent(post)
 
-const postsSerie = await getPostsSerie(serie?.title, title)
+const { Content, headings } = result
+const { blocks } = result
+
+const postsSerie = await getPostsSerie(serie, title)
 ---
 
 <PostLayout>
@@ -63,9 +65,23 @@ const postsSerie = await getPostsSerie(serie?.title, title)
     )
   }
 
-  <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
-    <Content />
-  </div>
+  <!-- Content is the Astro:content object -->
+  {
+    Content && (
+      <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
+        <Content />
+      </div>
+    )
+  }
+
+  <!-- blocks is the data from notion -->
+  {
+    blocks && (
+      <div>
+        <RenderBlocks blocks={blocks} />
+      </div>
+    )
+  }
 
   <div class='mt-16'>{/* <LikeButton2 slug={post.slug} /> */}</div>
   {

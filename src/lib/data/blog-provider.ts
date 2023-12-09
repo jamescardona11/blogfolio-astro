@@ -53,14 +53,15 @@ async function getBlocksPostData(id: string): Promise<DataContent> {
 
 /// Get post data from local mdx files
 async function getMdxPostData(slug: string): Promise<DataContent> {
-  const posts = await getCollection('posts')
+  const posts = await getCollection('posts', excludeDrafts)
   const post = posts.find(post => post.slug === slug)!
 
-  const { Content } = await post.render()
+  const { Content, headings } = await post.render()
 
   return {
     blocks: null,
-    Content: Content
+    Content: Content,
+    headings: headings
   } as DataContent
 }
 

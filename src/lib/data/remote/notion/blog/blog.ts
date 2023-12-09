@@ -26,7 +26,7 @@ export async function getPostsFromNotion() {
   const query = await notionClient.getDatabase(notionDatabaseId, {
     sorts: [
       {
-        property: 'publishedAt',
+        property: 'date',
         direction: 'descending'
       }
     ]
@@ -49,6 +49,8 @@ export async function getPostsFromNotion() {
     const title = row.title.title[0].text.content
     const slug = slugger(title)
 
+    console.log(row.serie)
+
     return {
       id: row.id,
       slug: slug,
@@ -56,9 +58,10 @@ export async function getPostsFromNotion() {
       summary: row.summary?.rich_text[0]?.text?.content,
       cover: row.cover?.files[0]?.file?.url,
       tags: row.tags?.multi_select.map((tag: { name: any }) => tag.name),
-      serie: row.serie?.select.name,
+      serie: row.serie?.select?.name,
       order: row.order?.number?.format,
-      status: row.status.status.name.toLowerCase()
+      status: row.status.status.name.toLowerCase(),
+      date: new Date(row.date?.date.start)
     } as Post
   })
 

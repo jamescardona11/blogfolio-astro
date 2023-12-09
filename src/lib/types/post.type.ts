@@ -7,8 +7,8 @@ export type Post = {
   summary?: string
   cover?: string | undefined
   tags: string[]
-  serie: string | undefined | null
-  order: number | undefined | null
+  serie: string | undefined
+  order: number | undefined
   status: PostStatus
   date: Date
 }

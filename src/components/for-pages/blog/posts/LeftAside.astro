@@ -1,0 +1,33 @@
+---
+import type { Post } from '@/lib/types/post.type'
+import Link from '@/components/Link.astro'
+import Icons from '@/components/icons/Icons.astro'
+
+interface Props {
+  post: Post
+}
+
+const { post } = Astro.props
+---
+
+<div class:list={['relative', 'xl:!col-start-2']}>
+  <div class='relative xl:absolute xl:top-0 xl:left-0 xl:right-0 flex flex-col'>
+    <Link href='/blog' class='pb-6 flex items-center justify-start'>
+      <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
+       See all posts
+    </Link>
+
+    {
+      post.status === 'partial' ? (
+        <div class='mb-2 text-base italic text-muted-foreground text-opacity-100 '>
+          Pending
+        </div>
+      ) : null
+    }
+
+    <p class='italic text-muted-foreground'>
+      Note: This post is not finished. I sometimes publish early in case it will
+      be helpful to someone.
+    </p>
+  </div>
+</div>

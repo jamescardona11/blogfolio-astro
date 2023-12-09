@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import type { Post } from '@/lib/types/post.type'
 
 import PostLayout from '@/layouts/PostLayout.astro'
@@ -6,7 +7,10 @@ import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
 import Link from '@/components/Link.astro'
 import RenderBlocks from '@/components/notion/RenderBlocks.astro'
-import PostRightPanel from '@/components/for-pages/blog/posts/PostRightPanel.astro'
+import RightAside from '@/components/for-pages/blog/posts/RightAside.astro'
+import LeftAside from '@/components/for-pages/blog/posts/LeftAside.astro'
+import Icons from '@/components/icons/Icons.astro'
+import Reactions from '@/components/reactions/reactions'
 
 import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
 import {
@@ -14,7 +18,6 @@ import {
   getPostsData,
   getPostsSerie
 } from '@/lib/data/blog-provider'
-import Aside from '@/components/Aside.astro'
 
 export async function getStaticPaths() {
   const posts = await getPostsData()
@@ -43,40 +46,38 @@ const postsSerie = await getPostsSerie(slug)
 
 <PostLayout>
   <div>
-    <h1 id={TOP_ID} class='text-2xl font-medium sm:text-3xl'>{title}</h1>
-
-    <div class='flex mt-2 space-x-2 text-lg text-zinc-100/50'>
-      {
-        date && (
-          <p class='text-sm text-muted-foreground'>
-            Published on <FormattedDate date={date} />
-          </p>
-        )
-      }
-      <div class='text-zinc-100/30'>&middot;</div>
-      <div>METRICS</div>
-
-      <!-- *Here: Good spot to add the cover image -->
-    </div>
+    {
+      date && (
+        <p class='text-sm text-muted-foreground'>
+          Published on <FormattedDate date={date} />
+        </p>
+      )
+    }
+    <h1
+      id={TOP_ID}
+      class='inline-block mt-2 text-4xl leading-tight font-heading lg:text-5xl'
+    >
+      {title}
+    </h1>
   </div>
+  <LeftAside post={post} />
+  <RightAside headings={headings} slug={slug} />
+
   {
-    post.status === 'partial' && (
-      <Aside title='Pending'>
-        Note: This post is not finished. I sometimes publish early in case it
-        will be helpful to someone.
-      </Aside>
+    cover && (
+      <Image
+        src={cover}
+        alt={title}
+        width={744}
+        height={405}
+        class='transition-colors border rounded-md bg-muted'
+      />
     )
   }
 
-  <PostRightPanel headings={headings} slug={slug} />
-
-  <!-- *Here: The best spot to add the cover image -->
-
   {
     postsSerie != null && postsSerie.posts.length > 1 && (
-      <div serie-top-component>
-        <PostSeries data={postsSerie} isInteractive={true} />
-      </div>
+      <PostSeries data={postsSerie} isInteractive={true} />
     )
   }
 
@@ -92,16 +93,25 @@ const postsSerie = await getPostsSerie(slug)
   <!-- blocks is the data from notion -->
   {
     blocks && (
-      <div>
+      <div class='pt-10 pb-8'>
         <RenderBlocks blocks={blocks} />
       </div>
     )
   }
 
-  <div class='mt-16'>{/* <LikeButton2 slug={post.slug} /> */}</div>
+  <hr class='border-t-2 border-zinc-200/10' />
+
+  <div class='flex flex-col items-center justify-center pb-6'>
+    <Link href='/blog' class='flex items-center py-3 lg:py-6'>
+      <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
+       See all posts
+    </Link>
+    <Reactions client:idle slug={slug} size='sm' />
+  </div>
+
   {
     postsSerie != null && postsSerie.posts.length > 1 ? (
-      <div serie-bottom-component class='my-16'>
+      <div serie-bottom-component>
         <PostSeries data={postsSerie} />
       </div>
     ) : null

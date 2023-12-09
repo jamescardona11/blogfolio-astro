@@ -1,6 +1,5 @@
 pre {
   line-height: 2;
-  border: 1px solid;
 }
 pre code .line::before {
   content: counter(line);

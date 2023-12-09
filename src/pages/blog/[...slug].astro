@@ -1,8 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 
-import { getPostsSerie } from '@/lib/data/local/mdx-posts'
-
 import PostLayout from '@/layouts/PostLayout.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
@@ -10,7 +8,11 @@ import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
 import PostRightPanel from '@/components/for-pages/blog/posts/PostRightPanel.astro'
 import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
 import type { Post } from '@/lib/types/post.type'
-import { getBlogContent, getPostsData } from '@/lib/data/blog-provider'
+import {
+  getBlogContent,
+  getPostsData,
+  getPostsSerie
+} from '@/lib/data/blog-provider'
 import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 
 export async function getStaticPaths() {
@@ -28,14 +30,14 @@ interface Props {
 const { post } = Astro.props
 
 // TOOD: related, tags
-const { slug, cover, title, date, tags, serie } = post
+const { slug, cover, title, date, tags } = post
 
 const result = await getBlogContent(post)
 
 const { Content, headings } = result
 const { blocks } = result
 
-const postsSerie = await getPostsSerie(serie, title)
+const postsSerie = await getPostsSerie(slug)
 ---
 
 <PostLayout>
@@ -138,4 +140,3 @@ const postsSerie = await getPostsSerie(serie, title)
 </PostLayout>
 
 <script src='/src/scripts/copy-button.js'></script>
- @/lib/data/local/mdx-posts

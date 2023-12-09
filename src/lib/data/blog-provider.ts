@@ -1,14 +1,25 @@
-import { getCollection } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 import type { Post } from '@/lib/types/post.type'
+import type { PostSerie } from '@/content/post-serie.type'
 import type { DataContent } from '@/lib/types/data/content.type'
 
+import { getHeadings as getHeadingsFromNotion } from '@lib/core/notion-core/notion-headings'
 import { providersConfig } from '@lib/providers.config'
-import { excludeDrafts, getHeadings, sortPosts } from './local/mdx-posts'
+
+import {
+  excludeDrafts,
+  filterSeriePosts,
+  getHeadings,
+  sortPosts,
+  sortSeriePosts
+} from './local/mdx-posts'
+
 import {
   getBlogBlocksById,
   getPostsFromNotion
 } from './remote/notion/blog/blog'
-import { getHeadings as getHeadingsFromNotion } from '../core/notion-core/notion-headings'
+
+let _posts: Post[] | null = null
 
 /// Get all posts data
 /// This function is used to get all posts data from local mdx files or from notion
@@ -17,10 +28,12 @@ export async function getPostsData(): Promise<Post[]> {
   const config = providersConfig.blog
 
   if (config === 'local') {
-    return await getLocalPosts() // local
+    _posts = await getLocalPosts() // local
+    return _posts
   }
 
-  return await getRemotePosts() // Remote
+  _posts = await getRemotePosts() // Remote
+  return _posts
 }
 
 /// Get post content
@@ -35,6 +48,36 @@ export async function getBlogContent(post: Post): Promise<DataContent> {
   }
 
   return await getBlocksPostData(post.id) // Remote
+}
+
+/// Get post serie
+/// This function is used to get post serie from local mdx files or from notion
+
+export async function getPostsSerie(slug: string): Promise<PostSerie | null> {
+  if (!_posts) {
+    _posts = await getPostsData()
+  }
+
+  const post = _posts.find(post => post.slug === slug)!
+
+  if (!post.serie) return null
+
+  const filter = sortSeriePosts(
+    _posts.filter(p => filterSeriePosts(post.serie!, p))
+  )
+
+  return {
+    title: post.serie,
+    posts: filter.map(p => {
+      return {
+        title: p.title,
+        slug: p.slug,
+        status: p.status,
+        isCurrent: p.title === post.title,
+        order: p.order!
+      }
+    })
+  }
 }
 
 /// Get blocks from notion
@@ -92,11 +135,11 @@ async function getLocalPosts() {
 }
 
 async function getRemotePosts() {
-  const experience = await getPostsFromNotion()
+  const posts = await getPostsFromNotion()
 
-  if (!experience.ok) {
-    console.log(experience.error)
+  if (!posts.ok) {
+    console.log(posts.error)
   }
 
-  return experience.ok ? experience.data : []
+  return posts.ok ? posts.data : []
 }

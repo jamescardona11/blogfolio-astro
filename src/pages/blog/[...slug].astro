@@ -1,19 +1,19 @@
 ---
-import { Image } from 'astro:assets'
+import type { Post } from '@/lib/types/post.type'
 
 import PostLayout from '@/layouts/PostLayout.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
-
+import Link from '@/components/Link.astro'
+import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 import PostRightPanel from '@/components/for-pages/blog/posts/PostRightPanel.astro'
+
 import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
-import type { Post } from '@/lib/types/post.type'
 import {
   getBlogContent,
   getPostsData,
   getPostsSerie
 } from '@/lib/data/blog-provider'
-import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 
 export async function getStaticPaths() {
   const posts = await getPostsData()
@@ -55,19 +55,25 @@ const postsSerie = await getPostsSerie(slug)
       }
       <div class='text-zinc-100/30'>&middot;</div>
       <div>METRICS</div>
+
+      <!-- Good spot to add the cover image -->
     </div>
   </div>
 
   <!-- RIGHT -->
   <PostRightPanel headings={headings} slug={slug} />
 
+  <!-- The best spot to add the cover image -->
+
   {
     postsSerie != null && postsSerie.posts.length > 1 && (
-      <PostSeries data={postsSerie} isInteractive={true} />
+      <div serie-top-component>
+        <PostSeries data={postsSerie} isInteractive={true} />
+      </div>
     )
   }
 
-  <!-- Content is the Astro:content object -->
+  <!-- Content is the astro:content object -->
   {
     Content && (
       <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
@@ -88,11 +94,12 @@ const postsSerie = await getPostsSerie(slug)
   <div class='mt-16'>{/* <LikeButton2 slug={post.slug} /> */}</div>
   {
     postsSerie != null && postsSerie.posts.length > 1 ? (
-      <div class='my-16'>
+      <div serie-bottom-component class='my-16'>
         <PostSeries data={postsSerie} />
       </div>
     ) : null
   }
+
   <!-- <Link
       href='/blog'
       class='absolute left-[-200px] top-14 hidden xl:inline-flex'
@@ -140,3 +147,38 @@ const postsSerie = await getPostsSerie(slug)
 </PostLayout>
 
 <script src='/src/scripts/copy-button.js'></script>
+<script>
+  function isElementVisible(element: Element | null) {
+    if (!element) return false
+    const rect = element.getBoundingClientRect()
+    const windowHeight =
+      window.innerHeight || document.documentElement.clientHeight
+    const windowWidth =
+      window.innerWidth || document.documentElement.clientWidth
+
+    // check if element is inside of viewport
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= windowHeight &&
+      rect.right <= windowWidth
+    )
+  }
+
+  const topSerie = document.querySelector('[serie-top-component]')
+  const bottomSerie = document.querySelector('[serie-bottom-component]')
+
+  let bothVisible = 0
+
+  if (isElementVisible(topSerie)) {
+    bothVisible += 1
+  }
+
+  if (isElementVisible(bottomSerie)) {
+    bothVisible += 1
+  }
+
+  if (bothVisible === 2) {
+    bottomSerie?.classList.add('hidden')
+  }
+</script>

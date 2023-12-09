@@ -13,5 +13,5 @@ export const providersConfig: Provider = {
   resume: 'notion',
   aboutMe: 'notion',
   projects: 'local',
-  blog: 'notion'
+  blog: 'local'
 }

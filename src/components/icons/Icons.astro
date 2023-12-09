@@ -58,7 +58,7 @@ let className =
   `fill-zinc-500 dark:hover:fill-zinc-100 hover:fill-zinc-700 h-${fSize} w-${fSize}`
 
 className =
-  href && className
+  !href && className
     ? className
     : 'text-sm text-gray-500 transition hover:text-gray-600'
 ---

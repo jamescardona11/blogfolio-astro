@@ -93,35 +93,38 @@ const currentIndex = currentPost!.order
   <script define:vars={{ isInteractive }}>
     let isOpen = !isInteractive
 
-    const cardHeader = document.querySelector('[toggle-card]')
-    const cardContent = document.querySelector('[card-content]')
-    const chevronDownIcon = document.querySelector('[chevrondown-icon]')
-    const chevronUpIcon = document.querySelector('[chevronup-icon]')
+    const cardHeaders = document.querySelectorAll('[toggle-card]')
+    const cardContents = document.querySelectorAll('[card-content]')
+    const chevronDownIcons = document.querySelectorAll('[chevrondown-icon]')
+    const chevronUpIcons = document.querySelectorAll('[chevronup-icon]')
 
     init()
 
     function init() {
       if (isInteractive) {
         // Add event listener to open the card
-        cardHeader.addEventListener('click', toggleCard)
-        cardHeader.classList.add('cursor-pointer')
-        chevronDownIcon.classList.remove('hidden')
+        cardHeaders.forEach(e => {
+          e.addEventListener('click', toggleCard)
+          e.classList.add('cursor-pointer')
+        })
+
+        chevronUpIcons.forEach(e => e.classList.remove('hidden'))
       } else {
-        cardContent.classList.remove('hidden')
+        cardContents.forEach(e => e.classList.remove('hidden'))
       }
     }
 
     function toggleCard() {
-      if (cardContent == null) return
+      if (cardContents == null) return
 
-      if (isOpen) {
-        cardContent.classList.add('hidden')
-        chevronUpIcon.classList.add('hidden')
-        chevronDownIcon.classList.remove('hidden')
+      if (!isOpen) {
+        cardContents.forEach(e => e.classList.add('hidden'))
+        chevronDownIcons.forEach(e => e.classList.remove('hidden'))
+        chevronUpIcons.forEach(e => e.classList.add('hidden'))
       } else {
-        cardContent.classList.remove('hidden')
-        chevronUpIcon.classList.remove('hidden')
-        chevronDownIcon.classList.add('hidden')
+        cardContents.forEach(e => e.classList.remove('hidden'))
+        chevronDownIcons.forEach(e => e.classList.add('hidden'))
+        chevronUpIcons.forEach(e => e.classList.remove('hidden'))
       }
       isOpen = !isOpen
     }

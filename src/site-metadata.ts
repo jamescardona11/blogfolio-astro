@@ -1,7 +1,7 @@
 const siteMetadata = {
-  title: 'Personal Page',
+  title: 'Blogfolio Astro',
   description:
-    'I share my insights on crafting exceptional products, honing my developer prowess, and growing a successful tech career.',
+    'Amazing blogfolio built with Astro, TypeScript, Tailwind CSS and MDX.',
   siteUrl: 'https://jamescardona11.com',
   language: 'en-us',
   siteRepo: 'https://github.com/jamescardona11/blogfolio-astro',
@@ -12,7 +12,7 @@ const siteMetadata = {
   github: 'jamescardona11',
   linkedin: 'jamescardona11',
   twitter: 'jamescardona11_',
-  youtube: 'https://youtube.com/channel/UCoDHYabD2zNtMn17x2wu50Q',
+  youtube: 'https://youtube.com',
   email: 'me@jamescardona11.com',
   name: 'jamescardona11'
 }

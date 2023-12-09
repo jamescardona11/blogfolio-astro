@@ -1,8 +1,8 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
-import { SITE_METADATA } from '../consts'
+import { siteMetadata } from '@/site-metadata'
 
-const { title, description } = SITE_METADATA
+const { title, description } = siteMetadata
 
 export async function GET(context) {
   const posts = await getCollection('blog')

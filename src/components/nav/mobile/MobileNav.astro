@@ -1,6 +1,6 @@
 ---
 import Link from '@components/Link.astro'
-import { NAVIGATION } from '@/consts'
+import { navItemsList } from '../nav-items'
 ---
 
 <button aria-label='Toggle Menu' class='sm:hidden toggle-menu'>
@@ -37,16 +37,18 @@ import { NAVIGATION } from '@/consts'
   </div>
   <nav class='fixed mt-8 h-full'>
     {
-      NAVIGATION.map(({ href, title }) => (
-        <div class='px-12 py-4'>
-          <Link
-            href={href}
-            class='text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100'
-          >
-            {title}
-          </Link>
-        </div>
-      ))
+      navItemsList
+        .filter(e => e.hideNavigation == null || !e.hideNavigation)
+        .map(({ href, title }) => (
+          <div class='px-12 py-4'>
+            <Link
+              href={href}
+              class='text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100'
+            >
+              {title}
+            </Link>
+          </div>
+        ))
     }
   </nav>
 </div>

@@ -1,42 +1,44 @@
 import { getCollection } from 'astro:content'
-import { Project } from '@/lib/types/projects.type'
+import type { Post } from '@/lib/types/post.type'
 import type { DataContent } from '@lib/types/content.type'
 
-import { getProjectsFromNotion } from './remote/notion/projects/projects'
-import { getProjectBlocksFromNotion } from './remote/notion/projects/project'
-import { sortProjects } from './local/mdx-projects'
 import { providersConfig } from '@lib/providers.config'
+import { excludeDrafts, sortPosts } from './local/mdx-posts'
+import {
+  getBlogBlocksById,
+  getPostsFromNotion
+} from './remote/notion/blog/blog'
 
-/// Get all projects data
-/// This function is used to get all projects data from local mdx files or from notion
+/// Get all posts data
+/// This function is used to get all posts data from local mdx files or from notion
 /// Review the providers.config.ts file to see the configuration
-export async function getPostsData(): Promise<Project[]> {
-  const config = providersConfig.projects
+export async function getPostsData(): Promise<Post[]> {
+  const config = providersConfig.blog
 
   if (config === 'local') {
-    return await getLocalProjects() // local
+    return await getLocalPosts() // local
   }
 
-  return await getRemoteProjects() // Remote
+  return await getRemotePosts() // Remote
 }
 
-/// Get project content
-/// This function is used to get project content from local mdx files or from notion
+/// Get post content
+/// This function is used to get post content from local mdx files or from notion
 /// Review the providers.config.ts file to see the configuration
-/// if the project has content, this function will return the blocks or the Content component
-export async function getBlogContent(project: Project): Promise<DataContent> {
-  const config = providersConfig.projects
+/// if the post has content, this function will return the blocks or the Content component
+export async function getBlogContent(post: Post): Promise<DataContent> {
+  const config = providersConfig.blog
 
   if (config === 'local') {
-    return await getMdxPostData(project.slug) // Local
+    return await getMdxPostData(post.slug) // Local
   }
 
-  return await getBlocksPostData(project.id) // Remote
+  return await getBlocksPostData(post.id) // Remote
 }
 
 /// Get blocks from notion
 async function getBlocksPostData(id: string): Promise<DataContent> {
-  const blocksResponse = await getProjectBlocksFromNotion(id)
+  const blocksResponse = await getBlogBlocksById(id)
   if (!blocksResponse.ok) {
     console.log(blocksResponse.error)
   }
@@ -49,12 +51,12 @@ async function getBlocksPostData(id: string): Promise<DataContent> {
   } as DataContent
 }
 
-/// Get project data from local mdx files
+/// Get post data from local mdx files
 async function getMdxPostData(slug: string): Promise<DataContent> {
-  const mdxProjects = await getCollection('projects')
-  const project = mdxProjects.find(project => project.slug === slug)!
+  const posts = await getCollection('posts')
+  const post = posts.find(post => post.slug === slug)!
 
-  const { Content } = await project.render()
+  const { Content } = await post.render()
 
   return {
     blocks: null,
@@ -62,31 +64,30 @@ async function getMdxPostData(slug: string): Promise<DataContent> {
   } as DataContent
 }
 
-/// Get all projects from local mdx files
-/// This map the collection of projects from mdx files to `Project` type
-async function getLocalProjects() {
-  const mdxProjects = await getCollection('projects')
+/// Get all posts from local mdx files
+/// This map the collection of posts from mdx files to `Post` type
+async function getLocalPosts() {
+  const posts = await getCollection('posts', excludeDrafts).then(sortPosts)
 
-  return sortProjects(mdxProjects).map(mdxProject => {
-    return new Project(
-      mdxProject.id, //id
-      mdxProject.slug, //slug
-      mdxProject.data.name, //name
-      mdxProject.data.status, //status
-      mdxProject.data.type, //type
-      mdxProject.data.description, //description
-      mdxProject.data.projectLink, //linkProject
-      mdxProject.data.repositoryLink, //linkRepository
-      mdxProject.data.techStack, //techStack
-      mdxProject.data.icon, //icon
-      mdxProject.data.background, //background
-      mdxProject.body != null && mdxProject.body !== '' //body
-    )
-  })
+  return posts.map(
+    post =>
+      ({
+        id: post.id,
+        slug: post.slug,
+        title: post.data.title,
+        summary: post.data.summary,
+        cover: post.data.cover,
+        tags: post.data.tags ?? [],
+        serie: post.data.serie?.title,
+        order: post.data.serie?.order,
+        status: post.data.status,
+        date: post.data.date
+      }) as Post
+  )
 }
 
-async function getRemoteProjects() {
-  const experience = await getProjectsFromNotion()
+async function getRemotePosts() {
+  const experience = await getPostsFromNotion()
 
   if (!experience.ok) {
     console.log(experience.error)

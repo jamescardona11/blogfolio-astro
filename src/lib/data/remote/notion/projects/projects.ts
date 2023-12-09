@@ -42,7 +42,7 @@ export async function getProjectsFromNotion() {
       return new Project(
         row.id!, // id
         slug, // slug
-        row.name.title[0].text.content, // name
+        name, // name
         row.status?.status?.name ?? '', // status
         row.type.select.name, // type
         row.description?.rich_text[0]?.text?.content, // description

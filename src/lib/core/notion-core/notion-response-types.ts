@@ -46,14 +46,14 @@ export type NBlogPostRow = {
     id: string
     title: Array<{ text: { content: string } }>
   }
+  summary?: { rich_text: Array<{ text: { content: string } }> }
   cover?: { files: Array<{ file: { url: string } }> }
-  description?: { rich_text: Array<{ text: { content: string } }> }
-  where: { select: { name: string } }
-  series: { select: { name: string } }
+  tags?: { multi_select: Array<{ name: string }> }
+  status: { status: { name: string } }
+  serie: { select: { name: string } }
   order: { number: { format: number } }
-  tag?: { select: { name: string } }
-  link?: { url: string }
-  publishedAt: { date: { start: string } }
+  type: { select: { name: string } }
+  date: { date: { start: string } }
 }
 
 export type NUsesRow = {

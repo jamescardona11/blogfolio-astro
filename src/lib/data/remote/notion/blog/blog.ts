@@ -1,3 +1,5 @@
+import { slug as slugger } from 'github-slugger'
+
 import type {
   BlockObjectResponse,
   PartialBlockObjectResponse
@@ -6,7 +8,7 @@ import type {
 import { NOTION_BLOG_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
 import { type NBlogPostRow } from '@/lib/core/notion-core/notion-response-types'
-import { type PostType } from '@/lib/types/post.type'
+import { type Post } from '@/lib/types/post.type'
 
 import {
   createFailureResponse,
@@ -18,7 +20,7 @@ import { mapNotionBlocks } from '@/lib/core/notion-core/notion-map-blocks'
 const notionDatabaseId = NOTION_BLOG_DB
 
 /// Get all blog posts
-export async function getLatestBlogPost() {
+export async function getPostsFromNotion() {
   console.log('GET /api/blog')
 
   const query = await notionClient.getDatabase(notionDatabaseId, {
@@ -43,19 +45,22 @@ export async function getLatestBlogPost() {
     return p
   })
 
-  const blogPost = rows.map(
-    row =>
-      ({
-        id: row.id,
-        title: row.title.title[0].text.content,
-        description: row.description?.rich_text[0]?.text?.content,
-        cover: row.cover?.files[0]?.file?.url,
-        where: row.where.select.name,
-        tag: row.tag?.select?.name,
-        link: row.link?.url,
-        publishedAt: row.publishedAt.date.start
-      }) as PostType
-  )
+  const blogPost = rows.map(row => {
+    const title = row.title.title[0].text.content
+    const slug = slugger(title)
+
+    return {
+      id: row.id,
+      slug: slug,
+      title: title,
+      summary: row.summary?.rich_text[0]?.text?.content,
+      cover: row.cover?.files[0]?.file?.url,
+      tags: row.tags?.multi_select.map((tag: { name: any }) => tag.name),
+      serie: row.serie?.select.name,
+      order: row.order?.number?.format,
+      status: row.status.status.name.toLowerCase()
+    } as Post
+  })
 
   return createSuccessResponse(blogPost)
 }

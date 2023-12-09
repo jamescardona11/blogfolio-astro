@@ -41,7 +41,7 @@ const navItemsList: NavItemProps[] = [
         title: 'Uses',
         keywords: ['uses', 'tools', 'gear']
       },
-      { href: '/rss.xml', title: 'RSS', hideCommand: true },
+      { href: '/rss.xml.js', title: 'RSS', hideCommand: true },
       {
         href: '/dashboard',
         title: 'Dashboard',

@@ -3,8 +3,8 @@
 @import 'tailwindcss/utilities';
 
 /* Additional styles */
-@import 'utility-patterns.css';
 @import 'copy-button.css';
+@import 'pre-code.css';
 
 @layer base {
   @font-face {

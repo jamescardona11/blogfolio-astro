@@ -1,0 +1,16 @@
+pre {
+  line-height: 2;
+  border: 1px solid;
+}
+pre code .line::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  margin-right: 2rem;
+  width: 1rem;
+  text-align: right;
+}
+pre > code {
+  display: grid;
+  counter-reset: line;
+}

@@ -5,10 +5,11 @@ import type { MarkdownHeading } from 'astro'
 import ScrollToTop from './ScrollToTop.astro'
 import TableOfContents from './table-of-contents/TableOfContents.astro'
 import Reactions from '@/components/reactions/reactions'
+import type { Headings } from '@/lib/types/data/headings.type'
 
 interface Props {
   slug: string
-  headings: MarkdownHeading[]
+  headings: Headings[]
 }
 
 const { slug, headings } = Astro.props

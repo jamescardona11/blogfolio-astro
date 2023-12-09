@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content'
 import { Project } from '@/lib/types/projects.type'
-import type { DataContent } from '@lib/types/content.type'
+import type { DataContent } from '@/lib/types/data/content.type'
 
 import { getProjectsFromNotion } from './remote/notion/projects/projects'
 import { getProjectBlocksFromNotion } from './remote/notion/projects/project'

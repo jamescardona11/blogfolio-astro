@@ -1,5 +1,8 @@
-import type { PostSerie } from '@/content/post-serie.type'
+import type { MarkdownHeading } from 'astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
+
+import type { PostSerie } from '@/content/post-serie.type'
+import type { Headings } from '@/lib/types/data/headings.type'
 
 // This code sorts blog posts by date. It's used to determine the order that posts are displayed on the blog index page.
 export const sortPosts = (
@@ -38,6 +41,16 @@ export const getPostsSerie = async (
       }
     })
   }
+}
+
+export const getHeadings = (headings: MarkdownHeading[]): Headings[] => {
+  return headings.map(heading => {
+    return {
+      level: heading.depth,
+      text: heading.text,
+      slug: heading.slug
+    } as Headings
+  })
 }
 
 const filterSeriePosts = (

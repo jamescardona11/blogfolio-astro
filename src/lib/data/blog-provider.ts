@@ -1,13 +1,14 @@
 import { getCollection } from 'astro:content'
 import type { Post } from '@/lib/types/post.type'
-import type { DataContent } from '@lib/types/content.type'
+import type { DataContent } from '@/lib/types/data/content.type'
 
 import { providersConfig } from '@lib/providers.config'
-import { excludeDrafts, sortPosts } from './local/mdx-posts'
+import { excludeDrafts, getHeadings, sortPosts } from './local/mdx-posts'
 import {
   getBlogBlocksById,
   getPostsFromNotion
 } from './remote/notion/blog/blog'
+import { getHeadings as getHeadingsFromNotion } from '../core/notion-core/notion-headings'
 
 /// Get all posts data
 /// This function is used to get all posts data from local mdx files or from notion
@@ -44,10 +45,12 @@ async function getBlocksPostData(id: string): Promise<DataContent> {
   }
 
   const blocks = blocksResponse.ok ? blocksResponse.data : []
+  const headings = getHeadingsFromNotion(blocks)
 
   return {
     blocks: blocks,
-    Content: null
+    Content: null,
+    headings: headings
   } as DataContent
 }
 
@@ -57,11 +60,12 @@ async function getMdxPostData(slug: string): Promise<DataContent> {
   const post = posts.find(post => post.slug === slug)!
 
   const { Content, headings } = await post.render()
+  const h = getHeadings(headings)
 
   return {
     blocks: null,
     Content: Content,
-    headings: headings
+    headings: h
   } as DataContent
 }
 

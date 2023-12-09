@@ -8,6 +8,7 @@ pre code .line::before {
   margin-right: 2rem;
   width: 1rem;
   text-align: right;
+  color: #505457;
 }
 pre > code {
   display: grid;

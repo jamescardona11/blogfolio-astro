@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 import type { Post } from '@/lib/types/post.type'
 
-import PostLayout from '@/layouts/PostLayout.astro'
+import ContentLayout from '@/layouts/content/ContentLayout.astro'
 import FormattedDate from '@/components/for-pages/blog/FormattedDate.astro'
 import PostSeries from '@/components/for-pages/blog/posts/PostSeries.astro'
 import Link from '@/components/Link.astro'
@@ -44,7 +44,7 @@ const { blocks } = result
 const postsSerie = await getPostsSerie(slug)
 ---
 
-<PostLayout>
+<ContentLayout>
   <div>
     {
       date && (
@@ -116,9 +116,8 @@ const postsSerie = await getPostsSerie(slug)
       </div>
     ) : null
   }
-</PostLayout>
+</ContentLayout>
 
-<script src='/src/scripts/copy-button.js'></script>
 <script>
   function isElementVisible(element: Element | null) {
     if (!element) return false

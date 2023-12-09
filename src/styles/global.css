@@ -3,7 +3,6 @@
 @import 'tailwindcss/utilities';
 
 /* Additional styles */
-@import 'copy-button.css';
 @import 'pre-code.css';
 
 @layer base {

@@ -1,0 +1,73 @@
+---
+import RootLayout from '@/layouts/root/RootLayout.astro'
+
+interface Props {
+  metaTitle?: string
+  metaDescription?: string
+}
+
+const { metaTitle: title, metaDescription: description } = Astro.props
+---
+
+<RootLayout metaTitle={title} metaDescription={description}>
+  <div
+    class:list={[
+      'grid font-sans text-base max-w-none',
+      'gap-y-8 xl:gap-x-9 xl:px-0',
+      'grid-cols-[1fr,min(640px,100%),1fr]',
+      'xl:grid-cols-[1fr,minmax(auto,200px),min(744px,100%),minmax(auto,200px),1fr]',
+      '[&>*]:col-start-2 xl:[&>*]:col-start-3'
+    ]}
+  >
+    <slot />
+  </div>
+</RootLayout>
+
+<!-- COPY SCRIPT -->
+<script>
+  let codeBlocks = Array.from(document.querySelectorAll('pre'))
+
+  const copyButton = (
+    document.getElementById('copyButtonTemplate') as HTMLTemplateElement
+  ).content.firstElementChild!
+
+  for (let block of codeBlocks) {
+    let wrapper = document.createElement('div')
+    wrapper.style.position = 'relative'
+    wrapper.classList.add('code-buttons')
+
+    let feedback = document.createElement('button')
+    feedback.className = 'copied'
+    feedback.style.display = 'none'
+    feedback.innerHTML = 'Copied!'
+
+    let button = copyButton.cloneNode(true) as HTMLButtonElement
+    button.addEventListener('click', makeCopier(block, button, feedback))
+
+    wrapper.appendChild(button)
+    wrapper.appendChild(feedback)
+
+    block.parentNode!.insertBefore(wrapper, block)
+  }
+
+  function makeCopier(
+    block: HTMLElement,
+    button: HTMLButtonElement,
+    feedback: HTMLButtonElement
+  ) {
+    let code = block.querySelector('code')!
+
+    async function copier() {
+      await navigator.clipboard.writeText(code.innerText)
+      button.classList.add('hidden')
+      feedback.style.display = 'block'
+
+      setTimeout(() => {
+        button.classList.remove('hidden')
+        feedback.style.display = 'none'
+      }, 700)
+    }
+
+    return copier
+  }
+</script>

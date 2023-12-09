@@ -9,6 +9,7 @@ import Icons from '@/components/icons/Icons.astro'
 import TextShadow from '@/components/TextShadow.astro'
 import Scale from '@/components/Scale.astro'
 import Chip from '@/components/Chip.astro'
+import Tags from './Tags.astro'
 
 interface Props {
   posts: Post[]
@@ -49,11 +50,7 @@ const { posts } = Astro.props
               <div class='flex justify-between'>
                 <div class='grow text-sm text-muted-foreground'>
                   {summary}
-                  <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
-                    {tags?.map(tag => (
-                      <Chip>{tag}</Chip>
-                    ))}
-                  </div>
+                  <Tags tags={tags} />
                 </div>
 
                 <Link

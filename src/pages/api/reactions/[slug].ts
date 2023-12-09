@@ -51,13 +51,15 @@ export const GET: APIRoute = async ({ params, clientAddress }) => {
             likes: 0,
             loves: 0,
             claps: 0,
-            party: 0
+            party: 0,
+            views: 0
           },
           user: {
             likes: 0,
             loves: 0,
             claps: 0,
-            party: 0
+            party: 0,
+            views: 0
           }
         })
       )
@@ -69,13 +71,15 @@ export const GET: APIRoute = async ({ params, clientAddress }) => {
           likes: content.likes ?? 0,
           loves: content.loves ?? 0,
           claps: content.claps ?? 0,
-          party: content.party ?? 0
+          party: content.party ?? 0,
+          views: content.views ?? 0
         },
         user: {
           likes: user?.likes ?? 0,
           loves: user?.loves ?? 0,
           claps: user?.claps ?? 0,
-          party: user?.party ?? 0
+          party: user?.party ?? 0,
+          views: user?.views ?? 0
         }
       })
     )

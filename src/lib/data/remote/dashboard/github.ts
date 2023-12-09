@@ -9,7 +9,7 @@ import {
 import type { GithubStatsType } from '@/lib/types/github-stats.type'
 
 export async function getGithubStatsData() {
-  console.log('GET /api/dashboard/wakatime')
+  console.log('GET /api/dashboard/github')
 
   if (GITHUB_TOKEN == null) {
     createFailureResponse('API key is missing', 'UNKNOWN')

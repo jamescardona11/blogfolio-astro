@@ -1,6 +1,7 @@
 import type { DashboardType } from '@/lib/types/dashboard.type'
 import type { GithubStatsType } from '@/lib/types/github-stats.type'
 import type { WakatimeType } from '@/lib/types/wakatime.type'
+import type { ReactionStatsType } from '@/lib/types/reactions.type'
 
 import { getGithubStatsData } from './remote/dashboard/github'
 import { getAllStats } from './remote/dashboard/stats'
@@ -16,6 +17,10 @@ export async function getDashboardData(): Promise<DashboardType> {
     wakatime: wakatimeStats,
     reactions
   }
+}
+
+export async function getAllStatsData(): Promise<ReactionStatsType> {
+  return await getAllStats()
 }
 
 async function getGithubStats(): Promise<GithubStatsType> {

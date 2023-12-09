@@ -49,9 +49,14 @@ const { posts } = Astro.props
             {summary && (
               <div class='grow text-sm text-muted-foreground'>
                 {summary}
-                <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+                <div class='flex flex-wrap gap-1 mt-2'>
                   {tags?.map(tag => (
-                    <Chip>{tag}</Chip>
+                    <a
+                      href={`/blog/tag/${tag?.toLowerCase()}`}
+                      class='text-sm text-gray-500 dark:text-stone-300'
+                    >
+                      #{tag}
+                    </a>
                   ))}
                 </div>
               </div>

@@ -2,6 +2,7 @@ import prismadb from '@/lib/core/prisma/prismadb'
 import { type ReactionStatsType } from '@/lib/types/reactions.type'
 
 export async function getAllStats(): Promise<ReactionStatsType> {
+  console.log('GET /api/dashboard/getAllStats')
   const likes = await prismadb.content.aggregate({
     _sum: {
       likes: true

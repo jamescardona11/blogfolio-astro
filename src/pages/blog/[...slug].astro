@@ -18,6 +18,7 @@ import {
   getPostsData,
   getPostsSerie
 } from '@/lib/data/blog-provider'
+import Views from '@/components/for-pages/blog/posts/views/views.tsx'
 
 export async function getStaticPaths() {
   const posts = await getPostsData()
@@ -34,12 +35,9 @@ interface Props {
 }
 
 const { post, next, prev } = Astro.props
-
-// TOOD: related, tags
 const { slug, cover, title, date, tags } = post
 
 const result = await getBlogContent(post)
-
 const { Content, headings } = result
 const { blocks } = result
 
@@ -48,19 +46,38 @@ const postsSerie = await getPostsSerie(slug)
 
 <ContentLayout>
   <div>
-    {
-      date && (
-        <p class='text-sm text-muted-foreground'>
-          Published on <FormattedDate date={date} />
-        </p>
-      )
-    }
     <h1
       id={TOP_ID}
-      class='inline-block mt-2 text-4xl leading-tight font-heading lg:text-5xl'
+      class='inline-block text-4xl leading-tight font-heading lg:text-5xl'
     >
       {title}
     </h1>
+    <div
+      class='flex gap-2 mt-2 text-sm text-muted-foreground items-center flex-wrap md:flex-nowrap'
+    >
+      <p>
+        Published on <FormattedDate date={date} />
+      </p>
+      <span class='text-gray-400 dark:text-stone-400'>•</span>
+      <Views client:idle slug={slug} />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <div class='mt-2 flex gap-2 items-center'>
+          <div class='w-full md:w-auto flex flex-wrap gap-3'>
+            {tags?.map(tag => (
+              <a
+                href={`/blog/tag/${tag?.toLowerCase()}`}
+                class='text-sm text-gray-500 dark:text-stone-300'
+              >
+                #{tag}
+              </a>
+            ))}
+          </div>
+        </div>
+      )
+    }
   </div>
   <LeftAside post={post} prev={prev} next={next} />
   <RightAside headings={headings} slug={slug} />

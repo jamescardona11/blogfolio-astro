@@ -5,29 +5,50 @@ import Icons from '@/components/icons/Icons.astro'
 
 interface Props {
   post: Post
+  prev: Post
+  next: Post
 }
 
-const { post } = Astro.props
+const { post, prev, next } = Astro.props
+
+const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
 ---
 
 <div class:list={['relative', 'xl:!col-start-2']}>
   <div class='relative xl:absolute xl:top-0 xl:left-0 xl:right-0 flex flex-col'>
-    <Link href='/blog' class='pb-6 flex items-center justify-start'>
-      <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
-       See all posts
-    </Link>
-
     {
-      post.status === 'partial' ? (
-        <div class='mb-2 text-base italic text-muted-foreground text-opacity-100 '>
-          Pending
-        </div>
+      post.status === 'in progress' ? (
+        <div class:list={['mb-2', labelClass]}>In Progress</div>
       ) : null
     }
 
-    <p class='italic text-muted-foreground'>
+    <p class='text-sm italic text-muted-foreground'>
       Note: This post is not finished. I sometimes publish early in case it will
       be helpful to someone.
     </p>
+
+    {
+      (next || prev) && (
+        <div class='flex justify-between py-4 xl:block xl:space-y-8 xl:py-8'>
+          {prev && (
+            <div>
+              <h2 class={labelClass}>Previous</h2>
+              <Link href={`/blog/${prev.slug}`}>{prev.title}</Link>
+            </div>
+          )}
+          {next && (
+            <div>
+              <h2 class={labelClass}>Next</h2>
+              <Link href={`/blog/${next.slug}`}>{next.title}</Link>
+            </div>
+          )}
+        </div>
+      )
+    }
+
+    <Link href='/blog' class='pb-6 flex items-center justify-start'>
+      <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
+       Back to blog
+    </Link>
   </div>
 </div>

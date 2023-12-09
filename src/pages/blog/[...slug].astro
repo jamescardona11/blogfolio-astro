@@ -29,9 +29,11 @@ export async function getStaticPaths() {
 
 interface Props {
   post: Post
+  next: Post
+  prev: Post
 }
 
-const { post } = Astro.props
+const { post, next, prev } = Astro.props
 
 // TOOD: related, tags
 const { slug, cover, title, date, tags } = post
@@ -60,7 +62,7 @@ const postsSerie = await getPostsSerie(slug)
       {title}
     </h1>
   </div>
-  <LeftAside post={post} />
+  <LeftAside post={post} prev={prev} next={next} />
   <RightAside headings={headings} slug={slug} />
 
   {
@@ -104,7 +106,7 @@ const postsSerie = await getPostsSerie(slug)
   <div class='flex flex-col items-center justify-center pb-6'>
     <Link href='/blog' class='flex items-center py-3 lg:py-6'>
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
-       See all posts
+       Back to blog
     </Link>
     <Reactions client:idle slug={slug} size='sm' />
   </div>
@@ -116,8 +118,46 @@ const postsSerie = await getPostsSerie(slug)
       </div>
     ) : null
   }
+
+  <div class='flex flex-row items-center justify-between'>
+    {
+      prev && (
+        <Link
+          href={`/blog/${prev.slug}`}
+          class:list={[
+            'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+            'hover:bg-accent hover:text-accent-foreground',
+            'h-10 py-2 px-4'
+          ]}
+        >
+          <Icons kind='chevronLeft' class='mr-2 h-4 w-4' />
+          {prev.title}
+        </Link>
+      )
+    }
+    {
+      next && (
+        <Link
+          href={`/blog/${next.slug}`}
+          class:list={[
+            'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+            'hover:bg-accent hover:text-accent-foreground',
+            'h-10 py-2 px-4',
+            'ml-auto'
+          ]}
+        >
+          {next.title}
+          <Icons kind='chevronRight' class='ml-2 h-4 w-4' />
+        </Link>
+      )
+    }
+  </div>
 </ContentLayout>
 
+<!-- 
+  This script si to determinate if the serie both component are visible;
+  if that is the case hide the bottom serie component  
+-->
 <script>
   function isElementVisible(element: Element | null) {
     if (!element) return false

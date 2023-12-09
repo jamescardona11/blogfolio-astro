@@ -13,6 +13,8 @@ const { projects } = Astro.props
 
 const activeProjects = filterProjects(projects ?? [], 'active')
 const completedProjects = filterProjects(projects ?? [], 'completed')
+
+const topPadding = activeProjects.length > 0 ? 'mt-20' : ''
 ---
 
 <div list-view class='hidden'>
@@ -34,7 +36,7 @@ const completedProjects = filterProjects(projects ?? [], 'completed')
 
   {
     completedProjects.length > 0 && (
-      <div class='mt-20'>
+      <div class={topPadding}>
         <SectionTitleByStatus
           title='Past'
           subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'

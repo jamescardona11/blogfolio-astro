@@ -13,13 +13,15 @@ const { headings } = Astro.props
   <nav>
     <h2 class='text-md font-bold uppercase text-zinc-100/80'>On this page</h2>
     <ul>
-      <a
-        id='preview-heading'
-        href={'#' + TOP_ID}
-        class:list={[HEADING_CLASS, HEADING_HOVER]}
-      >
-        Preview
-      </a>
+      <li>
+        <a
+          id='preview-heading'
+          href={'#' + TOP_ID}
+          class:list={[HEADING_CLASS, HEADING_HOVER]}
+        >
+          Preview
+        </a>
+      </li>
       {
         headings.map(heading => (
           <li>

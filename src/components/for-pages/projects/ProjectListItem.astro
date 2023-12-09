@@ -9,7 +9,6 @@ import IconForProject from './IconForProject.astro'
 import LinkForProject from './LinkForProject.astro'
 import { getBackground } from '@/utils/get-background'
 import Scale from '@/components/Scale.astro'
-import Icons from '@/components/icons/Icons.astro'
 import TextShadow from '@/components/TextShadow.astro'
 
 interface Props {
@@ -28,11 +27,11 @@ const background = getBackground.get(project)
 <div class='flex gap-4 items-center rounded-xl'>
   <Link href={href}>
     <Scale>
-      <div class='flex items-center justify-center'>
+      <div class='flex items-center justify-center w-[160px] h-[120px]'>
         <Image
           src={background}
-          width={200}
-          height={500}
+          width={160}
+          height={120}
           class='rounded-lg bg-muted'
           alt={project.name}
         />

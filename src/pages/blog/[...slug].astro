@@ -14,6 +14,7 @@ import {
   getPostsData,
   getPostsSerie
 } from '@/lib/data/blog-provider'
+import Aside from '@/components/Aside.astro'
 
 export async function getStaticPaths() {
   const posts = await getPostsData()
@@ -41,7 +42,6 @@ const postsSerie = await getPostsSerie(slug)
 ---
 
 <PostLayout>
-  <!-- TOP -->
   <div>
     <h1 id={TOP_ID} class='text-2xl font-medium sm:text-3xl'>{title}</h1>
 
@@ -56,14 +56,21 @@ const postsSerie = await getPostsSerie(slug)
       <div class='text-zinc-100/30'>&middot;</div>
       <div>METRICS</div>
 
-      <!-- Good spot to add the cover image -->
+      <!-- *Here: Good spot to add the cover image -->
     </div>
   </div>
+  {
+    post.status === 'partial' && (
+      <Aside title='Pending'>
+        Note: This post is not finished. I sometimes publish early in case it
+        will be helpful to someone.
+      </Aside>
+    )
+  }
 
-  <!-- RIGHT -->
   <PostRightPanel headings={headings} slug={slug} />
 
-  <!-- The best spot to add the cover image -->
+  <!-- *Here: The best spot to add the cover image -->
 
   {
     postsSerie != null && postsSerie.posts.length > 1 && (
@@ -76,9 +83,9 @@ const postsSerie = await getPostsSerie(slug)
   <!-- Content is the astro:content object -->
   {
     Content && (
-      <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
+      <Fragment class='pt-10 pb-8 max-w-none prose dark:prose-invert'>
         <Content />
-      </div>
+      </Fragment>
     )
   }
 
@@ -99,51 +106,6 @@ const postsSerie = await getPostsSerie(slug)
       </div>
     ) : null
   }
-
-  <!-- <Link
-      href='/blog'
-      class='absolute left-[-200px] top-14 hidden xl:inline-flex'
-    >
-      See all posts
-    </Link>
-    <div>
-      {
-        date && (
-          <p class='text-sm text-muted-foreground'>
-            Published on <FormattedDate date={date} />
-          </p>
-        )
-      }
-      <h1
-        class='inline-block mt-2 text-4xl leading-tight font-heading lg:text-5xl'
-      >
-        {title}
-      </h1>
-    </div>
-    {
-      image && (
-        <Image
-          src={image}
-          alt={title}
-          width={720}
-          height={405}
-          class='my-8 transition-colors border rounded-md bg-muted'
-        />
-      )
-    }
-
-    {
-      postsSerie != null && postsSerie.posts.length > 1 && (
-        <PostSeries data={postsSerie} isInteractive={true} />
-      )
-    }
-    <div class='pt-10 pb-8 prose max-w-none dark:prose-invert'>
-      <Content />
-    </div>
-    <hr class='mt-12' />
-    <div class='flex justify-center py-6 lg:py-10'>
-      <Link href='/blog'>chevronLeft --- See all posts</Link>
-    </div> -->
 </PostLayout>
 
 <script src='/src/scripts/copy-button.js'></script>

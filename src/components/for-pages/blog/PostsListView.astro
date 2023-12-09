@@ -8,17 +8,19 @@ import FormattedDate from './FormattedDate.astro'
 import Icons from '@/components/icons/Icons.astro'
 import TextShadow from '@/components/TextShadow.astro'
 import Scale from '@/components/Scale.astro'
-import Chip from '@/components/Chip.astro'
 import Tags from './Tags.astro'
 
 interface Props {
   posts: Post[]
+  visible?: boolean
 }
 
-const { posts } = Astro.props
+const { posts, visible = false } = Astro.props
+
+const className = visible ? 'block' : 'hidden'
 ---
 
-<div list-view class='hidden'>
+<div list-view class={className}>
   {
     // destructuring data from the collection
     // review `content/config.ts destructure the right data

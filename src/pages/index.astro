@@ -1,10 +1,12 @@
 ---
+import { siteMetadata } from '@/site-metadata'
+import PageLayout from '@/layouts/PageLayout.astro'
+
 import Link from '@/components/Link.astro'
 import Icons, { type IconKey } from '@/components/icons/Icons.astro'
+import Faq from '@/components/for-pages/home/Faq.astro'
 
-import PageLayout from '@/layouts/PageLayout.astro'
 import { socialNetwork } from '@/lib/data/static/about-me-data'
-import { siteMetadata } from '@/site-metadata'
 ---
 
 <PageLayout metaTitle='James Cardona - Home Page'>
@@ -266,5 +268,7 @@ import { siteMetadata } from '@/site-metadata'
         </Link>
       </div>
     </section>
+
+    <Faq />
   </section>
 </PageLayout>

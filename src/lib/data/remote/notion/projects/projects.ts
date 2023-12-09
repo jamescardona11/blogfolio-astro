@@ -3,7 +3,7 @@ import { slug as slugger } from 'github-slugger'
 import { NOTION_PROJECTS_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
 import { type NProjectRow } from '@/lib/core/notion-core/notion-response-types'
-import { Project } from '@/lib/types/projects'
+import { Project } from '@/lib/types/projects.type'
 import { createSuccessResponse } from '@/lib/core/api_response'
 
 const notionDatabaseId = NOTION_PROJECTS_DB

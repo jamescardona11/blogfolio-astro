@@ -6,10 +6,9 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string().optional(),
-    image: z.string().optional(),
+    cover: z.string().optional(),
     date: z.coerce.date(),
     canonicalUrl: z.string().optional(),
-    lastmod: z.coerce.date().optional(),
     tags: z.array(z.string().optional()).optional(),
     // Add related posts
     related: z.array(reference('posts')).default([]),

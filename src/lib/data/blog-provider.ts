@@ -10,7 +10,7 @@ import { providersConfig } from '@lib/providers.config'
 /// Get all projects data
 /// This function is used to get all projects data from local mdx files or from notion
 /// Review the providers.config.ts file to see the configuration
-export async function getProjectsData(): Promise<Project[]> {
+export async function getPostsData(): Promise<Project[]> {
   const config = providersConfig.projects
 
   if (config === 'local') {
@@ -24,26 +24,18 @@ export async function getProjectsData(): Promise<Project[]> {
 /// This function is used to get project content from local mdx files or from notion
 /// Review the providers.config.ts file to see the configuration
 /// if the project has content, this function will return the blocks or the Content component
-export async function getProjectContent(
-  project: Project
-): Promise<DataContent> {
+export async function getBlogContent(project: Project): Promise<DataContent> {
   const config = providersConfig.projects
-  if (project.hasContent) {
-    if (config === 'local') {
-      return await getMdxProjectData(project.slug) // Local
-    }
 
-    return await getBlocksProjectData(project.id) // Remote
+  if (config === 'local') {
+    return await getMdxPostData(project.slug) // Local
   }
 
-  return {
-    blocks: null,
-    Content: null
-  } as DataContent
+  return await getBlocksPostData(project.id) // Remote
 }
 
 /// Get blocks from notion
-async function getBlocksProjectData(id: string): Promise<DataContent> {
+async function getBlocksPostData(id: string): Promise<DataContent> {
   const blocksResponse = await getProjectBlocksFromNotion(id)
   if (!blocksResponse.ok) {
     console.log(blocksResponse.error)
@@ -58,7 +50,7 @@ async function getBlocksProjectData(id: string): Promise<DataContent> {
 }
 
 /// Get project data from local mdx files
-async function getMdxProjectData(slug: string): Promise<DataContent> {
+async function getMdxPostData(slug: string): Promise<DataContent> {
   const mdxProjects = await getCollection('projects')
   const project = mdxProjects.find(project => project.slug === slug)!
 

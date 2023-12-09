@@ -1,4 +1,4 @@
-import { Project } from '@/lib/types/projects'
+import { Project } from '@/lib/types/projects.type'
 
 const backgrounds = [
   '/static/backgrounds/1.png',

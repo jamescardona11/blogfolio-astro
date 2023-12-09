@@ -3,7 +3,6 @@ import type {
   PartialBlockObjectResponse
 } from '@notionhq/client/build/src/api-endpoints'
 
-import { NOTION_PROJECTS_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
 
 import {

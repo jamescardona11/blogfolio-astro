@@ -5,13 +5,13 @@ type Kind = 'local' | 'notion'
 type Provider = {
   resume: Kind
   aboutMe: Kind
-  Projects: Kind
-  Blogs: Kind
+  projects: Kind
+  blog: Kind
 }
 
-export const providers: Provider = {
+export const providersConfig: Provider = {
   resume: 'notion',
   aboutMe: 'notion',
-  Projects: 'notion',
-  Blogs: 'local'
+  projects: 'notion',
+  blog: 'local'
 }

@@ -20,8 +20,8 @@ const { posts } = Astro.props
   {
     // destructuring data from the collection
     // review `content/config.ts destructure the right data
-    posts.map(function ({ slug, data: { image, title, summary, date, tags } }) {
-      const backgroundImage = image ? image : '/static/blog_placeholder.png'
+    posts.map(function ({ slug, data: { cover, title, summary, date, tags } }) {
+      const backgroundCover = cover ? cover : '/static/blog_placeholder.png'
       const href = `/blog/${slug}`
 
       return (
@@ -31,7 +31,7 @@ const { posts } = Astro.props
               <Scale>
                 <Image
                   class='rounded-lg border w-16 h-16 sm:w-[88px] sm:h-[88px] object-cover mr-6 '
-                  src={backgroundImage}
+                  src={backgroundCover}
                   width={88}
                   height={88}
                   alt={title}

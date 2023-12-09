@@ -1,4 +1,4 @@
-import type { Project, ProjectFilterState } from '@/lib/types/projects'
+import type { Project, ProjectFilterState } from '@/lib/types/projects.type'
 
 export function filterProjects(
   projects: Project[],

@@ -1,12 +1,12 @@
 export type PostType = {
-  id: string
+  id: string // Notion id or slug when using local data
   title: string
-  description?: string
+  summary?: string
   cover?: string
-  where: string
   tag?: string
-  link: string
-  series: string
+  tags: string
+  serie: string
   order: number
-  publishedAt: string
+  status: string
+  date: Date
 }

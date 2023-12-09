@@ -11,11 +11,11 @@ import SwapViewButtons from '@components/SwapViewButtons.astro'
 
 import PostsGridView from '@/components/for-pages/blog/PostsGridView.astro'
 import PostsListView from '@/components/for-pages/blog/PostsListView.astro'
-import { excludeDrafts, sortPosts } from '@/lib/data/local/mdx-posts'
+import { getPostsData } from '@/lib/data/blog-provider'
 
 // @ts-ignore
 export async function getStaticPaths({ paginate }) {
-  const posts = await getCollection('posts', excludeDrafts).then(sortPosts)
+  const posts = await getPostsData()
   return paginate(posts, { pageSize: 10 })
 }
 

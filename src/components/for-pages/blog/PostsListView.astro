@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
-import type { CollectionEntry } from 'astro:content'
+
+import type { Post } from '@/lib/types/post.type'
 
 import Link from '@components/Link.astro'
 import FormattedDate from './FormattedDate.astro'
@@ -10,7 +11,7 @@ import Scale from '@/components/Scale.astro'
 import Chip from '@/components/Chip.astro'
 
 interface Props {
-  posts: CollectionEntry<'posts'>[]
+  posts: Post[]
 }
 
 const { posts } = Astro.props
@@ -20,7 +21,7 @@ const { posts } = Astro.props
   {
     // destructuring data from the collection
     // review `content/config.ts destructure the right data
-    posts.map(function ({ slug, data: { cover, title, summary, date, tags } }) {
+    posts.map(function ({ slug, cover, title, summary, date, tags }) {
       const backgroundCover = cover ? cover : '/static/blog_placeholder.png'
       const href = `/blog/${slug}`
 

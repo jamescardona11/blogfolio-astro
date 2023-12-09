@@ -5,7 +5,7 @@ export type Post = {
   slug: string
   title: string
   summary?: string
-  cover?: string
+  cover?: string | undefined
   tags: string[]
   serie: string | undefined | null
   order: number | undefined | null

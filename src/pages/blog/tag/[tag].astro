@@ -20,9 +20,7 @@ export async function getStaticPaths() {
     })
   })
 
-  const keys = Array.from(tags.keys())
-
-  return keys.map(tag => {
+  return Array.from(tags.keys()).map(tag => {
     return {
       params: { tag: tag },
       props: {
@@ -48,57 +46,51 @@ function isSamePath(path: string) {
 ---
 
 <PageLayout>
-  {
-    tag ? (
-      <div>
-        <div class='pb-6 pt-6'>
-          <h1 class='text-3xl capitalize font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
-            {tag}
-          </h1>
-        </div>
-        <div class='flex sm:space-x-4'>
-          <BaseCard styles='min-w-[280px] max-w-[280px]'>
-            <div class='py-4 px-6'>
-              <h3 class='text-primary-500 font-bold uppercase'>All Posts</h3>
+  <div class='pb-6 pt-6'>
+    <h1
+      class='text-3xl capitalize font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'
+    >
+      {tag}
+    </h1>
+  </div>
+  <div class='flex md:flex-row flex-col sm:space-x-4'>
+    <BaseCard styles='sm:min-w-full md:min-w-[200px]'>
+      <div class='py-4'>
+        <h3 class='text-primary font-bold uppercase'>All Tags</h3>
 
-              <ul>
-                {Array.from(tags.entries()).map(key => {
-                  const tag = key[0]
-                  const count = key[1]
-                  return (
-                    <Fragment>
-                      <li class='my-3'>
-                        {isSamePath(`/blog/tag/${tag}`) ? (
-                          <Fragment>
-                            <h3 class='inline py-2 px-3 uppercase text-sm font-bold text-primary-500 underline'>
-                              {`${tag} (${count})`}
-                            </h3>
-                          </Fragment>
-                        ) : (
-                          <Fragment>
-                            <Link
-                              href={`/blog/tag/${tag}`}
-                              class='py-2 px-3 uppercase text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500'
-                              {...{ 'aria-label': `View posts tagged ${tag}` }}
-                            >
-                              {`${tag} (${count})`}
-                            </Link>
-                          </Fragment>
-                        )}
-                      </li>
-                    </Fragment>
-                  )
-                })}
-              </ul>
-            </div>
-          </BaseCard>
-          <div>
-            <PostsListView posts={posts} visible={true} />
-          </div>
-        </div>
+        <ul>
+          {
+            Array.from(tags.entries()).map(key => {
+              const tag = key[0]
+              const count = key[1]
+              return (
+                <Fragment>
+                  <li class='my-3'>
+                    {isSamePath(`/blog/tag/${tag}`) ? (
+                      <Fragment>
+                        <h3 class='inline py-2 px-3 capitalize text-sm font-bold text-primary-500 underline'>
+                          {`${tag} (${count})`}
+                        </h3>
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <Link
+                          href={`/blog/tag/${tag}`}
+                          class='py-2 px-3 capitalize text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500'
+                          {...{ 'aria-label': `View posts tagged ${tag}` }}
+                        >
+                          {`${tag} (${count})`}
+                        </Link>
+                      </Fragment>
+                    )}
+                  </li>
+                </Fragment>
+              )
+            })
+          }
+        </ul>
       </div>
-    ) : (
-      <p>No tags found.</p>
-    )
-  }
+    </BaseCard>
+    <PostsListView posts={posts} visible={true} />
+  </div>
 </PageLayout>

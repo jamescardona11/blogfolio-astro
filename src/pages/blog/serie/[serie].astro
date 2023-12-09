@@ -1,0 +1,107 @@
+---
+import { slug as slugger } from 'github-slugger'
+import type { Post } from '@/lib/types/post.type'
+
+import PageLayout from '@/layouts/PageLayout.astro'
+import Link from '@/components/Link.astro'
+
+import { getPostsData } from '@/lib/data/blog-provider'
+import PostsListView from '@/components/for-pages/blog/PostsListView.astro'
+import BaseCard from '@/components/BaseCard.astro'
+import { filterSeriePosts, sortSeriePosts } from '@/lib/data/local/mdx-posts'
+import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
+import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
+
+export async function getStaticPaths() {
+  const posts = await getPostsData()
+  const series = new Map<string, number>()
+
+  posts
+    .filter(post => post.serie)
+    .forEach(post => {
+      series.set(post.serie!, (series.get(post.serie!) || 0) + 1)
+    })
+
+  return Array.from(series.keys()).map(serie => {
+    const postsSerie = sortSeriePosts(
+      posts.filter(p => filterSeriePosts(serie, p))
+    )
+    const slug = slugger(serie)
+    return {
+      params: { serie: slug },
+      props: {
+        posts: postsSerie,
+        serie: serie,
+        series: series
+      }
+    }
+  })
+}
+
+interface Props {
+  posts: Post[]
+  serie: string
+  series: Map<string, number>
+}
+
+const { serie, series, posts } = Astro.props
+
+function isSamePath(path: string) {
+  return Astro.url.pathname === path
+}
+
+const slug = slugger(serie)
+---
+
+<PageLayout>
+  <div>
+    <div class='pb-6 pt-6'>
+      <h1
+        class='text-3xl capitalize font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'
+      >
+        {serie}
+      </h1>
+    </div>
+
+    <div class='flex md:flex-row flex-col sm:space-x-4'>
+      <BaseCard styles='sm:min-w-full md:min-w-[300px]'>
+        <div class='py-4'>
+          <h3 class='text-primary font-bold uppercase'>All Series</h3>
+
+          <ul>
+            {
+              Array.from(series.entries()).map(key => {
+                const serie = key[0]
+                const count = key[1]
+                return (
+                  <Fragment>
+                    <li class='my-3'>
+                      {isSamePath(`/blog/serie/${slug}`) ? (
+                        <Fragment>
+                          <h3 class='inline py-2 px-3 capitalize text-sm font-bold text-primary-500 underline'>
+                            {`${serie} (${count})`}
+                          </h3>
+                        </Fragment>
+                      ) : (
+                        <Fragment>
+                          <Link
+                            href={`/blog/serie/${slug}`}
+                            class='py-2 px-3 capitalize text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500'
+                            {...{ 'aria-label': `View serie ${serie}` }}
+                          >
+                            {`${serie} (${count})`}
+                          </Link>
+                        </Fragment>
+                      )}
+                    </li>
+                  </Fragment>
+                )
+              })
+            }
+          </ul>
+        </div>
+      </BaseCard>
+      <PostsListView posts={posts} visible={true} />
+    </div>
+  </div>
+</PageLayout>

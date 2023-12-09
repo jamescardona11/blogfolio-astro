@@ -1,4 +1,4 @@
-import { getCollection, type CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
 import type { Post } from '@/lib/types/post.type'
 import type { PostSerie } from '@/content/post-serie.type'
 import type { DataContent } from '@/lib/types/data/content.type'
@@ -53,7 +53,7 @@ export async function getBlogContent(post: Post): Promise<DataContent> {
 /// Get post serie
 /// This function is used to get post serie from local mdx files or from notion
 
-export async function getPostsSerie(slug: string): Promise<PostSerie | null> {
+export async function getSerieBySlug(slug: string): Promise<PostSerie | null> {
   if (!_posts) {
     _posts = await getPostsData()
   }

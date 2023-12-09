@@ -1,4 +1,7 @@
 ---
+import { slug as slugger } from 'github-slugger'
+
+import Link from '@/components/Link.astro'
 import Icons from '@/components/icons/Icons.astro'
 import type { PostSerie } from '@/content/post-serie.type'
 
@@ -13,6 +16,8 @@ const title = data.title
 const currentPost = data.posts.find(post => post.isCurrent)
 const length = data.posts.length
 const currentIndex = currentPost!.order
+
+const slug = slugger(title)
 ---
 
 <div
@@ -22,7 +27,9 @@ const currentIndex = currentPost!.order
     <div>
       <div class='text-sm uppercase text-zinc-100/50'>Series</div>
       <div class='text-lg font-medium sm:text-xl'>
-        {title}
+        <Link href={`/blog/serie/${slug}`}>
+          {title}
+        </Link>
         <span class='font-normal text-zinc-100/50'>
           &middot; {currentIndex} of {length}</span
         >

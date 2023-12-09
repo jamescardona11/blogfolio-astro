@@ -16,7 +16,7 @@ import { TOP_ID } from '@/components/for-pages/blog/posts/table-of-contents/toc'
 import {
   getBlogContent,
   getPostsData,
-  getPostsSerie
+  getSerieBySlug
 } from '@/lib/data/blog-provider'
 import Views from '@/components/for-pages/blog/posts/views/views.tsx'
 
@@ -41,7 +41,7 @@ const result = await getBlogContent(post)
 const { Content, headings } = result
 const { blocks } = result
 
-const postsSerie = await getPostsSerie(slug)
+const postsSerie = await getSerieBySlug(slug)
 ---
 
 <ContentLayout>

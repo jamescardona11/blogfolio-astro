@@ -29,7 +29,7 @@ const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
 
     {
       (next || prev) && (
-        <div class='flex justify-between py-4 xl:block xl:space-y-8 xl:py-8 md:hidden'>
+        <div class='lg:flex justify-between py-4 xl:block xl:space-y-8 xl:py-8 hidden'>
           {prev && (
             <div>
               <h2 class={labelClass}>Previous</h2>
@@ -46,7 +46,7 @@ const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
       )
     }
 
-    <Link href='/blog' class='pb-6 flex items-center justify-start md:hidden'>
+    <Link href='/blog' class='pb-6 lg:flex items-center justify-start hidden'>
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
        Back to blog
     </Link>

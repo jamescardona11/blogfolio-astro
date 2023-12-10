@@ -8,15 +8,10 @@ const { tags } = Astro.props
 
 {
   tags.length > 0 && (
-    <div class='mt-2 flex gap-2 items-center'>
+    <div class='mt-2 flex gap-2 items-center text-sm text-foreground/60'>
       <div class='w-full md:w-auto flex flex-wrap gap-3'>
         {tags?.map(tag => (
-          <a
-            href={`/blog/tag/${tag?.toLowerCase()}`}
-            class='text-sm text-gray-500 dark:text-stone-300'
-          >
-            #{tag}
-          </a>
+          <a href={`/blog/tag/${tag?.toLowerCase()}`}>#{tag}</a>
         ))}
       </div>
     </div>

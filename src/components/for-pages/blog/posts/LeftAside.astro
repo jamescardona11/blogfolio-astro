@@ -11,7 +11,7 @@ interface Props {
 
 const { post, prev, next } = Astro.props
 
-const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
+const labelClass = 'text-sm italic text-foreground/50 text-opacity-100'
 ---
 
 <div class:list={['relative', 'xl:!col-start-2']}>
@@ -29,16 +29,16 @@ const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
 
     {
       (next || prev) && (
-        <div class='lg:flex justify-between py-4 xl:block xl:space-y-8 xl:py-8 hidden text-sm font-medium'>
+        <div class='lg:flex justify-between py-4 xl:block xl:space-y-8 xl:py-8 hidden text-sm font-medium text-foreground/80'>
           {prev && (
             <div>
-              <h2 class={labelClass}>Previous</h2>
+              <p class={labelClass}>Previous</p>
               <Link href={`/blog/${prev.slug}`}>{prev.title}</Link>
             </div>
           )}
           {next && (
             <div>
-              <h2 class={labelClass}>Next</h2>
+              <p class={labelClass}>Next</p>
               <Link href={`/blog/${next.slug}`}>{next.title}</Link>
             </div>
           )}
@@ -48,7 +48,7 @@ const labelClass = 'text-base italic text-muted-foreground text-opacity-100'
 
     <Link
       href='/blog'
-      class='pb-6 lg:flex items-center justify-start hidden text-sm font-medium'
+      class='pb-6 lg:flex items-center justify-start hidden text-sm font-medium text-foreground/80'
     >
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
        Back to blog

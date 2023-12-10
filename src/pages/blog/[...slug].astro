@@ -19,6 +19,7 @@ import {
   getSerieBySlug
 } from '@/lib/data/blog-provider'
 import Views from '@/components/for-pages/blog/posts/views/views.tsx'
+import Tags from '@/components/for-pages/blog/Tags.astro'
 
 export async function getStaticPaths() {
   const posts = await getPostsData()
@@ -61,22 +62,7 @@ const postsSerie = await getSerieBySlug(slug)
       <Views client:idle slug={slug} />
     </div>
 
-    {
-      tags.length > 0 && (
-        <div class='mt-2 flex gap-2 items-center'>
-          <div class='w-full md:w-auto flex flex-wrap gap-3'>
-            {tags?.map(tag => (
-              <a
-                href={`/blog/tag/${tag?.toLowerCase()}`}
-                class='text-sm text-gray-500 dark:text-stone-300'
-              >
-                #{tag}
-              </a>
-            ))}
-          </div>
-        </div>
-      )
-    }
+    {(<Tags tags={tags} />)}
   </div>
   <LeftAside post={post} prev={prev} next={next} />
   <RightAside headings={headings} slug={slug} />

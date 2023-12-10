@@ -7,6 +7,7 @@ import {
 } from '@/lib/data/projects-provider'
 import type { Project } from '@/lib/types/projects.type'
 import RenderBlocks from '@/components/notion/RenderBlocks.astro'
+import Reactions from '@/components/reactions/reactions'
 
 export async function getStaticPaths() {
   const projects = await getProjectsData()
@@ -33,6 +34,10 @@ const { blocks } = result
   <!-- TOP -->
   <div>
     <h1 class='text-2xl font-medium sm:text-3xl'>{project.name}</h1>
+  </div>
+
+  <div class='w-full h-12'>
+    <Reactions client:idle slug={project.slug} />
   </div>
 
   <!-- Content is the Astro:content object -->

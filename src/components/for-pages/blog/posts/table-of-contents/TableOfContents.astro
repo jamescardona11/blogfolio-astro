@@ -11,11 +11,11 @@ const { headings } = Astro.props
 
 <starlight-toc>
   <nav>
-    <h2 class='text-md font-bold uppercase text-zinc-100/80'>On this page</h2>
+    <h2 class='text-md font-bold uppercase text-primary'>On this page</h2>
     <ul>
       <li>
         <a
-          id='preview-heading'
+          id='preview-heading text-foreground/50'
           href={'#' + TOP_ID}
           class:list={[HEADING_CLASS, HEADING_HOVER]}
         >

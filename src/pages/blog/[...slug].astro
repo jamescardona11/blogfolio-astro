@@ -55,9 +55,8 @@ const postsSerie = await getSerieBySlug(slug)
     <div
       class='flex gap-2 mt-2 text-sm text-muted-foreground items-center flex-wrap md:flex-nowrap'
     >
-      <p>
-        Published on <FormattedDate date={date} />
-      </p>
+      <FormattedDate date={date} />
+
       <span class='text-gray-400 dark:text-stone-400'>•</span>
       <Views client:idle slug={slug} />
     </div>

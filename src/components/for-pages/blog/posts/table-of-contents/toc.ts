@@ -3,7 +3,7 @@ const maxHeadingLevel = 4
 const topId = '_top'
 
 const headingClass =
-  'block text-sm transition-all text-zinc-100/50 underline-offset-2 pt-1 hover:text-zinc-100'
+  'block text-sm transition-all text-foreground/50 underline-offset-2 pt-1 hover:text-zinc-100'
 const headingHover = 'hover:text-zinc-100 hover:decoration-zinc-200/50'
 
 export {

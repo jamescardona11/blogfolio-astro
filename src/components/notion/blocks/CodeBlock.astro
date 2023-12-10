@@ -13,8 +13,6 @@ const lang = getCodeLang(block.lang)
 const code = block.richText.content.map(c => c.text).join('')
 ---
 
-<div id='code-block'>
-  <Fragment>
-    <Code code={code} lang={lang} />
-  </Fragment>
+<div class='prose max-w-none dark:prose-invert'>
+  <Code code={code} lang={lang} />
 </div>

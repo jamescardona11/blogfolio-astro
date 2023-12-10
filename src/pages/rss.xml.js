@@ -1,18 +1,19 @@
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
 import { siteMetadata } from '@/site-metadata'
+import { getPostsData } from '@/lib/data/blog-provider'
 
 const { title, description } = siteMetadata
 
 export async function GET(context) {
-  const posts = await getCollection('blog')
+  const posts = await getPostsData()
   return rss({
     title,
     description,
     site: context.site,
-    items: posts.map(({ slug, data: { title, summary, tags, date } }) => ({
+    items: posts.map(({ slug, cover, title, summary, date, tags }) => ({
       title,
-      categories: tags.map(({ slug }) => slug), // TODO: add tags name in the future
+      categories: tags.map(tag => `/blog/tag/${tag?.toLowerCase()}`),
       pubDate: date,
       description: summary,
       link: `/blog/${slug}/`

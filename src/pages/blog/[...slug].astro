@@ -81,7 +81,10 @@ const postsSerie = await getSerieBySlug(slug)
 
   {
     postsSerie != null && postsSerie.posts.length > 1 && (
-      <PostSeries data={postsSerie} isInteractive={true} />
+      <>
+        <div serie-top-component />
+        <PostSeries data={postsSerie} isInteractive={true} />
+      </>
     )
   }
 
@@ -110,7 +113,6 @@ const postsSerie = await getSerieBySlug(slug)
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
        Back to blog
     </Link>
-    <Reactions client:idle slug={slug} size='sm' />
   </div>
 
   {

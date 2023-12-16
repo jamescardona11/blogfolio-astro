@@ -1,17 +1,4 @@
-import type { ExperienceType } from '@/lib/types/experience.type'
 import { type RecommendationType } from '@/lib/types/recommendation.type'
-
-const educationData: ExperienceType[] = [
-  {
-    startedDate: '2009',
-    endDate: '2015',
-    position: 'Software Engineering',
-    site: 'Universidad Nacional de Colombia',
-    description:
-      'I learned the basics of programming and software engineering. I participated in the development of a few projects, including as assistant teacher.',
-    image: '/static/unal.jpeg'
-  }
-]
 
 const recommendationData: RecommendationType[] = [
   {
@@ -23,9 +10,4 @@ const recommendationData: RecommendationType[] = [
   }
 ]
 
-const languages = {
-  esp: { icon: '🇪🇸', label: 'Spanish', percent: 100 },
-  eng: { icon: '🇺🇸', label: 'English', percent: 80 }
-}
-
-export { languages, educationData, recommendationData }
+export { recommendationData }

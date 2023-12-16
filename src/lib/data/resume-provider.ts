@@ -1,5 +1,5 @@
 import { getExperienceFromNotion } from './remote/notion/resume/experience'
-import { educationData, recommendationData } from './static/resume-data'
+import { recommendationData } from './local/recommendation-data'
 
 import type { RecommendationType } from '../types/recommendation.type'
 import type { ExperienceType } from '../types/experience.type'

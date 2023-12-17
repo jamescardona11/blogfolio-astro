@@ -1,7 +1,6 @@
 import type { MarkdownHeading } from 'astro'
-import { getCollection, type CollectionEntry } from 'astro:content'
+import { type CollectionEntry } from 'astro:content'
 
-import type { PostSerie } from '@/content/post-serie.type'
 import type { Headings } from '@/lib/types/data/headings.type'
 import type { Post } from '@/lib/types/post.type'
 

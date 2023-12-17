@@ -17,8 +17,6 @@ export async function getUsesData(): Promise<UsesByCategory> {
 }
 
 export function getLocalUsesData(): UsesByCategory {
-  console.log(codingJSON)
-
   const coding = codingJSON.map(item => {
     return {
       name: item.name,

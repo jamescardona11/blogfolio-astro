@@ -26,7 +26,7 @@ const projects = defineCollection({
   type: 'content',
   schema: z.object({
     name: z.string(),
-    status: z.enum(['Backlog', 'Paused', 'In Progress', 'Completed']),
+    status: z.enum(['Backlog', 'Paused', 'In progress', 'Completed']),
     type: z.enum(['Professional', 'Side-Project', 'Learning']),
     description: z.string(),
     projectLink: z.string().optional(),

@@ -11,7 +11,7 @@ type Provider = {
 }
 
 export const providersConfig: Provider = {
-  resume: 'notion',
+  resume: 'local',
   aboutMe: 'local',
   uses: 'local',
   projects: 'local',

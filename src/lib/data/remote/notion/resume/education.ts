@@ -1,13 +1,13 @@
-import { NOTION_EXPERIENCE_DB } from '@/lib/data/remote/remote-constants'
+import { NOTION_EDUCATION_DB } from '@/lib/data/remote/remote-constants'
 import { notionClient } from '@/lib/core/notion-core/notion-client'
-import { type NExperienceRow } from '@/lib/core/notion-core/notion-response-types'
+import { type NEducationRow } from '@/lib/core/notion-core/notion-response-types'
 import { type ExperienceType } from '@/lib/types/experience.type'
 import { createSuccessResponse } from '@/lib/core/api_response'
 
-const notionDatabaseId = NOTION_EXPERIENCE_DB
+const notionDatabaseId = NOTION_EDUCATION_DB
 
-export async function getExperienceFromNotion() {
-  console.log('GET /resume/experience')
+export async function getEducationFromNotion() {
+  console.log('GET /resume/education')
 
   const query = await notionClient.getDatabase(notionDatabaseId)
 
@@ -17,9 +17,9 @@ export async function getExperienceFromNotion() {
   }
 
   // @ts-ignore
-  const rows = query.data.results.map(res => res.properties) as NExperienceRow[]
+  const rows = query.data.results.map(res => res.properties) as NEducationRow[]
 
-  const experienceItems: ExperienceType[] = rows.map(row => ({
+  const educationItems: ExperienceType[] = rows.map(row => ({
     position: row.position.title[0].text.content,
     site: row.site.rich_text[0].text.content,
     description: row.description.rich_text[0].text.content,
@@ -32,5 +32,5 @@ export async function getExperienceFromNotion() {
     image: row.image?.files[0]?.file?.url
   }))
 
-  return createSuccessResponse(experienceItems)
+  return createSuccessResponse(educationItems)
 }

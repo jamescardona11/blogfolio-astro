@@ -5,4 +5,5 @@ export type ResumeType = {
   work: ExperienceType[]
   recommendation: RecommendationType[]
   education: ExperienceType[]
+  languages?: any
 }

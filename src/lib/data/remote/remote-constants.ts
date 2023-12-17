@@ -4,6 +4,13 @@ export const NOTION_SECRET =
 export const NOTION_EXPERIENCE_DB =
   import.meta.env.NOTION_EXPERIENCE_DB || process.env.NOTION_EXPERIENCE_DB
 
+export const NOTION_RECOMMENDATION_DB =
+  import.meta.env.NOTION_RECOMMENDATION_DB ||
+  process.env.NOTION_RECOMMENDATION_DB
+
+export const NOTION_EDUCATION_DB =
+  import.meta.env.NOTION_EDUCATION_DB || process.env.NOTION_EDUCATION_DB
+
 export const NOTION_LEARNING_PATH_DB =
   import.meta.env.NOTION_LEARNING_PATH_DB || process.env.NOTION_LEARNING_PATH_DB
 

@@ -1,6 +1,6 @@
 import { type RecommendationType } from '@/lib/types/recommendation.type'
 
-const recommendationData: RecommendationType[] = [
+export const recommendationData = (): RecommendationType[] => [
   {
     name: 'Ben Le Cun',
     position: 'Software Engineer & Tech Advisor',
@@ -9,5 +9,3 @@ const recommendationData: RecommendationType[] = [
     image: '/static/ben_le_cun.jpeg'
   }
 ]
-
-export { recommendationData }

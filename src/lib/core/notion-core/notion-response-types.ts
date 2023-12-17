@@ -5,10 +5,34 @@ export type NExperienceRow = {
   }
   startedDate: { rich_text: Array<{ text: { content: string } }> }
   endDate?: { rich_text: Array<{ text: { content?: string } }> }
-  company: { rich_text: Array<{ text: { content: string } }> }
+  site: { rich_text: Array<{ text: { content: string } }> }
   description: { rich_text: Array<{ text: { content: string } }> }
   link?: { url: string }
   technicalSkills?: { multi_select: Array<{ name: string }> }
+  image?: { files: Array<{ file: { url: string } }> }
+}
+
+export type NEducationRow = {
+  position: {
+    id: string
+    title: Array<{ text: { content: string } }>
+  }
+  startedDate: { rich_text: Array<{ text: { content: string } }> }
+  endDate?: { rich_text: Array<{ text: { content?: string } }> }
+  site: { rich_text: Array<{ text: { content: string } }> }
+  description: { rich_text: Array<{ text: { content: string } }> }
+  link?: { url: string }
+  technicalSkills?: { multi_select: Array<{ name: string }> }
+  image?: { files: Array<{ file: { url: string } }> }
+}
+
+export type NRecommendationRow = {
+  name: {
+    id: string
+    title: Array<{ text: { content: string } }>
+  }
+  position: { rich_text: Array<{ text: { content: string } }> }
+  description: { rich_text: Array<{ text: { content: string } }> }
   image?: { files: Array<{ file: { url: string } }> }
 }
 

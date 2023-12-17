@@ -1,6 +1,6 @@
 import type { ExperienceType } from '@/lib/types/experience.type'
 
-const educationData: ExperienceType[] = [
+const localEducationData = (): ExperienceType[] => [
   {
     startedDate: '2013',
     endDate: '2018',
@@ -17,4 +17,4 @@ const languages = [
   { icon: '🇺🇸', label: 'English', percent: 80 }
 ]
 
-export { languages, educationData }
+export { languages, localEducationData }

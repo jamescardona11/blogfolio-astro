@@ -33,7 +33,9 @@ const { skills } = Astro.props
                 ]}
                 style={{ '--custom-color': newColor }}
               >
-                {icon && <Image src={icon} alt={name} width={16} height={16} />}
+                {icon && icon.includes('.') && (
+                  <Image src={icon} alt={name} width={16} height={16} />
+                )}
                 <span class={'font-[500]'}>{name}</span>
               </div>
             </li>

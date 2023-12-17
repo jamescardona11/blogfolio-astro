@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets'
 
 import { siteMetadata } from '@/site-metadata'
-import { getSummaryData } from '@/lib/data/about-me-provider'
+import { getAboutMeData } from '@/lib/data/about-me-provider'
 
 import RenderBlocks from '@/components/notion/RenderBlocks.astro'
 import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
@@ -13,7 +13,7 @@ import ConnectWithMeCard from '@/components/for-pages/about/ConnectWithMeCard.as
 import CurrentCompany from '@/components/for-pages/about/CurrentCompany.astro'
 import SkillCard from '@/components/for-pages/about/SkillCard.astro'
 
-const { summaryData, skills, currentWork } = await getSummaryData()
+const { summary, summaryBlocks, skills, currentWork } = await getAboutMeData()
 ---
 
 <TwoColumnsLayout metaTitle={siteMetadata.name}>
@@ -21,7 +21,7 @@ const { summaryData, skills, currentWork } = await getSummaryData()
     <div class='rounded-2xl bg-zinc-800 object-cover dark:bg-zinc-800'>
       <Image
         src='/static/avatar.jpeg'
-        alt='James Cardona'
+        alt='Person avatar alt'
         width={1200}
         height={684}
         class='aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800'
@@ -29,9 +29,30 @@ const { summaryData, skills, currentWork } = await getSummaryData()
     </div>
     <Quote styles='mt-2' quote='Fortuna audaces iuvat' author='Virgilio' />
   </RightSide>
-  <MiddleArea>
-    <RenderBlocks blocks={summaryData} />
-  </MiddleArea>
+
+  {
+    summaryBlocks && (
+      <MiddleArea>
+        <RenderBlocks blocks={summaryBlocks} />
+      </MiddleArea>
+    )
+  }
+
+  {
+    summary && (
+      <MiddleArea>
+        {summary.map(element => {
+          if (element === '') return <p class='mt-8' />
+
+          return (
+            <p class='text-lg mt-2 text-zinc-900 dark:text-zinc-100'>
+              {element}
+            </p>
+          )
+        })}
+      </MiddleArea>
+    )
+  }
 
   <RightSide styles='md:justify-self-end space-y-6'>
     <ConnectWithMeCard />

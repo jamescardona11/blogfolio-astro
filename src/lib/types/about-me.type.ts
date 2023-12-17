@@ -5,6 +5,6 @@ import type { ExperienceType } from './experience.type'
 export type AboutMeType = {
   summaryBlocks?: NotionBlock[] | null
   summary?: string[] | null
-  skills: SkillType[] | null
+  skills: SkillType[]
   currentWork: ExperienceType | null
 }

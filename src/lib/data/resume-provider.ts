@@ -21,9 +21,9 @@ export async function getResumeData(): Promise<ResumeType> {
 }
 
 async function getLocalResumeData(): Promise<ResumeType> {
-  const work = getLocalExperienceData()
-  const recommendation = getLocalRecommendation()
-  const education = getLocalEducation()
+  const work = localExperienceData()
+  const recommendation = recommendationData()
+  const education = localEducationData()
 
   return {
     work,
@@ -72,16 +72,4 @@ async function getRemoteEducation() {
   }
 
   return experience.ok ? experience.data : []
-}
-
-function getLocalRecommendation(): RecommendationType[] {
-  return recommendationData()
-}
-
-function getLocalExperienceData(): ExperienceType[] {
-  return localExperienceData()
-}
-
-function getLocalEducation(): ExperienceType[] {
-  return localEducationData()
 }

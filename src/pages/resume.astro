@@ -16,8 +16,19 @@ const { work, recommendation, education } = await getResumeData()
 <TwoColumnsLayout metaTitle='My Resume'>
   <MiddleArea styles='space-y-8'>
     <ExperienceSection title='Work Experience' items={work} />
-    <RecommendationSection title={'Recommendations'} items={recommendation} />
-    <EducationSection title={'Education'} items={education} />
+    {
+      recommendation.length > 0 && (
+        <RecommendationSection
+          title={'Recommendations'}
+          items={recommendation}
+        />
+      )
+    }
+    {
+      education.length > 0 && (
+        <EducationSection title={'Education'} items={education} />
+      )
+    }
   </MiddleArea>
   <RightSide styles='space-y-6'>
     <LanguagesCard />

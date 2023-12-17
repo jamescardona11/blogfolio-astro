@@ -13,8 +13,8 @@ const localEducationData = (): ExperienceType[] => [
 ]
 
 const languages = [
-  { icon: '🇯🇵', label: 'Japanese', percent: 100 },
-  { icon: '🇺🇸', label: 'English', percent: 80 }
+  { icon: '🇯🇵', label: 'Japanese' },
+  { icon: '🇺🇸', label: 'English' }
 ]
 
 export { languages, localEducationData }

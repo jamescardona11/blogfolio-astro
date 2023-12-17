@@ -7,7 +7,12 @@ interface Props {
 }
 
 const { usesByCategory } = Astro.props
-const { coding, software, hardware, thisPage } = usesByCategory
+const {
+  coding = [],
+  software = [],
+  hardware = [],
+  thisPage = []
+} = usesByCategory
 
 const tabs = ['All', 'Coding', 'Software', 'Hardware', 'This Page']
 const tabsItems: Map<string, UsesType[]> = new Map()

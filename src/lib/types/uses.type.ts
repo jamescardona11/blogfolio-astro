@@ -7,8 +7,8 @@ export type UsesType = {
 }
 
 export type UsesByCategory = {
-  software: UsesType[]
-  hardware: UsesType[]
-  coding: UsesType[]
-  thisPage: UsesType[]
+  software?: UsesType[]
+  hardware?: UsesType[]
+  coding?: UsesType[]
+  thisPage?: UsesType[]
 }

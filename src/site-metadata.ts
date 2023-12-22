@@ -8,13 +8,13 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   workCompany: 'https://www.phononx.com/',
-  cv: 'https://dropbox.com/s/69l2vuo9ebjtly2/profile_us.pdf?dl=0',
+  cv: '',
   github: 'jamescardona11',
   linkedin: 'jamescardona11',
   twitter: 'jamescardona11_',
   youtube: 'https://youtube.com',
   email: 'me@jamescardona11.com',
-  name: 'jamescardona11'
+  name: 'BlogFolio'
 }
 
 export { siteMetadata }

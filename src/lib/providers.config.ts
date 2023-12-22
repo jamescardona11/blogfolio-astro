@@ -1,5 +1,5 @@
 /// Local: mdx or static
-/// Notion: notion CMS -> Template here:
+/// Notion: notion CMS -> Template here: https://jamescardona11.notion.site/Blogfolio-astro-template-4e95a6ec9dad4f6b9b3ccbe1355d6805
 type Kind = 'local' | 'notion'
 
 type Provider = {
@@ -11,9 +11,9 @@ type Provider = {
 }
 
 export const providersConfig: Provider = {
-  resume: 'notion',
+  resume: 'local',
   aboutMe: 'notion',
   uses: 'notion',
   projects: 'notion',
-  blog: 'notion'
+  blog: 'local'
 }

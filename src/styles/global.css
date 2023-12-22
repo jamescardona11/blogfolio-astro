@@ -3,6 +3,7 @@
 @import 'tailwindcss/utilities';
 
 /* Additional styles */
+@import 'utility-patterns.css';
 @import 'pre-code.css';
 
 @layer base {

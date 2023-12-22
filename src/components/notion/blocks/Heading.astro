@@ -12,21 +12,21 @@ const { block: heading } = Astro.props
 <div class='text-zinc-800 dark:text-zinc-200'>
   {
     heading.level === 'h1' && (
-      <h1 class='h1'>
+      <h1 id={heading.hashLink} class='h1'>
         <HeadingText hashLink={heading.hashLink} text={heading.text} />
       </h1>
     )
   }
   {
     heading.level === 'h2' && (
-      <h2 class='h2'>
+      <h2 id={heading.hashLink} class='h2'>
         <HeadingText hashLink={heading.hashLink} text={heading.text} />
       </h2>
     )
   }
   {
     heading.level === 'h3' && (
-      <h3 class='h3'>
+      <h3 id={heading.hashLink} class='h3'>
         <HeadingText hashLink={heading.hashLink} text={heading.text} />
       </h3>
     )

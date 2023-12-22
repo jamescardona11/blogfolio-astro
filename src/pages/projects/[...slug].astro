@@ -50,11 +50,5 @@ const { blocks } = result
   }
 
   <!-- blocks is the data from notion -->
-  {
-    blocks && (
-      <div>
-        <RenderBlocks blocks={blocks} />
-      </div>
-    )
-  }
+  {blocks && <RenderBlocks blocks={blocks} />}
 </PostLayout>

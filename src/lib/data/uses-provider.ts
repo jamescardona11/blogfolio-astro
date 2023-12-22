@@ -56,12 +56,12 @@ export function getLocalUsesData(): UsesByCategory {
 
 export async function getRemoteUsesData(): Promise<UsesByCategory> {
   const usesData = await getRemoteUses()
-  const data = usesData?.toSorted((a, b) => a.name.localeCompare(b.name))
+  usesData?.sort((a, b) => a.name.localeCompare(b.name))
 
-  const software = data?.filter(item => item.type === 'Software')
-  const hardware = data?.filter(item => item.type === 'Hardware')
-  const coding = data?.filter(item => item.type === 'Coding')
-  const thisPage = data?.filter(item => item.type === 'This Site & Blog')
+  const software = usesData?.filter(item => item.type === 'Software')
+  const hardware = usesData?.filter(item => item.type === 'Hardware')
+  const coding = usesData?.filter(item => item.type === 'Coding')
+  const thisPage = usesData?.filter(item => item.type === 'This Site & Blog')
 
   return {
     software,

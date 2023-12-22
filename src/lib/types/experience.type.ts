@@ -5,6 +5,5 @@ export type ExperienceType = {
   site: string
   description: string
   link?: string
-  technicalSkills?: string[]
   image?: string
 }

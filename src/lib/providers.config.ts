@@ -11,9 +11,9 @@ type Provider = {
 }
 
 export const providersConfig: Provider = {
-  resume: 'local',
-  aboutMe: 'local',
-  uses: 'local',
-  projects: 'local',
-  blog: 'local'
+  resume: 'notion',
+  aboutMe: 'notion',
+  uses: 'notion',
+  projects: 'notion',
+  blog: 'notion'
 }

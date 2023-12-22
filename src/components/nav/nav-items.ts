@@ -4,48 +4,39 @@ const navItemsList: NavItemProps[] = [
   {
     href: '/',
     title: 'Home',
-    hideNavigation: true,
-    keywords: ['home', 'homepage', 'index']
+    hideNavigation: true
   },
   {
     href: '/blog',
-    title: 'Blog',
-    keywords: ['blog', 'posts', 'articles', 'content']
+    title: 'Blog'
   },
   {
     href: '/projects',
-    title: 'Projects',
-    keywords: ['projects', 'work', 'opensource', 'open source']
+    title: 'Projects'
   },
   {
     href: '/about',
-    title: 'About me',
-    keywords: ['about', 'me', 'myself', 'jamescardona11', 'james cardona']
+    title: 'About me'
   },
 
   {
     href: '/more',
     title: 'More',
-    keywords: ['more', 'other', 'extra'],
 
-    hideCommand: true,
     subMenu: [
       {
         href: '/resume',
-        title: 'Resume',
-        keywords: ['resume', 'cv']
+        title: 'Resume'
       },
 
       {
         href: '/uses',
-        title: 'Uses',
-        keywords: ['uses', 'tools', 'gear']
+        title: 'Uses'
       },
-      { href: '/rss.xml', title: 'RSS', hideCommand: true },
+      { href: '/rss.xml', title: 'RSS' },
       {
         href: '/dashboard',
-        title: 'Dashboard',
-        keywords: ['dashboard', 'stats']
+        title: 'Dashboard'
       }
     ]
   }

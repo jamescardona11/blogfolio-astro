@@ -9,5 +9,5 @@ export const localSummaryData = () => [
   'Currently, I contribute to a startup in Canada as a mobile engineer called QuantumWave. As a key member of the mobile team, we are in the process of developing an app using React Native that promises to revolutionize The video call',
   'Personal Pursuits In my leisure hours, I stay updated on the latest advancements in the realm of software engineering. Always on the lookout for innovative technologies, I engage in personal coding projects and immerse myself in learning new programming languages',
   '',
-  'This encapsulates who I am. Thank you for taking the time to explore my website; I trust you find the information provided insightful. If you have any inquiries or wish to share thoughts, please feel free to reach out.  '
+  'This encapsulates who I am. Thank you for taking the time to explore my website; I trust you find the information provided insightful. If you have any inquiries or wish to share thoughts, please feel free to reach out.'
 ]

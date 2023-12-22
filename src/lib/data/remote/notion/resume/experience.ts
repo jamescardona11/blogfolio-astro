@@ -26,9 +26,6 @@ export async function getExperienceFromNotion() {
     link: row.link?.url,
     startedDate: row.startedDate.rich_text[0].text.content,
     endDate: row.endDate?.rich_text[0]?.text?.content,
-    technicalSkills: row.technicalSkills?.multi_select.map(
-      (skill: any) => skill.name
-    ),
     image: row.image?.files[0]?.file?.url
   }))
 

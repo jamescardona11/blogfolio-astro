@@ -8,7 +8,6 @@ export type NExperienceRow = {
   site: { rich_text: Array<{ text: { content: string } }> }
   description: { rich_text: Array<{ text: { content: string } }> }
   link?: { url: string }
-  technicalSkills?: { multi_select: Array<{ name: string }> }
   image?: { files: Array<{ file: { url: string } }> }
 }
 
@@ -22,7 +21,6 @@ export type NEducationRow = {
   site: { rich_text: Array<{ text: { content: string } }> }
   description: { rich_text: Array<{ text: { content: string } }> }
   link?: { url: string }
-  technicalSkills?: { multi_select: Array<{ name: string }> }
   image?: { files: Array<{ file: { url: string } }> }
 }
 

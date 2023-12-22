@@ -16,6 +16,7 @@
     "@astrojs/rss": "^4.0.1",
     "@astrojs/sitemap": "^3.0.3",
     "@astrojs/tailwind": "^5.0.3",
+    "@astrojs/vercel": "^6.1.0",
     "@notionhq/client": "^2.2.13",
     "@octokit/graphql": "^7.0.2",
     "@prisma/client": "5.6.0",

@@ -10,7 +10,6 @@ const posts = defineCollection({
     date: z.coerce.date(),
     canonicalUrl: z.string().optional(),
     tags: z.array(z.string().optional()).optional(),
-    // Add related posts
     related: z.array(reference('posts')).default([]),
     serie: z
       .object({

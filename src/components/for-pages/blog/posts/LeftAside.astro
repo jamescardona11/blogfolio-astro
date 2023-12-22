@@ -12,6 +12,8 @@ interface Props {
 const { post, prev, next } = Astro.props
 
 const labelClass = 'text-sm italic text-foreground/50 text-opacity-100'
+console.log(post.status)
+console.log(post.status !== 'in progress')
 ---
 
 <div class:list={['relative', 'xl:!col-start-2']}>
@@ -22,14 +24,23 @@ const labelClass = 'text-sm italic text-foreground/50 text-opacity-100'
       ) : null
     }
 
-    <p class='text-sm italic text-muted-foreground'>
-      Note: This post is not finished. I sometimes publish early in case it will
-      be helpful to someone.
-    </p>
+    {
+      post.status === 'in progress' ? (
+        <p class='text-sm italic text-muted-foreground'>
+          Note: This post is not finished. I sometimes publish early in case it
+          will be helpful to someone.
+        </p>
+      ) : null
+    }
 
     {
       (next || prev) && (
-        <div class='lg:flex justify-between py-4 xl:block xl:space-y-8 xl:py-8 hidden text-sm font-medium text-foreground/80'>
+        <div
+          class:list={[
+            'lg:flex justify-between xl:block xl:space-y-8 hidden text-sm font-medium text-foreground/80',
+            { 'py-4 xl:py-8 ': post.status === 'in progress' }
+          ]}
+        >
           {prev && (
             <div>
               <p class={labelClass}>Previous</p>
@@ -48,7 +59,7 @@ const labelClass = 'text-sm italic text-foreground/50 text-opacity-100'
 
     <Link
       href='/blog'
-      class='pb-6 lg:flex items-center justify-start hidden text-sm font-medium text-foreground/80'
+      class='pb-6 pt-6 lg:flex items-center justify-start hidden text-sm font-medium text-foreground/80'
     >
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
        Back to blog

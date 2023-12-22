@@ -3,7 +3,7 @@ title: 'Markdown Guide'
 date: '2019-10-11'
 tags: ['features', 'markdown']
 status: 'in progress'
-cover: /content/blog/blog-post-1.jpg
+cover: /content/blog-cover/blog-post-1.jpg
 serie:
   order: 2
   title: 'Build a Developer Blog with Astro'

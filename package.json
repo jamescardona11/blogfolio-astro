@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "eslint": "eslint 'src/**'"
+    "eslint": "eslint 'src/**'",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.0.0",

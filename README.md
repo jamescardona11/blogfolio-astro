@@ -1,65 +1,86 @@
-![img.png](img.png)
+![placeholder.png](blog-placeholder-1.png)
 
-# Tailwind Astro Starter Project
-[![GitHub Repo stars](https://img.shields.io/github/stars/wanoo21/tailwind-astro-starting-blog?style=social)](https://GitHub.com/wanoo21/tailwind-astro-starting-blog/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/wanoo21/tailwind-astro-starting-blog?style=social)](https://GitHub.com/wanoo21/tailwind-astro-starting-blog/network/)
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fipwanciu)](https://twitter.com/ipwanciu)
+# Blogfolio Astro
 
-[//]: # ([![Sponsor]&#40;https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/timlrx&#41;]&#40;https://github.com/sponsors/timlrx&#41;)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/wanoo21/tailwind-astro-starting-blog)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/jamescardona11/blogfolio-astro)
     
 
 This template is perfect for those who want to use Tailwind CSS and Astro to build a blog. 
 
-It is inspired by the [Tailwind Next.js Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) - one of the most popular Next.js blogging templates.
+It is inspired by many other blogs (see the references bottom of this page), and I started this repository using [Tailwind Astro Starter Project](https://github.com/wanoo21/tailwind-astro-starting-blog/tree/main?tab=readme-ov-file).
 
-Feature request or Facing issue? Check the [discussion page](https://github.com/wanoo21/tailwind-astro-starting-blog/discussions) to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcomed!
+Feature request or Facing issue? Check the [discussion page](https://github.com/wanoo21/tailwind-astro-starting-blog/discussions) to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcome!
 
 ## Demo
 
-[Live Demo](https://tasb.yon.fun/) - Deployed on Vercel.
+[Live Demo](https://blogfolio-astro.vercel.app/) - Deployed on Vercel.
+[Images Demo](https://github.com/jamescardona11/blogfolio-astro/tree/master/demo)
 
 ## Features
 
 - Astro with Typescript
 - Astro MDX support
+- Able to use notion as CMS
 - Easy styling customization with [Tailwind 3.3](https://tailwindcss.com/blog/tailwindcss-v3-3) and primary color attribute
-- ~~Perfect lighthouse score~~ - Still have to make some improvements
 - Mobile-friendly view
 - Light and dark theme
-- ~~Font optimization~~ - Not yet implemented
 - Automatic image optimization via Astro image component
+- Reactions using [Prisma](https://prisma.io/) and [PlanetScale](https://planetscale.com/)
+- Combine local data with notion data
+- Support for a series of content
+- Support switch between list and grid view and keep the state
 - Support for tags - each unique tag will be its own page
-- Support for multiple authors
-- ~~3 different blog layouts~~ - Only 2 for now
-- ~~2 different blog listing layouts~~ - Only 1 for now
 - Support for nested routing of blog posts
 - Projects page
-- ~~SEO friendly~~ still working on this, but already supports RSS feed, sitemaps and more!
+- Resume Page
+- Dashboard Page; using wakatime and GitHub stats
+- Resume and about me page
+- RSS
 
-Even thought these features looks the same as the original template, they are implemented in a different way, and there are more to come.
-
-However, there are some features that are not in the original template, like:
-
-- Support for multiple authors pages - **each author will have** its own page, with a list of all the posts written by him/her.
-- Support for multiple tags pages - **each tag has its own page with custom description**, that can be customized with markdown. 
-- Related posts - **each post has** a list of related posts, provided by the author inside the markdown file.
-- Pagination inside blog/tags pages - **each blog/tags page has** a pagination.
-- Cool animations provided by Astro.
-- And many more that would come in the future.
+Even though these features look the same as the original template, they are implemented differently, and there are more to come.
 
 ## Extend / Customize
 
-`src/consts.ts` contains a list of constants that you can customize to your liking, including the blog title, description, author, social media links, etc.
+`site-metadata.ts` contains a list of constants that you can customize to your liking, including the blog title, description, author, social media links, etc.
 
-`src/functions.ts` contains a list of functions that changes the default behavior of the template, including default post sorting and exclude draft posts.
+`src/lib/providers.config.ts` contains the default data provider configuration; this means where the source of data comes from.
 
-`src/content/authors/default.mdx` contains the default author information. You can add more authors by adding more `.mdx` files in the `src/content/authors` folder.
+`src/lib/data/local` contains a list of functions and maps to retrieve local information.
 
-`src/content/tags/default.mdx` contains the default tag information. You can add more tags by adding more `.mdx` files in the `src/content/tags` folder.
+`src/lib/data/remote` contains the functions to retrieve information from notion and other remote sources.
 
-`src/content/config.ts` contains all fields for author, blog and tags pages. Check what's required and what's not. You can also add more fields if you want to.
+`src/lib/data/..-provider.ts` each file represents how the information interacts with the app.
+
+`.env.example` rename to .env and add the environment variables
+
+
+### Providers configuration
+
+The file `src/lib/providers.config.ts` contains the configuration for providers; if you open a provider file inside `src/lib/data` you can see all providers can fetch data from local or remote you only need to change the configuration for notion or local and everything should be work as the template expected.
+
+After deciding what configuration you want; feel free to delete the other code that is not used
+
+**Current configuration:**
+```
+export const providersConfig: Provider = {
+  resume: 'notion',
+  about me: 'local',
+  uses: 'notion',
+  projects: 'notion',
+  blog: 'local'
+}
+```
+
+
+
+### Notion CMS configuration
+
+1- Clone the notion template here: [Notion Template](https://jamescardona11.notion.site/Blogfolio-astro-template-4e95a6ec9dad4f6b9b3ccbe1355d6805)
+2- Create a Notion Api; follow the official guide here: [API Setup](https://developers.notion.com/)
+3- Choose what pages/databases will fetch information from the notion and set `.env`
+4- Change `src/lib/providers.config.ts` configuration for `'notion'`
+
 
 ## 🧞 Commands
 
@@ -73,3 +94,47 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+
+### References
+
+- Fonts:
+  - https://vercel.com/font
+  - https://designermarkdavis.com/Cal-Sans 
+  - https://www.hacksoft.io/blog/using-multiple-font-files-the-right-way
+  - https://brazy.one/blog/how-to-manage-and-preload-local-fonts-with-tailwind-in-astro/
+
+- Scripts:
+  - https://docs.astro.build/en/guides/client-side-scripts/
+
+- Theme
+  - https://tailwindcss.com/docs/dark-mode
+  - https://medium.com/ageless-dynasty/enable-dark-mode-for-your-astro-website-via-css-variables-9e2a052641b0
+  - https://www.kevinzunigacuellar.com/blog/dark-mode-in-astro/
+
+
+- Tabs
+  - https://www.codeconcisely.com/posts/javascript-tabs/
+
+- Copy button
+  - https://timneubauer.dev/blog/copy-code-button-in-astro/
+  - https://jordemort.dev/blog/adding-copy-buttons-to-code-blocks/
+
+
+- Skills icons
+  -https://iconify.design/
+
+- Routing:
+  - https://docs.astro.build/en/core-concepts/routing/
+
+- Headings:
+  - https://starlight.astro.build/getting-started/
+
+- Based on:
+  - https://tx.shadcn.com/docs
+  - https://honghong.me/
+  - https://astro.build/themes/details/astros/
+  - https://jahir.dev
+  - https://www.braydoncoyer.dev/
+  - https://delba.dev/
+  - https://github.com/jcha0713/astro-notion

@@ -6,11 +6,11 @@
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/jamescardona11/blogfolio-astro)
     
 
-This template is perfect for those who want to use Tailwind CSS and Astro to build a blog. 
+This template is perfect for those who want to use Tailwind CSS and Astro to build a blog. You can easily setup MDX or Notion as CMS.
 
 It is inspired by many other blogs (see the references bottom of this page), and I started this repository using [Tailwind Astro Starter Project](https://github.com/wanoo21/tailwind-astro-starting-blog/tree/main?tab=readme-ov-file).
 
-Feature request or Facing issue? Check the [discussion page](https://github.com/wanoo21/tailwind-astro-starting-blog/discussions) to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcome!
+Feature request or Facing issue? Go to [issue page](https://github.com/jamescardona11/blogfolio-astro/issues) to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcome!
 
 ## Demo
 

@@ -15,6 +15,7 @@ Feature request or Facing issue? Check the [discussion page](https://github.com/
 ## Demo
 
 [Live Demo](https://blogfolio-astro.vercel.app/) - Deployed on Vercel.
+
 [Images Demo](https://github.com/jamescardona11/blogfolio-astro/tree/master/demo)
 
 ## Features
@@ -40,6 +41,11 @@ Feature request or Facing issue? Check the [discussion page](https://github.com/
 
 Even though these features look the same as the original template, they are implemented differently, and there are more to come.
 
+### Missing features
+- OpenGraph
+- Dashboard lazy loading
+- 
+
 ## Extend / Customize
 
 `site-metadata.ts` contains a list of constants that you can customize to your liking, including the blog title, description, author, social media links, etc.
@@ -53,6 +59,8 @@ Even though these features look the same as the original template, they are impl
 `src/lib/data/..-provider.ts` each file represents how the information interacts with the app.
 
 `.env.example` rename to .env and add the environment variables
+
+Change the default view between list and grid; search `SwapViewButtons.astro` for blog or project and set the default view as param.
 
 
 ### Providers configuration
@@ -77,8 +85,11 @@ export const providersConfig: Provider = {
 ### Notion CMS configuration
 
 1- Clone the notion template here: [Notion Template](https://jamescardona11.notion.site/Blogfolio-astro-template-4e95a6ec9dad4f6b9b3ccbe1355d6805)
+
 2- Create a Notion Api; follow the official guide here: [API Setup](https://developers.notion.com/)
+
 3- Choose what pages/databases will fetch information from the notion and set `.env`
+
 4- Change `src/lib/providers.config.ts` configuration for `'notion'`
 
 

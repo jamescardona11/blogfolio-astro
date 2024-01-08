@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Blogfolio Astro',
   description:
     'Amazing blogfolio built with Astro, TypeScript, Tailwind CSS and MDX.',
-  siteUrl: 'https://jamescardona11.com',
+  siteUrl: 'https://blogfolio-astro.vercel.app/',
   language: 'en-us',
   siteRepo: 'https://github.com/jamescardona11/blogfolio-astro',
   siteLogo: '/static/images/logo.png',

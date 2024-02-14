@@ -34,10 +34,7 @@ const navItemsList: NavItemProps[] = [
         title: 'Uses'
       },
       { href: '/rss.xml', title: 'RSS' },
-      {
-        href: '/dashboard',
-        title: 'Dashboard'
-      }
+      
     ]
   }
 ]

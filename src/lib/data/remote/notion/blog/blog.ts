@@ -94,35 +94,3 @@ export async function getBlogBlocksById(pageId: string) {
 
   return createSuccessResponse(mapNotionBlocks(content))
 }
-
-/// Get a blog post by slug
-export async function getBlogBlocksBySlug(slug: string) {
-  console.log('GET /api/blog/slug')
-
-  const query = await notionClient.getDatabase(notionDatabaseId, {
-    filter: {
-      property: 'slug',
-      formula: {
-        string: {
-          equals: slug
-        }
-      }
-    }
-  })
-
-  if (!query.ok) {
-    console.error(query.error)
-    return query
-  }
-
-  if (query.data.results.length === 0) {
-    console.error('No blog post found with slug: ', slug)
-    return createFailureResponse(
-      `No blog post found with slug: ${slug}`,
-      'NOT_FOUND'
-    )
-  }
-
-  const pageId = query.data.results[0].id
-  return getBlogBlocksById(pageId)
-}

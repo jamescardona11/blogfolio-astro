@@ -9,13 +9,37 @@ interface Props {
 const { block } = Astro.props
 ---
 
-<ul>
+<ul class='mt-2'>
   {
     block.items.map(listItem => {
       return (
-        <li class='flex items-center space-x-2'>
-          <div class='w-[6px] h-[6px] rounded-full bg-foreground' />
-          <NotionText block={listItem.richText} />
+        <li class='flex items-center space-x-2 mb-4'>
+          <div>
+            {listItem.richText.content.map((b, i) => {
+              return b.text == '\n' ? (
+                <div class='pb-1' />
+              ) : (
+                <div class='flex items-center space-x-2'>
+                  {i == 0 && (
+                    <div class='w-[6px] h-[6px] rounded-full bg-foreground' />
+                  )}
+                  {i != 0 && <div class='ml-1' />}
+                  <span class={b.styles}>
+                    {b.url != null ? (
+                      <a
+                        class='text-gray-700 dark:text-zinc-400 underline'
+                        href={b.url}
+                      >
+                        {b.text}
+                      </a>
+                    ) : (
+                      b.text
+                    )}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </li>
       )
     })

@@ -315,13 +315,22 @@ const transformNotionMedia = (
 const transformNotionRichText = (
   richText: RichTextItemResponse[]
 ): TextBlock[] => {
-  return richText.map(t => {
-    const styles = matchStyle(t.annotations as StyleAnnotations)
-    const url =
-      t.type === 'text' && t.text.link != null ? t.text.link.url : undefined
+  return richText
+    .map(t => {
+      const styles = matchStyle(t.annotations as StyleAnnotations)
+      const url =
+        t.type === 'text' && t.text.link != null ? t.text.link.url : undefined
 
-    return factory.text(t.plain_text, { styles, url })
-  })
+      if (t.plain_text.startsWith('\n')) {
+        return [
+          factory.text('\n', { styles, url }),
+          factory.text(t.plain_text.replace('\n', ''), { styles, url })
+        ]
+      }
+
+      return [factory.text(t.plain_text, { styles, url })]
+    })
+    .flat()
 }
 
 // TOOD: Partially unimplemented

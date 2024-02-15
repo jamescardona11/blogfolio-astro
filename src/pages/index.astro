@@ -17,13 +17,7 @@ import { socialNetwork } from '@/lib/social-network-links'
           Object.keys(socialNetwork).map(key => {
             const element = socialNetwork[key]
 
-            return (
-              <Icons
-                kind={element.icon as IconKey}
-                href={element.link}
-                size={5}
-              />
-            )
+            return <Icons kind={element.icon as IconKey} href={element.link} />
           })
         }
       </div>

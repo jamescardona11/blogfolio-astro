@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   const posts = await getPostsData()
   return posts.map((post, index) => ({
     params: { slug: post.slug },
-    props: { post, next: posts[index + 1], prev: posts[index - 1] }
+    props: { post, next: posts[index - 1], prev: posts[index + 1] }
   }))
 }
 
@@ -111,7 +111,7 @@ const postsSerie = await getSerieBySlug(slug)
   <div class='flex flex-col items-center justify-center pb-6'>
     <Link href='/blog' class='flex items-center py-3 lg:py-6'>
       <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
-       Back to blog
+      Back to blog
     </Link>
   </div>
 

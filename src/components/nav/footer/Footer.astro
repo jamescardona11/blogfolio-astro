@@ -1,38 +1,52 @@
 ---
-import SocialIcon from '@/components/icons/Icons.astro'
+import { navFooterItemsList } from '../nav-items'
+import MenuItem from '../MenuItem.astro'
+import { socialNetwork } from '@/lib/social-network-links'
 import { siteMetadata } from '@/site-metadata'
-
-import Link from '@components/Link.astro'
 ---
 
-<footer>
-  <div class='mt-16 flex flex-col items-center'>
-    <div class='mb-3 flex space-x-4'>
-      <SocialIcon kind='mail' href={`mailto:${siteMetadata.email}`} size={6} />
-      <SocialIcon kind='github' href={siteMetadata.github} size={6} />
-      <SocialIcon kind='youtube' href={siteMetadata.youtube} size={6} />
-      <SocialIcon kind='linkedin' href={siteMetadata.linkedin} size={6} />
-      <SocialIcon kind='x' href={siteMetadata.twitter} size={6} />
+<footer class='container mx-auto max-w-[58rem] pb-10'>
+  {
+    navFooterItemsList.length > 0 && (
+      <div class='mb-4 flex flex-wrap gap-x-6 gap-y-1'>
+        {navFooterItemsList.map(navItem => {
+          return <MenuItem navItem={navItem} />
+        })}
+      </div>
+    )
+  }
+  <div
+    class:list={[
+      'pt-6 flex flex-col gap-4 border-t border-dashed border-main border-zinc-500',
+      {
+        'sm:flex-row-reverse sm:justify-between sm:items-center text-foreground/60': true
+      }
+    ]}
+  >
+    <div class='flex flex-wrap gap-x-4 gap-y-1'>
+      {
+        Object.keys(socialNetwork).map(key => {
+          const element = socialNetwork[key]
+
+          return (
+            <a
+              class='inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2'
+              href={element.link}
+              target='_blank'
+              rel='noopener noreferer'
+            >
+              {element.name}
+            </a>
+          )
+        })
+      }
     </div>
-    <div class='mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400'>
-      <Link href='/about'>{siteMetadata.name}</Link>
-      <div>{` • `}</div>
-      <div>{`© ${new Date().getFullYear()}`}</div>
-      <div>{` • `}</div>
-      <Link href='/'>{siteMetadata.title}</Link>
-    </div>
-    <div class='mb-8 text-sm text-gray-500 dark:text-gray-400'>
-      <Link href={siteMetadata.siteRepo}>
-        {siteMetadata.title}
-        {` is open source. `}
-        {` View `}
-        <span class='underline'>the source</span>
-        {` code on `}
-        <span class='underline'>GitHub</span>
-        {` and `}
-        <span class='underline'>give it a star</span>
-        {` if you like it.`}
-      </Link>
-    </div>
+
+    <p class='text-sm'>
+      &copy; {new Date().getFullYear()}&nbsp;<a
+        class='hover:underline hover:underline-offset-2'
+        href='/'>{siteMetadata.title}</a
+      >. All rights reserved.
+    </p>
   </div>
 </footer>

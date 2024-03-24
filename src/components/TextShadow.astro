@@ -2,17 +2,33 @@
 import Link from './Link.astro'
 
 interface Props {
-  href: string | undefined
+  href?: string | null
   type?: 'h2' | 'h3' | 'h4'
+  foreground?: boolean
 }
 
-const { href, type = 'h4' } = Astro.props
+const { href, type = 'h4', foreground = false } = Astro.props
 ---
 
-<span class:list={['font-sans text-lg font-bold mb-1 text-ellipsis', type]}>
+<span
+  class:list={[
+    ' font-sans text-lg font-bold mb-1 text-ellipsis',
+    type,
+    { 'text-foreground/60': foreground }
+  ]}
+>
   <Link
     href={href}
-    class='inline-flex relative hover:text-zinc-800 dark:hover:text-zinc-200 duration-150 ease-out before:scale-x-0 before:origin-center before:absolute before:inset-0 before:bg-zinc-500 dark:before:bg-zinc-500 before:opacity-30 before:-z-10 before:translate-y-1/4 before:-rotate-2 hover:before:scale-100 before:duration-150 before:ease-in-out'
+    class:list={[
+      {
+        'inline-flex relative hover:text-sky-500 duration-150 ease-out before:scale-x-0 before:origin-center before:absolute before:inset-0 before:bg-sky-200 dark:before:bg-sky-500 before:opacity-30 before:-z-10 before:translate-y-1/4 before:-rotate-2 hover:before:scale-100 before:duration-150 before:ease-in-out':
+          href != null
+      },
+      {
+        'hover:text-zinc-700 dark:hover:text-zinc-100 before:bg-zinc-500 dark:before:bg-zinc-300':
+          foreground
+      }
+    ]}
   >
     <slot />
   </Link>

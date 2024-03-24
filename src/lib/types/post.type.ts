@@ -6,6 +6,7 @@ export type Post = {
   title: string
   summary?: string
   cover?: string | undefined
+  link?: string | undefined
   tags: string[]
   serie: string | undefined
   order: number | undefined

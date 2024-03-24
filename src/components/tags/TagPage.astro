@@ -1,0 +1,66 @@
+---
+import type { TagWithPosts } from '@/lib/types/tags-with-posts.type'
+
+import Link from '@/components/Link.astro'
+import PostsListView from '@/components/PostsListView.astro'
+import BaseCard from '@/components/BaseCard.astro'
+
+interface Props {
+  tagWithPosts: TagWithPosts
+  isFirst?: boolean
+}
+
+const { tagWithPosts, isFirst = false } = Astro.props
+
+function isSamePath(path: string) {
+  return Astro.url.pathname === path
+}
+---
+
+<div class='pb-6 pt-6'>
+  <h1
+    class='text-3xl capitalize font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:leading-10 md:leading-14'
+  >
+    {tagWithPosts.tag}
+  </h1>
+</div>
+<div class='flex md:flex-row flex-col sm:space-x-4 items-start'>
+  <BaseCard styles='sm:min-w-full md:min-w-[320px]'>
+    <div class='py-4'>
+      <h3 class='text-primary font-bold uppercase'>All Tags</h3>
+
+      <ul>
+        {
+          Array.from(tagWithPosts.tags.entries()).map((key, index) => {
+            const tag = key[0]
+            const count = key[1]
+            return (
+              <Fragment>
+                <li class='my-3'>
+                  {isSamePath(`/tags/${tag}`) || (index == 0 && isFirst) ? (
+                    <Fragment>
+                      <h3 class='inline py-2 px-3 capitalize text-sm font-bold text-primary-500 underline'>
+                        {`${tag} (${count})`}
+                      </h3>
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <Link
+                        href={`/tags/${tag}`}
+                        class='py-2 px-3 capitalize text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500'
+                        {...{ 'aria-label': `View posts tagged ${tag}` }}
+                      >
+                        {`${tag} (${count})`}
+                      </Link>
+                    </Fragment>
+                  )}
+                </li>
+              </Fragment>
+            )
+          })
+        }
+      </ul>
+    </div>
+  </BaseCard>
+  <PostsListView posts={tagWithPosts.posts} />
+</div>

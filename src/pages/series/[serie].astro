@@ -1,0 +1,31 @@
+---
+import type { SeriesWithPosts } from '@/content/post-serie.type'
+
+import PageLayout from '@/layouts/PageLayout.astro'
+import SeriePage from '@/components/series/SeriePage.astro'
+import { getSeriesWithPosts } from '@/lib/data/series-provider'
+
+export async function getStaticPaths() {
+  const seriesWithPosts = await getSeriesWithPosts()
+
+  return (seriesWithPosts ?? []).map(serie => {
+    console.log(serie.series)
+    return {
+      params: { serie: serie.slug },
+      props: {
+        seriesWithPosts: serie
+      }
+    }
+  })
+}
+
+interface Props {
+  seriesWithPosts: SeriesWithPosts
+}
+
+const { seriesWithPosts } = Astro.props
+---
+
+<PageLayout metaTitle={seriesWithPosts.serie}>
+  <SeriePage serieWithPosts={seriesWithPosts} />
+</PageLayout>

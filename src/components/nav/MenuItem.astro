@@ -1,0 +1,35 @@
+---
+import Link from '@/components/Link.astro'
+import type { NavItemProps } from './types'
+
+interface Props {
+  navItem: NavItemProps
+}
+
+const { navItem } = Astro.props
+const { pathname } = Astro.url
+
+const isActive =
+  pathname === navItem.href || navItem.href === pathname.replace(/\/$/, '')
+---
+
+<Link
+  href={navItem.href}
+  class:list={[
+    'flex items-center font-medium text-lg transition-colors text-foreground hover:text-foreground sm:text-sm',
+    {
+      'text-foreground': isActive,
+      'text-foreground/60': !isActive
+    }
+  ]}
+>
+  <span
+    class:list={[
+      {
+        'underline decoration-foreground': isActive
+      }
+    ]}
+  >
+    {navItem.title}
+  </span>
+</Link>

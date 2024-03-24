@@ -1,0 +1,50 @@
+---
+import type { Post } from '@/lib/types/post.type'
+
+import Link from '@components/Link.astro'
+import FormattedDate from './FormattedDate.astro'
+import Icons from '@/components/icons/Icons.astro'
+import TextShadow from '@/components/TextShadow.astro'
+import Tags from './Tags.astro'
+
+interface Props {
+  posts: Post[]
+}
+
+const { posts } = Astro.props
+---
+
+<div>
+  {
+    // destructuring data from the collection
+    // review `content/config.ts destructure the right data
+    posts.map(function ({ slug, title, summary, date, tags, link }) {
+      const href = link ?? `/posts/${slug}`
+
+      return (
+        <article class='py-5 border-slate-100 dark:border-slate-800 group'>
+          <div class='w-full'>
+            <div class='text-xs text-slate-500 uppercase mb-1'>
+              <FormattedDate date={date} />
+            </div>
+            <TextShadow href={href}>{title}</TextShadow>
+
+            <div class='flex justify-between'>
+              <div class='grow text-sm text-muted-foreground'>
+                {summary}
+                <Tags tags={tags} />
+              </div>
+
+              <Link
+                class='hidden font-serif opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0'
+                href={href}
+              >
+                <Icons kind='arrow' />
+              </Link>
+            </div>
+          </div>
+        </article>
+      )
+    })
+  }
+</div>

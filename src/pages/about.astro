@@ -9,11 +9,13 @@ import MiddleArea from '@/layouts/two-columns/MiddleArea.astro'
 import TwoColumnsLayout from '@/layouts/two-columns/TwoColumnsLayout.astro'
 import RightSide from '@/layouts/two-columns/RightSide.astro'
 import Quote from '@/components/Quote.astro'
-import ConnectWithMeCard from '@/components/for-pages/about/ConnectWithMeCard.astro'
-import CurrentCompany from '@/components/for-pages/about/CurrentCompany.astro'
-import SkillCard from '@/components/for-pages/about/SkillCard.astro'
+import BaseCard from '@components/BaseCard.astro'
+import Link from '@components/Link.astro'
+import Icons, { type IconKey } from '@components/icons/Icons.astro'
+import { socialNetwork } from '@/lib/social-network-links'
+import { hexToRgb } from '@/utils/color'
 
-const { summary, summaryBlocks, skills, currentWork } = await getAboutMeData()
+const { summaryBlocks, skills, currentWork } = await getAboutMeData()
 ---
 
 <TwoColumnsLayout metaTitle={siteMetadata.name}>
@@ -38,25 +40,76 @@ const { summary, summaryBlocks, skills, currentWork } = await getAboutMeData()
     )
   }
 
-  {
-    summary && (
-      <MiddleArea>
-        {summary.map(element => {
-          if (element === '') return <p class='mt-8' />
-
-          return (
-            <p class='text-lg mt-2 text-zinc-900 dark:text-zinc-100'>
-              {element}
-            </p>
-          )
-        })}
-      </MiddleArea>
-    )
-  }
-
   <RightSide styles='md:justify-self-end space-y-6'>
-    <ConnectWithMeCard />
-    <CurrentCompany currentWork={currentWork} />
-    <SkillCard skills={skills} />
+    <BaseCard title='Connect with me'>
+      <ul class='space-y-2'>
+        {
+          Object.keys(socialNetwork).map(key => {
+            const element = socialNetwork[key]
+            return (
+              <li>
+                <Link href={element.link} class='flex items-center'>
+                  <Icons kind={element.icon as IconKey} />
+                  <span class='ml-4 font-medium text-base text-foreground '>
+                    {element.name}
+                  </span>
+                </Link>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </BaseCard>
+    {
+      currentWork && (
+        <BaseCard title='Current job' variant='right'>
+          <div class='mr-1 truncate'>
+            <span class='text-sky-500 mr-2'> {'>👨🏻‍💻'} </span>
+            <a class='font-bold text-sm truncate'>{currentWork.position}</a>
+          </div>
+          <div class='mr-1 truncate'>
+            <span class='text-sky-500 mr-2'> {'>🏢'} </span>
+            <a
+              href={currentWork.link}
+              target='_blank'
+              class='font-bold text-sm truncate'
+              rel='noreferrer'
+            >
+              {currentWork.site}
+            </a>
+          </div>
+        </BaseCard>
+      )
+    }
+
+    <BaseCard title='Main Skills' variant='left'>
+      <ul class='mt-6 flex flex-wrap gap-x-2 gap-y-2'>
+        {
+          skills.slice(0, 10).map(skill => {
+            const { name, color = '#4BC0EF', icon } = skill
+            const newColor = hexToRgb(color, 0)
+
+            return (
+              <li>
+                <div
+                  class:list={[
+                    'h-[32px] flex items-center rounded-full hover:text-primary border border-zinc-300 dark:border-zinc-700 gap-2 px-2.5 py-1 text-xs  text-zinc-600  dark:text-zinc-200 dark:hover:text-primary transition hocus:underline-none hocus:text-primary-txt hocus:bg-divider dark:hocus:bg-divider hocus:transform hocus:scale-[1.015]',
+                    'hover:bg-[rgba(var(--custom-color)/0.30)]',
+                    'dark:hover:bg-[rgba(var(--custom-color)/0.18)]',
+                    'hover:border-[rgba(var(--custom-color)/0.56)]'
+                  ]}
+                  style={{ '--custom-color': newColor }}
+                >
+                  {icon && icon.includes('.') && (
+                    <Image src={icon} alt={name} width={16} height={16} />
+                  )}
+                  <span class={'font-[500]'}>{name}</span>
+                </div>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </BaseCard>
   </RightSide>
 </TwoColumnsLayout>

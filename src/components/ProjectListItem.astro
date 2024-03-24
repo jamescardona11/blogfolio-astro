@@ -1,0 +1,45 @@
+---
+import { Project } from '@/lib/types/projects.type'
+
+import Link from '@components/Link.astro'
+import Icons from '@/components/icons/Icons.astro'
+import Chip from '@/components/Chip.astro'
+import TextShadow from '@/components/TextShadow.astro'
+
+interface Props {
+  project: Project
+  foreground?: boolean
+}
+
+const { project, foreground = false } = Astro.props
+
+const href =
+  project.projectLink != null
+    ? project.projectLink
+    : project.hasContent
+      ? `/projects/${project.slug}`
+      : null
+---
+
+<div class='flex gap-4 items-center group'>
+  <div class='w-full'>
+    <TextShadow foreground={foreground} href={href}>{project.name}</TextShadow>
+    <div class='grow text-sm text-muted-foreground'>
+      <p>{project.description}</p>
+    </div>
+
+    <div class='flex flex-wrap gap-1 mt-2 -ml-1'>
+      {project?.techStack?.map(techStackItem => <Chip>{techStackItem}</Chip>)}
+    </div>
+  </div>
+  {
+    href && (
+      <Link
+        class='hidden font-serif opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0'
+        href={href}
+      >
+        <Icons kind='arrow' />
+      </Link>
+    )
+  }
+</div>

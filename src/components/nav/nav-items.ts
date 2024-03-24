@@ -3,40 +3,47 @@ import { type NavItemProps } from '@/components/nav/types'
 const navItemsList: NavItemProps[] = [
   {
     href: '/',
-    title: 'Home',
-    hideNavigation: true
+    title: 'Home'
   },
   {
-    href: '/blog',
-    title: 'Blog'
+    href: '/posts',
+    title: 'Posts'
   },
   {
     href: '/projects',
     title: 'Projects'
   },
   {
-    href: '/about',
-    title: 'About me'
+    href: '/series',
+    title: 'Series'
   },
-
   {
-    href: '/more',
-    title: 'More',
-
-    subMenu: [
-      {
-        href: '/resume',
-        title: 'Resume'
-      },
-
-      {
-        href: '/uses',
-        title: 'Uses'
-      },
-      { href: '/rss.xml', title: 'RSS' },
-      
-    ]
+    href: '/tags',
+    title: 'Tags'
   }
 ]
 
-export { navItemsList }
+const navFooterItemsList: NavItemProps[] = [
+  {
+    href: '/',
+    title: 'Home'
+  },
+  {
+    href: '/posts',
+    title: 'Posts'
+  },
+  {
+    href: '/about',
+    title: 'About'
+  },
+  {
+    href: 'https://www.j11.io/',
+    title: 'My Links'
+  },
+  {
+    href: 'https://github.com/jamescardona11/blogfolio-astro',
+    title: 'How I Built This Site'
+  }
+]
+
+export { navItemsList, navFooterItemsList }

@@ -6,11 +6,11 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string().optional(),
-    cover: z.string().optional(),
     date: z.coerce.date(),
-    canonicalUrl: z.string().optional(),
     tags: z.array(z.string().optional()).optional(),
     related: z.array(reference('posts')).default([]),
+    link: z.string().optional(),
+    cover: z.string().optional(),
     serie: z
       .object({
         order: z.number(),
@@ -37,4 +37,12 @@ const projects = defineCollection({
   })
 })
 
-export const collections = { posts, projects }
+const video = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    link: z.string().optional()
+  })
+})
+
+export const collections = { posts, projects, video }

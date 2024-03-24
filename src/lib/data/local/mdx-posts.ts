@@ -9,7 +9,18 @@ export const sortPosts = (
   posts: CollectionEntry<'posts'>[]
 ): CollectionEntry<'posts'>[] => {
   return posts.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+    const diff =
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+
+    if (
+      diff === 0 &&
+      a.data.serie != null &&
+      a.data.serie?.title == b.data.serie?.title
+    ) {
+      return b.data.serie.order - a.data.serie.order
+    }
+
+    return diff
   })
 }
 

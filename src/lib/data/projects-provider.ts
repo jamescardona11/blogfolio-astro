@@ -7,17 +7,23 @@ import { getProjectBlocksFromNotion } from './remote/notion/projects/project'
 import { sortProjects } from './local/mdx-projects'
 import { providersConfig } from '@lib/providers.config'
 
+let _projects: Project[] | null = null
+
 /// Get all projects data
 /// This function is used to get all projects data from local mdx files or from notion
 /// Review the providers.config.ts file to see the configuration
 export async function getProjectsData(): Promise<Project[]> {
   const config = providersConfig.projects
 
+  if (_projects && _projects.length > 0) return _projects
+
   if (config === 'local') {
-    return await getLocalProjects() // local
+    _projects = await getLocalProjects() // local
   }
 
-  return await getRemoteProjects() // Remote
+  _projects = await getRemoteProjects() // Remote
+
+  return _projects
 }
 
 /// Get project content
@@ -81,10 +87,8 @@ async function getLocalProjects() {
       mdxProject.slug, //slug
       mdxProject.data.name, //name
       mdxProject.data.status, //status
-      mdxProject.data.type, //type
       mdxProject.data.description, //description
       mdxProject.data.projectLink, //linkProject
-      mdxProject.data.repositoryLink, //linkRepository
       mdxProject.data.techStack, //techStack
       mdxProject.data.icon, //icon
       mdxProject.data.background, //background

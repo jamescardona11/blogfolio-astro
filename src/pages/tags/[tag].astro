@@ -1,0 +1,31 @@
+---
+import type { TagWithPosts } from '@/lib/types/tags-with-posts.type'
+
+import PageLayout from '@/layouts/PageLayout.astro'
+import TagPage from '@/components/tags/TagPage.astro'
+
+import { getTagsWithPosts } from '@/lib/data/tags-provider'
+
+export async function getStaticPaths() {
+  const tags = (await getTagsWithPosts()) ?? []
+
+  return tags.map(tag => {
+    return {
+      params: { tag: tag.tag },
+      props: {
+        tagWithPosts: tag
+      }
+    }
+  })
+}
+
+interface Props {
+  tagWithPosts: TagWithPosts
+}
+
+const { tagWithPosts } = Astro.props
+---
+
+<PageLayout metaTitle={tagWithPosts.tag}>
+  <TagPage tagWithPosts={tagWithPosts} />
+</PageLayout>

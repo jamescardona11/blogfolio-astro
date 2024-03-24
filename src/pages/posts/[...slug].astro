@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets'
+import type { Post } from '@/lib/types/post.type'
+
+import ContentLayout from '@/layouts/content/ContentLayout.astro'
+import FormattedDate from '@/components/FormattedDate.astro'
+import PostSeries from '@/components/posts/PostSeries.astro'
+import Link from '@/components/Link.astro'
+import RenderBlocks from '@/components/notion/RenderBlocks.astro'
+import RightAside from '@/components/posts/RightAside.astro'
+import LeftAside from '@/components/posts/LeftAside.astro'
+import Icons from '@/components/icons/Icons.astro'
+
+import { TOP_ID } from '@/components/posts/table-of-contents/toc'
+import {
+  getBlogContent,
+  getPostsData,
+  getSerieBySlug
+} from '@/lib/data/posts-provider'
+import Tags from '@/components/Tags.astro'
+
+export async function getStaticPaths() {
+  const posts = await getPostsData()
+  return posts.map((post, index) => ({
+    params: { slug: post.slug },
+    props: { post, next: posts[index + 1], prev: posts[index - 1] }
+  }))
+}
+
+interface Props {
+  post: Post
+  next: Post
+  prev: Post
+}
+
+const { post, next, prev } = Astro.props
+const { slug, cover, title, date, tags } = post
+
+const result = await getBlogContent(post)
+const { Content, headings } = result
+const { blocks } = result
+
+const postsSerie = await getSerieBySlug(slug)
+---
+
+<ContentLayout>
+  <div>
+    <h1
+      id={TOP_ID}
+      class='inline-block text-4xl leading-tight font-heading lg:text-5xl'
+    >
+      {title}
+    </h1>
+    <div
+      class='flex gap-2 mt-2 text-sm text-muted-foreground items-center flex-wrap md:flex-nowrap'
+    >
+      <FormattedDate date={date} />
+    </div>
+
+    {(<Tags tags={tags} />)}
+  </div>
+  <LeftAside post={post} prev={prev} next={next} />
+  <RightAside headings={headings} slug={slug} />
+
+  {
+    cover && (
+      <Image
+        src={cover}
+        alt={title}
+        width={744}
+        height={405}
+        class='transition-colors border rounded-md bg-muted'
+      />
+    )
+  }
+
+  {
+    postsSerie != null && postsSerie.posts.length > 1 && (
+      <>
+        <div serie-top-component />
+        <PostSeries data={postsSerie} isInteractive={true} />
+      </>
+    )
+  }
+
+  <!-- Content is the astro:content object -->
+  {
+    Content && (
+      <div class='pt-10 pb-8 max-w-none prose dark:prose-invert'>
+        <Content />
+      </div>
+    )
+  }
+
+  <!-- blocks is the data from notion -->
+  {
+    blocks && (
+      <div class='pt-10 pb-8'>
+        <RenderBlocks blocks={blocks} />
+      </div>
+    )
+  }
+
+  <hr class='border-t-2 border-zinc-700/5 dark:border-zinc-200/5' />
+
+  <div class='flex flex-col items-center justify-center pb-6'>
+    <Link href='/blog' class='flex items-center py-3 lg:py-6'>
+      <Icons kind='chevronLeft' class='w-4 h-4 mr-1' />
+      Back to blog
+    </Link>
+  </div>
+
+  {
+    postsSerie != null && postsSerie.posts.length > 1 ? (
+      <div serie-bottom-component>
+        <PostSeries data={postsSerie} />
+      </div>
+    ) : null
+  }
+
+  <div class='flex flex-row items-center justify-between'>
+    {
+      prev && (
+        <Link
+          href={prev.link ?? `/posts/${prev.slug}`}
+          class:list={[
+            'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+            'hover:bg-accent hover:text-accent-foreground',
+            'h-10 py-2 px-4'
+          ]}
+        >
+          <Icons kind='chevronLeft' class='mr-2 h-4 w-4' />
+          {prev.title}
+        </Link>
+      )
+    }
+    {
+      next && (
+        <Link
+          href={next.link ?? `/posts/${next.slug}`}
+          class:list={[
+            'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background',
+            'hover:bg-accent hover:text-accent-foreground',
+            'h-10 py-2 px-4',
+            'ml-auto'
+          ]}
+        >
+          {next.title}
+          <Icons kind='chevronRight' class='ml-2 h-4 w-4' />
+        </Link>
+      )
+    }
+  </div>
+</ContentLayout>
+
+<!-- 
+  This script si to determinate if the serie both component are visible;
+  if that is the case hide the bottom serie component  
+-->
+<script>
+  function isElementVisible(element: Element | null) {
+    if (!element) return false
+    const rect = element.getBoundingClientRect()
+    const windowHeight =
+      window.innerHeight || document.documentElement.clientHeight
+    const windowWidth =
+      window.innerWidth || document.documentElement.clientWidth
+
+    // check if element is inside of viewport
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= windowHeight &&
+      rect.right <= windowWidth
+    )
+  }
+
+  const topSerie = document.querySelector('[serie-top-component]')
+  const bottomSerie = document.querySelector('[serie-bottom-component]')
+
+  let bothVisible = 0
+
+  if (isElementVisible(topSerie)) {
+    bothVisible += 1
+  }
+
+  if (isElementVisible(bottomSerie)) {
+    bothVisible += 1
+  }
+
+  if (bothVisible === 2) {
+    bottomSerie?.classList.add('hidden')
+  }
+</script>
+@/components/posts/table-of-contents/toc

@@ -2,7 +2,6 @@
 import Header from '@/components/nav/header/Header.astro'
 import BaseHead from './BaseHead.astro'
 import Footer from '@/components/nav/footer/Footer.astro'
-import CopyButton from './CopyButton.astro'
 
 interface Props {
   metaTitle?: string
@@ -21,15 +20,14 @@ const { metaTitle: title, metaDescription: description, maxWidth } = Astro.props
     <Header />
     <main
       class:list={[
-        'container flex flex-col py-16 mx-auto mb-auto md:py-20',
+        'container flex flex-col py-8 mx-auto mb-auto md:py-10',
         {
-          'max-w-[62rem]': maxWidth
+          'max-w-[58rem]': maxWidth
         }
       ]}
     >
       <slot />
     </main>
     <Footer />
-    <CopyButton />
   </body>
 </html>

@@ -1,40 +1,59 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
 import PageTitle from '@/components/PageTitle.astro'
-import SwapViewButtons from '@/components/SwapViewButtons.astro'
 
-import BacklogSection from '@/components/for-pages/projects/BacklogSection.astro'
-import LearningSection from '@/components/for-pages/projects/LearningSection.astro'
-
-import ProjectsGridView from '@/components/for-pages/projects/ProjectsGridView.astro'
-import ProjectsListView from '@/components/for-pages/projects/ProjectsListView.astro'
+import ProjectListItem from '@/components/ProjectListItem.astro'
+import SectionTitleByStatus from '@/components/SectionTitleByStatus.astro'
+import { filterProjects } from '@/utils/filter-projects'
 
 import { getProjectsData } from '@/lib/data/projects-provider'
 
 const projects = await getProjectsData()
+const activeProjects = filterProjects(projects ?? [], 'active')
+const completedProjects = filterProjects(projects ?? [], 'completed')
+
+const topPadding = activeProjects.length > 0 ? 'mt-20' : ''
 ---
 
-<PageLayout metaTitle="Things I've made in an attempt to make my mark">
+<PageLayout metaTitle='Projects'>
   <div class='flex justify-between'>
     <PageTitle
       title="Things I've made in an attempt to make my mark"
       subtitle="Goal: Don't stop learning."
     />
-    <SwapViewButtons defaultView='list' />
   </div>
-
-  <hr class='my-8 border-muted' />
 
   {projects.length == 0 && <p>No projects published.</p>}
 
-  <!-- GRID VIEW -->
-  <ProjectsGridView projects={projects} />
-
   <!-- LIST VIEW -->
-  <ProjectsListView projects={projects} />
+  <div class='mt-10'>
+    {
+      activeProjects.length > 0 && (
+        <div>
+          <div class='flex flex-col gap-6'>
+            {activeProjects.map(project => (
+              <ProjectListItem project={project} />
+            ))}
+          </div>
+        </div>
+      )
+    }
 
-  <h2 class='text-2xl font-bold mt-20'>Others</h2>
+    {
+      completedProjects.length > 0 && (
+        <div class={topPadding}>
+          <SectionTitleByStatus
+            title='Past'
+            subtitle='Projects I worked on. Due to the nature of Internet businesses, not all are online.'
+          />
 
-  <BacklogSection projects={projects} />
-  <LearningSection projects={projects} />
+          <div class='flex flex-col gap-6'>
+            {completedProjects.map(project => (
+              <ProjectListItem project={project} foreground={true} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </div>
 </PageLayout>

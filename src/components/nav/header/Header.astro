@@ -1,47 +1,25 @@
 ---
-import Logo from '@/components/Logo.astro'
-import Link from '@/components/Link.astro'
-
 import MobileNav from '@/components/nav/mobile/MobileNav.astro'
-import ThemeSwitcher from './ThemeSwitcher.astro'
 import { navItemsList } from '../nav-items'
-import { SubMenuItem } from './SubMenuItem'
-import MenuItem from './MenuItem.astro'
-
-import { siteMetadata } from '@/site-metadata'
+import MenuItem from '../MenuItem.astro'
+import ThemeSwitcher from './ThemeSwitcher.astro'
 ---
 
-<header class='container mx-auto max-w-[62rem]'>
+<header class='container mx-auto max-w-[58rem]'>
   <div class='flex items-center justify-between h-20 py-6'>
-    <div>
-      <Link
-        href='/'
-        aria-label={siteMetadata.name}
-        class='flex items-center space-x-2'
-      >
-        <Logo />
-        <span class='hidden font-bold leading-5 text-md sm:inline-block'>
-          {siteMetadata.name}
-        </span>
-      </Link>
-    </div>
     <div class='hidden sm:block'>
       <nav class='flex items-center gap-4'>
         {
-          navItemsList
-            .filter(e => e.hideNavigation == null || !e.hideNavigation)
-            .map(navItem => {
-              if (navItem.subMenu != null) {
-                return <SubMenuItem client:load navItem={navItem} />
-              }
-
-              return <MenuItem navItem={navItem} />
-            })
+          navItemsList.map(navItem => {
+            return <MenuItem navItem={navItem} />
+          })
         }
-
-        <ThemeSwitcher />
       </nav>
     </div>
     <MobileNav />
+  </div>
+
+  <div class='absolute right-4 xl:right-10 top-6 z-10'>
+    <ThemeSwitcher />
   </div>
 </header>

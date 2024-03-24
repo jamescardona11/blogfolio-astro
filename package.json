@@ -7,8 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "postinstall": "prisma generate"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",

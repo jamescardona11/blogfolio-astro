@@ -14,8 +14,8 @@ export async function getProjectsFromNotion() {
   const query = await notionClient.getDatabase(notionDatabaseId, {
     sorts: [
       {
-        property: 'date',
-        direction: 'descending'
+        property: 'priority',
+        direction: 'ascending'
       }
     ]
   })
@@ -44,10 +44,8 @@ export async function getProjectsFromNotion() {
         slug, // slug
         name, // name
         row.status?.status?.name ?? '', // status
-        row.type.select.name, // type
         row.description?.rich_text[0]?.text?.content, // description
         row.projectLink?.url, // linkProject
-        row.repositoryLink?.url, // linkRepository
         row.techStack?.multi_select.map((skill: { name: any }) => skill.name), // techStack
         row.icon?.files[0]?.file?.url, // icon
         row.background?.files[0]?.file?.url, // background

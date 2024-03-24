@@ -1,0 +1,24 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import SeriePage from '@/components/series/SeriePage.astro'
+import PageTitle from '@/components/PageTitle.astro'
+import { getSeriesWithPosts } from '@/lib/data/series-provider'
+
+const seriesWithPosts = await getSeriesWithPosts()
+const firstSerie = seriesWithPosts?.[0]
+---
+
+<PageLayout metaTitle='Series'>
+  {
+    seriesWithPosts?.length === 0 && (
+      <div class='flex justify-between'>
+        <PageTitle
+          title='No series found'
+          subtitle='There are no series available at the moment.'
+        />
+      </div>
+    )
+  }
+
+  {firstSerie && <SeriePage serieWithPosts={firstSerie} isFirst={true} />}
+</PageLayout>

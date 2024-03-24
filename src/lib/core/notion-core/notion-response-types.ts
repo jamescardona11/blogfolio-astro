@@ -52,10 +52,8 @@ export type NProjectRow = {
     title: Array<{ text: { content: string } }>
   }
   status: { status: { name: string } }
-  type: { select: { name: string } }
   description?: { rich_text: Array<{ text: { content: string } }> }
   projectLink?: { url: string }
-  repositoryLink?: { url: string }
   techStack?: { multi_select: Array<{ name: string }> }
   icon?: { files: Array<{ file: { url: string } }> }
   background?: { files: Array<{ file: { url: string } }> }

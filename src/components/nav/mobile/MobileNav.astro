@@ -5,15 +5,13 @@ import type { NavItemProps } from '../types'
 
 let items: NavItemProps[] = []
 
-navItemsList
-  .filter(e => e.hideNavigation == null || !e.hideNavigation)
-  .forEach(item => {
-    if (item.subMenu && item.subMenu.length > 0) {
-      items = items.concat(item.subMenu)
-    } else {
-      items.push(item)
-    }
-  })
+navItemsList.forEach(item => {
+  if (item.subMenu && item.subMenu.length > 0) {
+    items = items.concat(item.subMenu)
+  } else {
+    items.push(item)
+  }
+})
 ---
 
 <button aria-label='Toggle Menu' class='sm:hidden toggle-menu'>

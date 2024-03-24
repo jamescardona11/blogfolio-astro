@@ -5,23 +5,16 @@ export function filterProjects(
   filter: ProjectFilterState
 ): Project[] {
   if (filter === 'completed') {
-    return projects.filter(
-      project => project.wasCompleted() && !project.isLearning()
-    )
+    return projects.filter(project => project.wasCompleted())
   }
 
   if (filter === 'active') {
-    return projects.filter(
-      project => project.isInProgress() && !project.isLearning()
-    )
+    return projects.filter(project => project.isInProgress())
   }
 
   if (filter === 'backlog') {
-    return projects.filter(
-      project =>
-        (project.isBacklog() || project.isPaused()) && !project.isLearning()
-    )
+    return projects.filter(project => project.isBacklog() || project.isPaused())
   }
 
-  return projects.filter(project => project.isLearning())
+  return projects
 }
